@@ -4,7 +4,6 @@
 
 import os, sys, subprocess, platform
 import webbrowser
-import help
 os.system('clear')
 
 def command(command):
