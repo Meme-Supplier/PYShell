@@ -1,12 +1,18 @@
-print("Available commands:\n")
+from colorama import Fore, Back, Style, init
 
-print("echo <text>")
-print("exit")
-print('clear')
-print('help')
-print("python")
-print("neofetch")
-print("shutdown")
-print("app <app>")
-print("expr <expression>")
-print('ver\n')
+
+def help():
+    print('\n'+Fore.GREEN+"Available commands:\n")
+
+    print(
+          Fore.CYAN+"echo "+
+          Fore.BLUE+"<text>"+
+
+          Fore.CYAN+"\nexit\n"+
+          "clear\nhelp\npython\nshutdown\napp "
+          +Fore.BLUE+"<app/command (such as git/neofetch)>"
+          +Fore.CYAN+"\nexpr "+
+          Fore.BLUE+"<expression>"+
+          Fore.CYAN+
+          "\nver\ncredits")
+help()
