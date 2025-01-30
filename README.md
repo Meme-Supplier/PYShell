@@ -6,4 +6,5 @@ This should be compatible with most commands, except commands to navigate, such 
 For **Linux** machines only.
 
 Maintained by **Meme Supplier**
+
 2025 Meme Supplier
