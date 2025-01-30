@@ -4,6 +4,7 @@
 
 import os, sys, subprocess, platform
 import webbrowser
+import help
 os.system('clear')
 
 def command(command):
@@ -17,6 +18,24 @@ def ver():
     print(Fore.CYAN  + platform.system(),
           Fore.BLUE  + platform.release(),
             '\n')
+
+def help():
+    print('\n'+
+#         Color        Output          
+          Fore.GREEN + "Available commands:\n")
+    print(Fore.CYAN  + "echo"                 +
+          Fore.BLUE + " <text>")
+    print(Fore.CYAN  + "exit")
+    print(Fore.CYAN  + 'clear')
+    print(Fore.CYAN  + 'help')
+    print(Fore.CYAN  + "python")
+    print(Fore.CYAN  + "neofetch")
+    print(Fore.CYAN  + "shutdown")
+    print(Fore.CYAN  + "app "                 +
+          Fore.BLUE  + "<app>")
+    print(Fore.CYAN  + "expr "                +
+          Fore.BLUE  + "<expression>")
+    print(Fore.CYAN  + 'ver\n')
 
 def credits():
 #         Color        Output
@@ -66,7 +85,7 @@ while True and coloramaInstalled and isLinux:
     match answer:
 #              Input          Response  
         case   "clear"    : os.system(answer)
-        case   "help"     : import pscripts.help
+        case   "help"     : help()
         case   "exit"     : sys.exit()
         case   "python"   : command('python3') # I added this to make accessing Python easier (you don't need the "3" at the end).
         case   "shutdown" : command('shutdown now')
