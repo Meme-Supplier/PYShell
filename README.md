@@ -1,10 +1,14 @@
 # CSHELL - Custom Bash
 ## Just run "cshell.py" from the terminal or run the "launch.sh" file.
 
-This should be compatible with most commands, except commands to navigate, such as "cd", "dir", or "ls".
+This should be compatible with **most** commands, **except commands to navigate**, such as "**cd**", "**dir**", or "**ls**".
 
-For **Linux** machines only.
+# For **Linux** machines only.
+
+## Supported distros:
+- **Debian**-based
+- **Fedora**-based
+- **Arch** based
 
 Maintained by **Meme Supplier**
-
 2025 Meme Supplier
