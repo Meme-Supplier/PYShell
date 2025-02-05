@@ -12,20 +12,20 @@ This should be compatible with **most** commands, **except commands to navigate*
 
 Maintained by **Meme Supplier**
 2025 Meme Supplier
-
+#
 # How to install using commands:
 
-### Clone the repo
+### 1. Clone the repo
 `git clone https://github.com/Meme-Supplier/CSHELL.git`
 
-### Navigate into the cloned repository directory
+### 2. Navigate into the cloned repository directory
 `cd CSHELL`
 
-### Ensure the installer.sh file has execute permissions
+### 3. Ensure the installer.sh file has execute permissions
 `chmod +x installer.sh`
 
-### Run the installer
+### 4. Run the installer
 `./installer.sh`
 
-### Run CShell
+### 5. Run CShell
 `cshell`
