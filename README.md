@@ -28,8 +28,8 @@ Maintained by **Meme Supplier**
 
 ### 5. Run the installer
 `./installer.sh`
-
-### 6. Run CShell
+#
+# 6. Run CShell
 `cshell`
 
 ## To uninstall:
