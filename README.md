@@ -15,7 +15,7 @@ Maintained by **Meme Supplier**
 #
 # How to install using commands:
 
-### 1. Install Git if you haven't already/ if it isn't installed
+### 1. Install Git if you haven't already
 
 ### 2. Clone the repo
 `git clone https://github.com/Meme-Supplier/CSHELL.git`
