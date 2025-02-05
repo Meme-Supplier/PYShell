@@ -15,17 +15,19 @@ Maintained by **Meme Supplier**
 #
 # How to install using commands:
 
-### 1. Clone the repo
+### 1. Install Git if you haven't already/ if it isn't installed
+
+### 2. Clone the repo
 `git clone https://github.com/Meme-Supplier/CSHELL.git`
 
-### 2. Navigate into the cloned repository directory
+### 3. Navigate into the cloned repository directory
 `cd CSHELL`
 
-### 3. Ensure the installer.sh file has execute permissions
+### 4. Ensure the installer.sh file has execute permissions
 `chmod +x installer.sh`
 
-### 4. Run the installer
+### 5. Run the installer
 `./installer.sh`
 
-### 5. Run CShell
+### 6. Run CShell
 `cshell`
