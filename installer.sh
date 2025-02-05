@@ -1,9 +1,9 @@
 #!/bin/bash
 
-echo "Would you like to install or uninstall CShell? (install/uninstall)"
+echo "Would you like to install or uninstall CShell? (Y/N)"
 read action
 
-if [ [ "$action" == "Y" ] || [ "$action" == "y" ]]; then
+if [[ "$action" == "Y" ] || [ "$action" == "y" ]]; then
     echo "Installing CShell..."
 
     # Create cshell directory
