@@ -11,7 +11,6 @@ rm -rf ~/cshell
 # Confirm uninstallation
 if [[ ! -f /usr/local/bin/cshell && ! -d ~/cshell ]]; then
     echo "CShell has been successfully uninstalled."
-    echo
 else
     echo "Error: CShell could not be completely removed."
 fi
