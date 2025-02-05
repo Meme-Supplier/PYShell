@@ -3,7 +3,7 @@
 echo "Would you like to install or uninstall CShell? (install/uninstall)"
 read action
 
-if [[ "$action" == "install" ]]; then
+if [ [ "$action" == "Y" ] || [ "$action" == "y" ]]; then
     echo "Installing CShell..."
 
     # Create cshell directory
@@ -22,30 +22,6 @@ if [[ "$action" == "install" ]]; then
     source ~/.bashrc
 
     echo "CShell has been installed successfully. You can run it by typing 'cshell'."
-
-elif [[ "$action" == "uninstall" ]]; then
-    echo "Uninstalling CShell..."
-    
-    # Remove the symbolic link
-    sudo rm -f /usr/local/bin/cshell
-
-    # Remove CShell files
-    rm -f ~/cshell/cshell.py
-    rm -f ~/cshell/reload.sh
-    rm -f ~/cshell/uninstall.sh
-
-    # Remove cshell directory if empty
-    rmdir ~/cshell 2>/dev/null
-
-    # Confirm uninstallation
-    if [[ ! -f /usr/local/bin/cshell && ! -d ~/cshell ]]; then
-        echo "CShell has been successfully uninstalled."
-    else
-        echo "Error: CShell could not be completely removed."
-    fi
-
 else
-    echo "Invalid choice. Please type 'install' or 'uninstall'."
+    echo "Aborted."
 fi
-
-read
