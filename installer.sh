@@ -11,7 +11,7 @@ if [[ "$action" == "install" ]]; then
     
     # Copy CShell script files
     cp cshell.py ~/cshell/cshell.py
-    cp reload.sh ~/cshell/reload.sh
+    cp uninstall.sh ~/cshell/uninstall.sh
     chmod +x ~/cshell/cshell.py
 
     # Create a symbolic link in /usr/local/bin
@@ -30,7 +30,7 @@ elif [[ "$action" == "uninstall" ]]; then
 
     # Remove CShell files
     rm -f ~/cshell/cshell.py
-    rm -f ~/cshell/reload.sh
+    rm -f ~/cshell/uninstall.sh
 
     # Remove cshell directory if empty
     rmdir ~/cshell 2>/dev/null
