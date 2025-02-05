@@ -31,3 +31,6 @@ Maintained by **Meme Supplier**
 
 ### 6. Run CShell
 `cshell`
+
+## To uninstall:
+**Open CShell, then type uninstall. That's it.**
