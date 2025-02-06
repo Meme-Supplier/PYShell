@@ -19,6 +19,7 @@ Features:
 ### 1. Install Git if you haven't already
 
 ### 2. Clone the repo
+`sudo rm -r ~/CSHELL/` (Optional)
 `git clone https://github.com/Meme-Supplier/CSHELL.git`
 
 ### 3. Navigate into the cloned repository directory
