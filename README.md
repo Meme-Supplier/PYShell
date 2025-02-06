@@ -1,17 +1,18 @@
 # CSHELL - Custom Bash
-## Just run "cshell.py" from the terminal or run the "launch.sh" file.
 
-This should be compatible with **most** commands, **except commands to navigate**, such as "**cd**", "**dir**", or "**ls**".
+Features:
 
-# For **Linux** machines only.
+- **Scriptable:** You can create scripts, and supports ALL file types!
+- **Compatability:** CShell is compatible with (almost) ALL commands!
+- **Performance:** CShell is fast, and reliable, so you will never encounter any performance issues.
+- 
 
-## Supported distros:
+## For **Linux** machines only.
+### Supported distros:
 - **Debian**-based
 - **Fedora**-based
 - **Arch** based
 
-Maintained by **Meme Supplier**
-2025 Meme Supplier
 #
 # How to install using commands:
 
@@ -35,3 +36,6 @@ Maintained by **Meme Supplier**
 #
 # To uninstall:
 **Open CShell, then type uninstall. That's it.**
+
+Maintained by **Meme Supplier**
+2025 Meme Supplier
