@@ -16,23 +16,26 @@ Features:
 #
 # How to install using commands:
 
-### 1. Install Git if you haven't already
+### 1. Navigate to the home directory **(Optional)**
+`cd ~/`
 
-### 2. Clone the repo
+### 2. Install Git if you haven't already
+
+### 3. Clone the repo
 `sudo rm -r ~/CSHELL/` (Optional)
 
 `git clone https://github.com/Meme-Supplier/CSHELL.git`
 
-### 3. Navigate into the cloned repository directory
+### 4. Navigate into the cloned repository directory
 `cd CSHELL`
 
-### 4. Ensure the installer.sh file has execute permissions
+### 5. Ensure the installer.sh file has execute permissions
 `chmod +x installer.sh`
 
-### 5. Run the installer
+### 6. Run the installer
 `./installer.sh`
 
-### 6. Run CShell
+### 7. Run CShell
 `cshell`
 
 #
