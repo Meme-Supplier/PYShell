@@ -5,7 +5,7 @@ Features:
 - **Scriptable:** You can create scripts, and supports ALL file types!
 - **Compatability:** CShell is compatible with (almost) ALL commands!
 - **Performance:** CShell is fast, and reliable, so you will never encounter any performance issues.
-- 
+- **And many more!**
 
 ## For **Linux** machines only.
 ### Supported distros:
