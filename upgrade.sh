@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 GREEN="\e[32m"
 RESET="\e[0m" # Reset color
 
@@ -14,8 +13,6 @@ chmod +x installer.sh
 ./installer.sh
 
 source ~/.bashrc
-
-rm -r ~/CSHELL/
 
 echo -e "${GREEN}CShell successfully updated!${RESET}"
 
