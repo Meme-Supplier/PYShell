@@ -19,7 +19,7 @@ Features:
 ### 1. Navigate to the home directory **(Optional)**
 `cd ~/`
 
-### 2. Install Git if you haven't already
+### 2. Install Git if not installed
 
 ### 3. Clone the repo
 `sudo rm -r ~/CSHELL/` (Optional)
