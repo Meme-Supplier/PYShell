@@ -25,5 +25,3 @@ sudo ln -sf ~/cshell/cshell.py /usr/local/bin/cshell
 source ~/.bashrc
 
 echo -e "${GREEN}CShell has been installed successfully. You can run it by typing 'cshell'.${RESET}"
-
-rm -r ~/CSHELL/
