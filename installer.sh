@@ -5,7 +5,6 @@ GREEN="\e[32m"
 RESET="\e[0m" # Reset color
 
 rm -r ~/cshell/
-rm -r ~/CSHELL/
 
 echo -e "${BLUE}Installing CShell...${RESET}"
 
