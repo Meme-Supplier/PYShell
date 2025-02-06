@@ -16,7 +16,7 @@ Features:
 #
 # How to install using commands:
 
-## Here's everything in 1 command for your convenience:
+## Here's everything in one line for your convenience:
 `cd ~/ && git clone https://github.com/Meme-Supplier/CSHELL.git && cd CSHELL && chmod +x installer.sh && ./installer.sh`
 
 ### 1. Navigate to the home directory **(Optional)**
