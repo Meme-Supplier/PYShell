@@ -9,9 +9,9 @@ Features:
 
 ## For **Linux** machines only.
 ### Supported distros:
-- **Debian**-based
-- **Fedora**-based
-- **Arch** based
+- **Debian**-based (Ex: Linux Mint, Raspbian)
+- **Fedora**-based (Ex: Fedora, Bazzite)
+- **Arch** -based (Ex Arch, Manjaro)
 
 #
 # How to install using commands:
