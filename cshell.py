@@ -22,7 +22,7 @@ pythonMinor = sys.version_info.minor  # Ex: x.12.x
 pythonMicro = sys.version_info.micro # Ex: x.x.3
 pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
 
-cshellVer = "v0.7"
+cshellVer = "v0.7.5"
 
 locked = False
 passwordSet = False
@@ -34,6 +34,7 @@ functions
 """
 
 def commands():
+
     """
     Command list
     """
@@ -119,68 +120,71 @@ def commands():
 #   Update
     print(Fore.CYAN + "update "     +
           Fore.GREEN + " Updates your device " +
-          Fore.RED + "Notice: Only supports Fedora, Arch, and Debian based distros.\n")
+          Fore.RED + "Notice: Only supports Fedora, Arch, and Debian based distros.")
+#   Upgrade
+    print(Fore.CYAN + "upgrade" +
+          Fore.GREEN+ " Updates CShell\n")
 
 def processCommand(answer):
 #       Goes through and executes commands
     match answer:
-#                Input        Response  
-        case "clear"    : os.system('clear')
-        case "help"     : help()
-        case "cmds"     : commands()
-        case "exit"     : sys.exit(0)
-        case "python"   : command("python3")
-        case "shutdown" : command("shutdown now")
-        case "credits"  : credits()
-        case "ver"      : ver()
-        case "update"   : update()
-        case "lock"     : lock()
-        case "edit"     : edit()
-        case "reload"   : reload()
-        case "in"       : input()
-        case "uptime"   : command("uptime")
-        case "uninstall": uninstall()
+#            Input         Response  
+        case "clear"     : os.system('clear')
+        case "help"      : help()
+        case "cmds"      : commands()
+        case "exit"      : sys.exit(0)
+        case "python"    : command("python3")
+        case "shutdown"  : command("shutdown now")
+        case "credits"   : credits()
+        case "ver"       : ver()
+        case "update"    : update() # updates your system
+        case "upgrade"   : upgrade() # updates CShell
+        case "lock"      : lock()
+        case "edit"      : edit()
+        case "reload"    : reload()
+        case "in"        : input()
+        case "uptime"    : command("uptime")
+        case "uninstall" : uninstall()
 
 #       Commands that require syntax
 #       (Show usage)
 
-        case "echo"    : print(Fore.CYAN + "Usage: " +
-                               Fore.BLUE + "echo <message>")
-        case "expr"    : print(Fore.CYAN + "Usage: " +
-                               Fore.BLUE + "expr <equation>")
-        case "bash"    : print(Fore.CYAN + "Usage: " +
-                               Fore.BLUE + "bash <command>")
-        case "web"     : print(Fore.CYAN + "Usage: " +
-                               Fore.BLUE + "web <website>")
-        case "wait"    : print(Fore.CYAN + "Usage: " +
-                               Fore.BLUE + "wait <time (seconds)>")
-        case "pwd"     : print(Fore.CYAN + "Usage: " +
-                               Fore.BLUE + "pwd <password>")
-        case "script"  : print(Fore.CYAN + "Usage: " +
-                               Fore.BLUE + "script <script path>")
-        case "ls"      : print(Fore.CYAN + "Usage: " +
-                               Fore.BLUE + "ls <directory>")
+        case "echo"   : print(Fore.CYAN + "Usage: " +
+                              Fore.BLUE + "echo <message>")
+        case "expr"   : print(Fore.CYAN + "Usage: " +
+                              Fore.BLUE + "expr <equation>")
+        case "bash"   : print(Fore.CYAN + "Usage: " +
+                              Fore.BLUE + "bash <command>")
+        case "web"    : print(Fore.CYAN + "Usage: " +
+                              Fore.BLUE + "web <website>")
+        case "wait"   : print(Fore.CYAN + "Usage: " +
+                              Fore.BLUE + "wait <time (seconds)>")
+        case "pwd"    : print(Fore.CYAN + "Usage: " +
+                              Fore.BLUE + "pwd <password>")
+        case "script" : print(Fore.CYAN + "Usage: " +
+                              Fore.BLUE + "script <script path>")
+        case "ls"     : print(Fore.CYAN + "Usage: " +
+                              Fore.BLUE + "ls <directory>")
             
         case ''        : () # Does nothing
 
         case _ :
 #           Multi-syntax
-            if   answer.startswith ("echo ")    : command(answer)
-            elif answer.startswith ("expr ")    : command(answer)
-            elif answer.startswith ("bash ")    : command(answer.replace("bash " , "" , 1))
-            elif answer.startswith ("web ")     : webbrowser.open_new(answer.replace("web " , "" , 1))
-            elif answer.startswith ("wait ")    : wait(answer.replace("wait " , "" , 1))
-            elif answer.startswith ("pwd ")     : setPwd(answer.replace("pwd " , "" , 1))
-            elif answer.startswith ("script ")  : script(answer.replace("script " , "" , 1))
-            elif answer.startswith ("in ")      : input(answer.replace("in " , "" , 1) + '\n')
-            elif answer.startswith ("ls ")      : ls(answer.replace("ls " , "" , 1) + '\n')
-            elif answer.startswith ("flatpak")  : command(answer)
+            if   answer.startswith ("echo ")   : command(answer)
+            elif answer.startswith ("expr ")   : command(answer)
+            elif answer.startswith ("bash ")   : command(answer.replace("bash " , "" , 1))
+            elif answer.startswith ("web ")    : webbrowser.open_new(answer.replace("web " , "" , 1))
+            elif answer.startswith ("wait ")   : wait(answer.replace("wait " , "" , 1))
+            elif answer.startswith ("pwd ")    : setPwd(answer.replace("pwd " , "" , 1))
+            elif answer.startswith ("script ") : script(answer.replace("script " , "" , 1))
+            elif answer.startswith ("in ")     : input(answer.replace("in " , "" , 1) + '\n')
+            elif answer.startswith ("ls ")     : ls(answer.replace("ls " , "" , 1) + '\n')
+            elif answer.startswith ("flatpak") : command(answer)
 
 #           If nothing checks out
             else: print(Fore.RED +
                     answer +
                     ": invalid command.")
-
 """
 Info
 """
@@ -191,7 +195,7 @@ def credits():
           Fore.GREEN + "2025 Meme Supplier")
 
 def help():
-#             Color         Output
+#         Color         Output
     print(Fore.CYAN   + "Welcome to " +
           Fore.GREEN  + "CShell " +
           Fore.YELLOW + cshellVer)
@@ -200,7 +204,7 @@ def help():
           Fore.CYAN   + " for some commands!\n")
 
 def ver():
-#             Color        Output
+#         Color        Output
     print(Fore.CYAN  + '\nCSHELL' +
           Fore.BLUE  + ' version: ' +
           Fore.GREEN + cshellVer)
@@ -273,6 +277,17 @@ def update():
     else:
         print(Fore.RED + "Unsupported package manager!")
 
+def upgrade():
+    print(Fore.CYAN + "Do you want to update CShell?\n" +
+          Fore.BLUE + "(Y/N)")
+    print(Fore.RED + "Note: This will uninstall then reinstall CShell.")
+    choice = input()
+    if choice == 'Y' or choice == 'y': 
+        command("bash ~/cshell/upgrade.sh")
+        sys.exit(0)
+    else:
+        print(Fore.RED + "Aborted.")
+
 def edit():
     try:    
         command("sudo nano /home/meme/cshell/cshell.py")
@@ -289,7 +304,9 @@ def reload():
     
     if choice == 'Y' or choice == 'y': 
         print("Reloading script...")
-        os.execv(sys.executable, ['python3'] + sys.argv)
+        os.execv(sys.executable,
+                 ['python3'] +
+                 sys.argv)
     else:
         print(Fore.RED + "Aborted.")
 
@@ -318,7 +335,7 @@ else:
     input()
 
 if not isLinux:
-#             Color       Output
+#          Color       Output
     print(Fore.CYAN + "This script is for " +
           Fore.BLUE + "Linux " +
           Fore.RED  + "only! " +
@@ -351,7 +368,7 @@ except:
 if isLinux and sufficentVersion : help()
 
 while True and coloramaInstalled and isLinux and sufficentVersion and not locked:
-#                      Color        Output
+#                  Color         Output
     answer = input(Fore.BLUE   + 'CShell' +
                    Fore.GREEN  + '$' +
                    Fore.YELLOW + '~' +
