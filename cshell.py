@@ -15,14 +15,12 @@ import shutil
 
 os.system("clear")
 
-currentDirectory = os.path.dirname(os.path.abspath(__file__))
-
-pythonMajor = sys.version_info.major  # Ex: 3.x.x
-pythonMinor = sys.version_info.minor  # Ex: x.12.x
+pythonMajor = sys.version_info.major # Ex: 3.x.x
+pythonMinor = sys.version_info.minor # Ex: x.12.x
 pythonMicro = sys.version_info.micro # Ex: x.x.3
 pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
 
-cshellVer = "v0.7.5"
+cshellVer = "v0.8"
 
 locked = False
 passwordSet = False
@@ -38,7 +36,7 @@ def commands():
     """
     Command list
     """
-    
+
     print('\n' +
 #         Color        Output          
           Fore.YELLOW + "Available commands:\n")
@@ -126,7 +124,7 @@ def commands():
           Fore.GREEN+ " Updates CShell\n")
 
 def processCommand(answer):
-#       Goes through and executes commands
+#   Goes through and executes commands
     match answer:
 #            Input         Response  
         case "clear"     : os.system('clear')
@@ -165,8 +163,8 @@ def processCommand(answer):
                               Fore.BLUE + "script <script path>")
         case "ls"     : print(Fore.CYAN + "Usage: " +
                               Fore.BLUE + "ls <directory>")
-            
-        case ''        : () # Does nothing
+
+        case ''       : ()
 
         case _ :
 #           Multi-syntax
@@ -190,8 +188,10 @@ Info
 """
 
 def credits():
-    print(Fore.CYAN  + "Meme Supplier" +
-          Fore.BLUE  + ": owner, programmer, maintainer\n" +
+    print(Fore.CYAN + "Meme Supplier" +
+          Fore.BLUE + ": owner, programmer, maintainer\n" +
+          Fore.YELLOW + "Contact: " +
+          Fore.BLUE + "memesupplierbusiness@gmail.com\n" +
           Fore.GREEN + "2025 Meme Supplier")
 
 def help():
@@ -224,7 +224,7 @@ def ls(lsDir):
 def uninstall():
     choice = input(Fore.RED + "Do you want to uninstall CShell?\n" +
                    Fore.WHITE)
-    
+
     if choice == 'Y' or choice == 'y':
         command("bash ~/cshell/uninstall.sh")
         sys.exit(0)
@@ -252,20 +252,24 @@ def setPwd(pwd):
 def lock():
     if passwordSet:
         os.system("clear")
+        
         global locked
         locked = True
 
         while locked:
             print(Fore.CYAN + "Enter password to unlock CShell.")
             pwdAttempt = input()
-            if pwdAttempt == password : locked = False
-            else: print(Fore.RED + "Incorrect password!\n")
+
+            if pwdAttempt == password:
+                locked = False
+            else:
+                print(Fore.RED + "Incorrect password!\n")
     else:
         print(Fore.RED + "You need to set a password first in order to use this command.")
         print(Fore.RED + "Use the command " +
               Fore.BLUE + "\"pwd <password>\" " + 
               Fore.RED + "to set your password")
-    
+
 
 def update():
     if shutil.which("apt"):   
@@ -282,6 +286,7 @@ def upgrade():
           Fore.BLUE + "(Y/N)")
     print(Fore.RED + "Note: This will uninstall then reinstall CShell.")
     choice = input()
+    
     if choice == 'Y' or choice == 'y': 
         command("bash ~/cshell/upgrade.sh")
         sys.exit(0)
@@ -293,7 +298,7 @@ def edit():
         command("sudo nano /home/meme/cshell/cshell.py")
     except:
         print(Fore.RED + "Unable to use command: Nano is not installed!")
-    
+
     print(Fore.BLUE + "\nChanges applied.")
     reload()
 
@@ -301,7 +306,7 @@ def reload():
     
     print(Fore.CYAN + "\nWould you like to reload CShell?")
     choice = input()
-    
+
     if choice == 'Y' or choice == 'y': 
         print("Reloading script...")
         os.execv(sys.executable,
@@ -341,6 +346,7 @@ if not isLinux:
           Fore.RED  + "only! " +
           Fore.CYAN + "Either install Linux for edit the code " +
           Fore.RED  + "(it may not work as expected or break if you edit the code).\n"  )
+
     sys.exit(1)
 
 #   Attempts to confirm Colorama's existence
@@ -352,12 +358,12 @@ try:
 #   If not installed, you will be prompted to install Colorama.
 except:
     coloramaInstalled = False
-    
+
     print(Fore.RED + "Colorama doesn't appear to be installed!\n" +
           Fore.RED + "Would you like to install it?\n(Y or N)\n")
-    
+
     choice = input("\n")
-    
+
     if choice == 'Y' or choice == 'y':
 #           Opens the download page for Colorama
         webbrowser.open_new("https://pypi.org/project/colorama/")
