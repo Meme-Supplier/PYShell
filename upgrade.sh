@@ -11,7 +11,6 @@ RESET="\e[0m" # Reset color
 
 echo -e "${BLUE}Upgrading CShell...${RESET}"
 
-sudo rm -r ~/cshell/
 sudo rm -r ~/CSHELL/
 git clone https://github.com/Meme-Supplier/CSHELL.git
 cd CSHELL
