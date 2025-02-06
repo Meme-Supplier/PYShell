@@ -1,15 +1,11 @@
 #!/bin/bash
 
 # Define color variables
-RED="\e[31m"
 GREEN="\e[32m"
-YELLOW="\e[33m"
-BLUE="\e[34m"
-MAGENTA="\e[35m"
-CYAN="\e[36m"
 RESET="\e[0m" # Reset color
 
 rm -r ~/cshell/
+rm -r ~/CSHELL/
 
 echo -e "${BLUE}Installing CShell...${RESET}"
 
@@ -30,4 +26,5 @@ sudo ln -sf ~/cshell/cshell.py /usr/local/bin/cshell
 source ~/.bashrc
 
 echo -e "${GREEN}CShell has been installed successfully. You can run it by typing 'cshell'.${RESET}"
-read x
+
+rm -r ~/CSHELL/
