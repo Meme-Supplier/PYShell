@@ -28,7 +28,7 @@ Features:
 
 `git clone https://github.com/Meme-Supplier/CSHELL.git`
 
-**If you encounter problems cloning the repo, try this command.**
+**If you encounter problems cloning the repo, try this command. If not, skip.**
 
 `sudo rm -r ~/CSHELL/` (Optional)
 
