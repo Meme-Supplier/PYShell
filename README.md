@@ -35,7 +35,14 @@ Features:
 ### 6. Run the installer
 `./installer.sh`
 
-### 7. Run CShell
+### 7. Install Colorama **(REQUIRED)**
+`pip install colorama`
+
+**If that doesn't work:**
+
+**https://pypi.org/project/colorama/**
+
+### 8. Run CShell
 `cshell`
 
 #
