@@ -40,7 +40,7 @@ Features:
 
 #
 # To uninstall:
-**Open CShell, then type uninstall. That's it.**
+**Open CShell, then type `uninstall`. That's it.**
 
 #
 Maintained by **Meme Supplier**
