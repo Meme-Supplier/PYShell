@@ -36,7 +36,13 @@ Features:
 `./installer.sh`
 
 ### 7. Install Colorama **(REQUIRED)**
+`python -m venv venv`
+
+`source venv/bin/activate`
+
 `pip install colorama`
+
+`deactivate`
 
 **If that doesn't work:**
 
