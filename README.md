@@ -54,6 +54,8 @@ Features:
 
 `pip install colorama`
 
+### After installing colorama, restart the instructions from the beginning
+
 **If that doesn't work:**
 
 **https://pypi.org/project/colorama/**
