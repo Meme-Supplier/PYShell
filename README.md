@@ -17,7 +17,7 @@ Features:
 # How to install using commands:
 
 ## Here's everything in one line for your convenience:
-`cd ~/ && git clone https://github.com/Meme-Supplier/CSHELL.git && cd CSHELL && chmod +x installer.sh && ./installer.sh`
+`cd ~/ && git clone https://github.com/Meme-Supplier/CSHELL.git && cd CSHELL && chmod +x installer.sh && ./installer.sh && cd ~/`
 
 ### 1. Navigate to the home directory **(Optional)**
 `cd ~/`
@@ -60,7 +60,10 @@ Features:
 
 **https://pypi.org/project/colorama/**
 
-### 8. Run CShell
+### 8. (OPTIONAL) navigate back to the home directory
+`cd ~/`
+
+### 9. Run CShell
 `cshell`
 
 #
