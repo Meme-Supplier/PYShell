@@ -21,7 +21,7 @@ try:
     pythonMicro = sys.version_info.micro # Ex: x.x.3
     pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
 
-    cshellVer = "v0.9"
+    cshellVer = "v0.9.1"
 
     locked = False
     passwordSet = False
