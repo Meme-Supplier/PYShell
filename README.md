@@ -66,6 +66,8 @@ Features:
 ### 9. Run CShell
 `cshell`
 
+**If you have problems with Colorama, try returning to step 7.**
+
 #
 # To uninstall:
 **Open CShell, then type `uninstall`. That's it.**
