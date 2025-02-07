@@ -415,7 +415,7 @@ except:
     choice = input()
 
     if choice == 'Y' or choice == 'y':
-        upgrade()
+        __import__('os').system('bash ~/cshell/upgrade.sh')
 
 """
 # 2025 Meme Supplier
