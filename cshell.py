@@ -115,8 +115,9 @@ def commands():
         Fore.BLUE + "<website>" +
         Fore.GREEN + " Opens your desired website")
 #   Git
-    print(Fore.CYAN + "git <rest of the command>" +
-        Fore.GREEN+ " Runs git\n")
+    print(Fore.CYAN + "git " +
+          Fore.BLUE + "<rest of the command>" +
+        Fore.GREEN+ " Runs git")
 #   Script
     print(Fore.CYAN + "script "     +
         Fore.BLUE + "<path to " +
