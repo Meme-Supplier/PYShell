@@ -5,6 +5,7 @@ RESET="\e[0m" # Reset color
 
 echo -e "${GREEN}Upgrading CShell...${RESET}"
 
+cd ~/
 sudo rm -r ~/CSHELL/
 
 git clone https://github.com/Meme-Supplier/CSHELL.git
