@@ -9,9 +9,17 @@ Features:
 
 ## For **Linux** machines only.
 ### Supported distros:
-- **Debian**-based (Ex: Linux Mint, Raspbian)
+- **Debian**-based (Ex: Linux Mint, Rasberry Pi OS)
 - **Fedora**-based (Ex: Fedora, Bazzite)
 - **Arch**-based (Ex Arch, Manjaro)
+
+### Tested on:
+- Manjaro
+- Linux Mint
+- WSL (Ubuntu)
+- WSL (Debian)
+- Rasberry Pi OS
+- Fedora
 
 #
 # How to install using commands:
