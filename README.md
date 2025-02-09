@@ -51,6 +51,12 @@ Features:
 
 ### 7. Install Colorama (If not already installed) [REQUIRED]
 
+If you're using **Debian**:
+
+`sudo apt install python3-colorama`
+
+Otherwise:
+
 **Here is everything in one line for your convenience:**
 `cd ~/ && python -m venv venv && source venv/bin/activate && pip install colorama`
 
