@@ -20,4 +20,5 @@ if [[ ! -f /usr/local/bin/cshell && ! -d ~/cshell ]]; then
 else
     echo -e "${RED}Error: CShell could not be completely removed.${RESET}"
 fi
+
 exit
