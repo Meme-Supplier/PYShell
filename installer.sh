@@ -4,11 +4,12 @@
 GREEN="\e[32m"
 RESET="\e[0m" # Reset color
 
-rm -r ~/cshell/
-
 echo -e "${BLUE}Installing CShell...${RESET}"
 
-# Create cshell directory
+if [ -d ~/cshell ]; then
+    rm -r ~/cshell/
+fi
+
 mkdir -p ~/cshell
 
 # Copy CShell script files
