@@ -7,7 +7,7 @@ echo -e "${GREEN}Upgrading CShell...${RESET}"
 
 cd ~/
 
-rm -r ~/CSHELL/
+sudo rm -rf ~/CSHELL/
 
 git clone https://github.com/Meme-Supplier/CSHELL.git
 cd CSHELL
