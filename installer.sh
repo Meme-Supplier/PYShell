@@ -7,7 +7,7 @@ RESET="\e[0m" # Reset color
 echo -e "${BLUE}Installing CShell...${RESET}"
 
 if [ -d ~/cshell ]; then
-    rm -r ~/cshell/
+    rm -rf ~/cshell/
 fi
 
 mkdir -p ~/cshell
