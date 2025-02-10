@@ -12,6 +12,7 @@ import subprocess
 import platform
 import webbrowser
 import shutil
+from pathlib import Path
 
 from colorama import Fore, init
 init(autoreset = True)
@@ -23,7 +24,9 @@ pythonMinor = sys.version_info.minor # Ex: x.12.x
 pythonMicro = sys.version_info.micro # Ex: x.x.3
 pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
 
-cshellVer = "v0.9.5"
+cshellVer = "v1.0"
+
+sufficientPacMan = False
 
 locked = False
 passwordSet = False
@@ -71,6 +74,9 @@ def commands():
 #   Reload
     print(Fore.CYAN  + "reload" +
           Fore.GREEN + " Reloads CShell")
+#   Clean
+    print(Fore.CYAN  + "clean" +
+          Fore.GREEN + " removes unnecessary packages")
 #   Reload
     print(Fore.CYAN  + "uptime" +
           Fore.GREEN + " Shows how long your system has been on")
@@ -96,6 +102,11 @@ def commands():
     print(Fore.CYAN  + "wait" +
           Fore.BLUE  + " <time (seconds)>" +
           Fore.GREEN + " Waits your desired time")
+#   Newdir
+    print(Fore.CYAN  + "newdir" +
+          Fore.BLUE  + " <path to directory>" +
+          Fore.GREEN + " Creates a directory in the desired path." +
+          Fore.RED   + "Notice: The path must be the FULL path")
 #   Echo
     print(Fore.CYAN  + "echo" +
           Fore.BLUE  + " <text>" +
@@ -123,8 +134,8 @@ def commands():
           Fore.BLUE  + "file>" +
           Fore.GREEN + " Runs a CShell script" +
           Fore.RED   + " Notice: Only supports text files with the file extension \"" +
-          Fore.YELLOW  + ".cshell" +
-          Fore.RED   + "\".")
+          Fore.BLUE  + ".cshell" +
+          Fore.RED   + "\", and the path must be the FULL path")
 #   In
     print(Fore.CYAN  + "in " +
           Fore.BLUE  + "<text>" +
@@ -138,6 +149,11 @@ def commands():
           Fore.BLUE  + "<password>" +
           Fore.GREEN + " Sets a password " +
           Fore.RED   + "Notice: Password has to be at least 5 characters long.")
+#   Del
+    print(Fore.CYAN  + "del " +
+          Fore.BLUE  + "<path to file/directory>" +
+          Fore.GREEN + " Deletes a file/directory " +
+          Fore.RED   + "Notice: The path must be the FULL path")
 #   Update
     print(Fore.CYAN  + "update " +
           Fore.GREEN + " Updates your device " +
@@ -168,6 +184,8 @@ def processCommand(answer):
         case "in"        : input()
         case "uptime"    : command("uptime")
         case "uninstall" : uninstall()
+        case "quit"      : quit()
+        case "clean"     : clean()
 
 #       Commands that require syntax
 #       (Show usage)
@@ -188,6 +206,10 @@ def processCommand(answer):
                               Fore.BLUE + "script <script path>")
         case "ls"     : print(Fore.CYAN + "Usage: " +
                               Fore.BLUE + "ls <directory>")
+        case "del"    : print(Fore.CYAN + "Usage: " +
+                              Fore.BLUE + "del <path to file/directory>")
+        case "newdir" : print(Fore.CYAN + "Usage: " +
+                              Fore.BLUE + "newdir <path to directory>")
         case ''       : ''
 
         case _ :
@@ -200,52 +222,50 @@ def processCommand(answer):
             elif answer.startswith ("pwd ")    : setPwd(answer.replace("pwd " , "" , 1))
             elif answer.startswith ("script ") : script(answer.replace("script " , "" , 1))
             elif answer.startswith ("in ")     : input(answer.replace("in " , "" , 1) + '\n')
-            elif answer.startswith ("ls ")     : ls(answer.replace("ls " , "" , 1) + '\n')
+            elif answer.startswith ("ls ")     : ls(answer.replace("ls " , "" , 1))
             elif answer.startswith ("flatpak") : command(answer)
             elif answer.startswith ("git")     : git()
-            elif answer.startswith ("touch")   : command(answer)
+            elif answer.startswith ("touch ")  : command(answer)
+            elif answer.startswith ("del ")    : delete(answer.replace("del " , "" , 1))
+            elif answer.startswith ("newdir ") : newdir(answer.replace("newdir " , "" , 1))
 
 #           If nothing checks out
             else: print(Fore.RED +
-                    answer +
-                    ": invalid command.")
-"""
-Info
-"""
-
-def credits():
-    print(Fore.CYAN   + "Meme Supplier" +
-          Fore.BLUE   + ": owner, programmer, maintainer\n" +
-          Fore.YELLOW + "Contact: " +
-          Fore.BLUE   + "memesupplierbusiness@gmail.com\n" +
-          Fore.GREEN  + "2025 Meme Supplier")
-
-def help():
-#         Color         Output
-    print(Fore.CYAN   + "Welcome to " +
-          Fore.GREEN  + "CShell " +
-          Fore.YELLOW + cshellVer)
-    print(Fore.CYAN   + "Type " +
-          Fore.BLUE   + "\"cmds\"" +
-          Fore.CYAN   + " for some commands!\n")
-
-def ver():
-#   CShell version
-    print(Fore.CYAN  + '\nCSHELL' +
-          Fore.BLUE  + ' version: ' +
-          Fore.GREEN + cshellVer)
-    print(Fore.CYAN  + platform.system() ,
-          Fore.BLUE  + platform.release())
-    
-#   Python version
-    print(Fore.CYAN + "Python " +
-          Fore.BLUE + sys.version +
-          '\n')
+                        answer +
+                        ": invalid command.")
 
 """
 Scripting
 Commands
 """
+
+def newdir(dir):
+    Path(dir).mkdir(parents = True,
+                    exist_ok = True)
+    
+    # Verifies of the directory exists
+    if os.path.exists(dir):
+        print(Fore.GREEN + "Directory successfully created!")
+    else:
+        print("Error! File/Directory doesn't exist! Try again and remember to use the full path!")
+
+def clean():
+    if shutil.which("apt"):   
+        command("sudo apt autoremove")
+
+    elif shutil.which("dnf"):   
+        command("sudo dnf autoremove")
+
+    elif shutil.which("pacman"):
+        command("sudo pacman -Rns $(pacman -Qdtq)")
+    else:
+        print(Fore.RED + "Unable to remove packages: Unsupported package manager!")
+
+def delete(file):
+    if os.path.exists(file):
+        command("rm -rf " + file)
+    else:
+        print(Fore.RED + "Error! File/Directory doesn't exist! Remember to use the full path!")
 
 def git():
     if gitInstalled():
@@ -254,11 +274,12 @@ def git():
         print(Fore.RED + "Git is not installed. Please install Git.")
 
 def ls(lsDir):
-    command("ls " + lsDir)
+    command("\nls " + lsDir)
 
 def uninstall():
     global uninstalled
     uninstalled = True
+
     choice = input(Fore.RED + "Are you sure you want to uninstall CShell?\n" +
                    Fore.WHITE)
 
@@ -273,13 +294,14 @@ def wait(value):
 
 def command(command):
     subprocess.run([command],
-                shell = True)
+                   shell = True)
     
 def setPwd(pwd):
     global password 
     global passwordSet
 
-    if len(pwd) < 5: print(Fore.RED  + "Password must be at least " +
+    if len(pwd) < 5:
+        print(Fore.RED  + "Password must be at least " +
                            Fore.BLUE + "5 " +
                            Fore.RED  + "characters long!")
     else:
@@ -295,15 +317,25 @@ def lock():
         
         global locked
         locked = True
+        attemptsLeft = 5
 
         while locked:
-            print(Fore.CYAN + "Enter password to unlock CShell.")
-            pwdAttempt = input()
+            if attemptsLeft != 0:
+                print(Fore.CYAN + "Enter password to unlock CShell.")
+                pwdAttempt = input()
 
-            if pwdAttempt == password:
-                locked = False
+                if pwdAttempt == password:
+                    locked = False
+                else:
+                    print(Fore.RED + "\nIncorrect password!\n")
+                    attemptsLeft -= 1
             else:
-                print(Fore.RED + "Incorrect password!\n")
+                os.system("clear")
+                print(Fore.RED + "You are out of attempts! Wait 5 seconds to try again!")
+                wait(str(5))
+                # Resets the attempts
+                print()
+                attemptsLeft = 5
     else:
         print(Fore.RED  + "You need to set a password first in order to use this command.")
         print(Fore.RED  + "Use the command " +
@@ -320,11 +352,12 @@ def update():
     elif shutil.which("pacman"):
         command("sudo pacman -Syu")
     else:
-        print(Fore.RED + "Unsupported package manager!")
+        print(Fore.RED + "Unable to update: Unsupported package manager!")
 
 def upgrade():
     print(Fore.CYAN + "Do you want to update CShell?\n" +
           Fore.BLUE + "(Y/N)")
+    
     print(Fore.RED + "Note: This will uninstall then reinstall CShell.")
     
     choice = input()
@@ -358,17 +391,59 @@ def reload():
         print(Fore.RED + "Aborted.")
 
 def script(scriptPath):
-    if answer.endswith(".cshell"):
-        try:
-            with open(scriptPath, "r") as file:
-                    for line in file:
-                        processCommand(line.strip())
-        except:
-            print(Fore.RED + "Error: File/directory not found!")
+    if not scriptPath.startswith("~/"):
+
+        if answer.endswith(".cshell"):
+
+            try:
+                with open(scriptPath, "r") as file:
+                        for line in file:
+                            processCommand(line.strip())
+            except:
+                print(Fore.RED + "Error: File/directory not found!")
+
+        else:
+            print(Fore.RED  + "Unsupported file extension! CShell only supports files ending with \"" +
+                  Fore.BLUE + ".cshell" +
+                  Fore.RED  + "\"!")
+    
     else:
-        print(Fore.RED  + "Unsupported file extension! CShell only supports files ending with \"" +
-              Fore.BLUE + ".cshell" +
-              Fore.RED  + "\"!")
+        print(Fore.RED + "The path to the script must be the full path. " +
+              Fore.CYAN + "\nEx: " +
+              Fore.BLUE + "/home/(your username)/file.cshell")
+        
+"""
+Info
+"""
+
+def credits():
+    print(Fore.CYAN   + "Meme Supplier" +
+          Fore.BLUE   + ": owner, programmer, maintainer\n" +
+          Fore.YELLOW + "Contact: " +
+          Fore.BLUE   + "memesupplierbusiness@gmail.com\n" +
+          Fore.GREEN  + "2025 Meme Supplier")
+
+def help():
+    if sufficientPacMan and isLinux:
+        print(Fore.CYAN   + "Welcome to " +
+            Fore.GREEN  + "CShell " +
+            Fore.YELLOW + cshellVer)
+        print(Fore.CYAN   + "Type " +
+            Fore.BLUE   + "\"cmds\"" +
+            Fore.CYAN   + " for some commands!\n")
+
+def ver():
+#   CShell version
+    print(Fore.CYAN  + '\nCSHELL' +
+          Fore.BLUE  + ' version: ' +
+          Fore.GREEN + cshellVer)
+    print(Fore.CYAN  + platform.system() ,
+          Fore.BLUE  + platform.release())
+    
+#   Python version
+    print(Fore.CYAN + "Python " +
+          Fore.BLUE + sys.version +
+          '\n')
 
 """
 Misc
@@ -382,12 +457,25 @@ def gitInstalled():
                     check  = True)
         return True
     except (subprocess.CalledProcessError,
-            FileNotFoundError):
+           FileNotFoundError):
         return False
 
 """
 Program
 """
+
+if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):   
+    sufficientPacMan = True
+else:
+    sufficientPacMan = False
+
+    print(Fore.RED  + "Unsupported package manager! Please use " +
+          Fore.BLUE + "Apt" +
+          Fore.RED  + ", " +
+          Fore.BLUE + "Dnf" +
+          Fore.RED  + ", or " +
+          Fore.BLUE + "Pacman" +
+          Fore.RED  + ".")
 
 if platform.system() == "Linux":
     isLinux = True
@@ -395,7 +483,6 @@ else:
     isLinux = False
 
 if not isLinux:
-#         Color       Output
     print(Fore.CYAN + "This script is for " +
           Fore.BLUE + "Linux " +
           Fore.RED  + "only! " +
@@ -404,14 +491,12 @@ if not isLinux:
 
     sys.exit(1)
 
-if isLinux:
-    help()
+help()
 
-while True and isLinux and not locked:
-#                  Color         Output
+while True and isLinux and not locked and sufficientPacMan:
+
     answer = input(Fore.BLUE   + "CShell" +
                    Fore.GREEN  + '$' +
                    Fore.CYAN   + '~' +
                    Fore.WHITE  + ': ')
-
     processCommand(answer)
