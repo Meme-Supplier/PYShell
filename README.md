@@ -13,6 +13,8 @@ Features:
 - **Fedora**-based (Ex: Fedora, Bazzite)
 - **Arch**-based (Ex Arch, Manjaro)
 
+**Ubuntu may work as well.**
+
 ### Tested on:
 - Manjaro
 - Linux Mint
