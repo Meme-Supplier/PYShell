@@ -1,21 +1,24 @@
 #!/bin/bash
-
+# Define color variables
+RED="\e[31m"
 GREEN="\e[32m"
+BLUE="\e[34m"
 RESET="\e[0m" # Reset color
 
-echo -e "${GREEN}Upgrading CShell...${RESET}"
+echo -e "${BLUE}Uninstalling CShell......${RESET}"
 
-cd ~/
-
-sudo rm -rf ~/CSHELL/
-
-git clone https://github.com/Meme-Supplier/CSHELL.git
-cd CSHELL
-chmod +x installer.sh
-./installer.sh
+# Remove the symbolic link
+sudo rm -f /usr/local/bin/cshell
+# Remove the CShell directory and files
+rm -rf ~/cshell
 
 source ~/.bashrc
 
-echo -e "${GREEN}CShell successfully updated!${RESET}"
+# Confirm uninstallation
+if [[ ! -f /usr/local/bin/cshell && ! -d ~/cshell ]]; then
+    echo -e "${GREEN}CShell has been successfully uninstalled.${RESET}"
+else
+    echo -e "${RED}Error: CShell could not be completely removed.${RESET}"
+fi
 
-cshell
+exit
