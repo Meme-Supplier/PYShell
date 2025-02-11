@@ -23,8 +23,9 @@ pythonMajor = sys.version_info.major # Ex: 3.x.x
 pythonMinor = sys.version_info.minor # Ex: x.12.x
 pythonMicro = sys.version_info.micro # Ex: x.x.3
 pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
+pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 
-cshellVer = "v1.0"
+cshellVer = "v1.1"
 
 sufficientPacMan = False
 
@@ -61,7 +62,7 @@ def commands():
           Fore.GREEN + " Lists available commands")
 #   Python
     print(Fore.CYAN  + "python" +
-          Fore.GREEN + " Opens python")
+          Fore.GREEN + " Runs the latest Python version")
 #   Ver
     print(Fore.CYAN  + "ver" +
           Fore.GREEN + " Shows CShell's version")
@@ -83,12 +84,6 @@ def commands():
 #   Shutdown
     print(Fore.CYAN  + "shutdown" +
           Fore.GREEN + " Shuts down your system")
-#   Logout
-    print(Fore.CYAN  + "logout" +
-          Fore.GREEN + " Logs you out")
-#   Login
-    print(Fore.CYAN  + "login" +
-          Fore.GREEN + " Logs you in")
 #   Uninstall
     print(Fore.CYAN  + "uninstall" +
           Fore.GREEN + " Uninstalls CShell.")
@@ -102,6 +97,10 @@ def commands():
     print(Fore.CYAN  + "wait" +
           Fore.BLUE  + " <time (seconds)>" +
           Fore.GREEN + " Waits your desired time")
+#   Pm
+    print(Fore.CYAN  + "pm" +
+          Fore.BLUE  + " <apt/dnf/pacman> <rest of the command>" +
+          Fore.GREEN + " Runs Apt, Dnf, or Pacman.")
 #   Newdir
     print(Fore.CYAN  + "newdir" +
           Fore.BLUE  + " <path to directory>" +
@@ -121,6 +120,9 @@ def commands():
           Fore.BLUE  + "<equation>" +
           Fore.GREEN + " Solves a math equation")
 #   Web
+    print(Fore.CYAN  + "web " +
+          Fore.GREEN + " Opens your browser")
+#   Web (site)
     print(Fore.CYAN  + "web " +
           Fore.BLUE  + "<website>" +
           Fore.GREEN + " Opens your desired website")
@@ -168,12 +170,10 @@ def processCommand(answer):
 #            Input         Response  
         case "clear"     : os.system('clear')
         case "help"      : help()
+        case "python"    : command("python" + pythonVersionShort)
         case "cmds"      : commands()
         case "exit"      : sys.exit(0)
-        case "python"    : command("python3")
         case "shutdown"  : command("shutdown now")
-        case "logout"    : command("logout")
-        case "login"     : command("sudo login")
         case "credits"   : credits()
         case "ver"       : ver()
         case "update"    : update() # updates your system
@@ -186,6 +186,7 @@ def processCommand(answer):
         case "uninstall" : uninstall()
         case "quit"      : quit()
         case "clean"     : clean()
+        case "web"       : webbrowser.open_new('')
 
 #       Commands that require syntax
 #       (Show usage)
@@ -196,8 +197,6 @@ def processCommand(answer):
                               Fore.BLUE + "expr <equation>")
         case "bash"   : print(Fore.CYAN + "Usage: " +
                               Fore.BLUE + "bash <command>")
-        case "web"    : print(Fore.CYAN + "Usage: " +
-                              Fore.BLUE + "web <website>")
         case "wait"   : print(Fore.CYAN + "Usage: " +
                               Fore.BLUE + "wait <time (seconds)>")
         case "pwd"    : print(Fore.CYAN + "Usage: " +
@@ -210,6 +209,8 @@ def processCommand(answer):
                               Fore.BLUE + "del <path to file/directory>")
         case "newdir" : print(Fore.CYAN + "Usage: " +
                               Fore.BLUE + "newdir <path to directory>")
+        case "pm"     : print(Fore.CYAN + "Usage: " +
+                              Fore.BLUE + "pm <apt/dnf/pacman> <rest of the command>")
         case ''       : ''
 
         case _ :
@@ -227,7 +228,7 @@ def processCommand(answer):
             elif answer.startswith ("git")     : git()
             elif answer.startswith ("touch ")  : command(answer)
             elif answer.startswith ("del ")    : delete(answer.replace("del " , "" , 1))
-            elif answer.startswith ("newdir ") : newdir(answer.replace("newdir " , "" , 1))
+            elif answer.startswith ("pm ")     : pm(answer.replace("pm " , "" , 1))
 
 #           If nothing checks out
             else: print(Fore.RED +
@@ -239,6 +240,12 @@ Scripting
 Commands
 """
 
+def pm(cmd):
+    if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):
+        command(cmd)
+    else:
+        print(Fore.RED + "Unable to remove packages: Unsupported package manager!")
+
 def newdir(dir):
     Path(dir).mkdir(parents = True,
                     exist_ok = True)
@@ -247,7 +254,7 @@ def newdir(dir):
     if os.path.exists(dir):
         print(Fore.GREEN + "Directory successfully created!")
     else:
-        print("Error! File/Directory doesn't exist! Try again and remember to use the full path!")
+        print("Error! File/Directory doesn't exist!\nTry again and remember to use the full path!")
 
 def clean():
     if shutil.which("apt"):   
@@ -369,11 +376,7 @@ def upgrade():
         print(Fore.RED + "Aborted.")
 
 def edit():
-    try:    
-        command("nano ~/cshell/cshell.py")
-    except:
-        print(Fore.RED + "Unable to use command: Nano is not installed!")
-
+    command("nano ~/cshell/cshell.py")
     print(Fore.BLUE + "\nChanges applied.")
     reload()
 
@@ -391,27 +394,24 @@ def reload():
         print(Fore.RED + "Aborted.")
 
 def script(scriptPath):
-    if not scriptPath.startswith("~/"):
-
+    if scriptPath.startswith("~/"):
+        print(Fore.RED  + "Unsupported file extension! CShell only supports files ending with \"" +
+                  Fore.BLUE + ".cshell" +
+                  Fore.RED  + "\"!")
+    else:
         if answer.endswith(".cshell"):
-
             try:
                 with open(scriptPath, "r") as file:
                         for line in file:
                             processCommand(line.strip())
             except:
                 print(Fore.RED + "Error: File/directory not found!")
-
-        else:
-            print(Fore.RED  + "Unsupported file extension! CShell only supports files ending with \"" +
-                  Fore.BLUE + ".cshell" +
-                  Fore.RED  + "\"!")
-    
-    else:
-        print(Fore.RED + "The path to the script must be the full path. " +
-              Fore.CYAN + "\nEx: " +
-              Fore.BLUE + "/home/(your username)/file.cshell")
         
+        else:
+            print(Fore.RED + "The path to the script must be the full path. " +
+                Fore.CYAN + "\nEx: " +
+                Fore.BLUE + "/home/(your username)/file.cshell")
+
 """
 Info
 """
@@ -499,4 +499,5 @@ while True and isLinux and not locked and sufficientPacMan:
                    Fore.GREEN  + '$' +
                    Fore.CYAN   + '~' +
                    Fore.WHITE  + ': ')
+    
     processCommand(answer)
