@@ -38,7 +38,7 @@ Features:
 
 **If you encounter problems cloning the repo, try this command. If not, skip.**
 
-`rm -r ~/CSHELL/` (Optional)
+`rm -rf ~/CSHELL/` (Optional)
 
 ### 4. Navigate into the cloned repository directory
 `cd CSHELL`
