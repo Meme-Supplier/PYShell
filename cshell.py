@@ -25,7 +25,7 @@ pythonMicro = sys.version_info.micro # Ex: x.x.3
 pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 
-cshellVer = "v1.1"
+cshellVer = "v1.2"
 
 sufficientPacMan = False
 
@@ -87,12 +87,10 @@ def commands():
 #   Uninstall
     print(Fore.CYAN  + "uninstall" +
           Fore.GREEN + " Uninstalls CShell.")
-#   Touch
-    print(Fore.CYAN  + "touch " +
-          Fore.BLUE  + "<text> " +
-          Fore.YELLOW  + "> " +
-          Fore.BLUE  + "<file>" +
-          Fore.GREEN + " Creates a file with text")
+#   Create
+    print(Fore.CYAN  + "create " +
+          Fore.BLUE  + "<path to file>" +
+          Fore.GREEN + " Creates a file")
 #   Wait
     print(Fore.CYAN  + "wait" +
           Fore.BLUE  + " <time (seconds)>" +
@@ -101,6 +99,10 @@ def commands():
     print(Fore.CYAN  + "pm" +
           Fore.BLUE  + " <apt/dnf/pacman> <rest of the command>" +
           Fore.GREEN + " Runs Apt, Dnf, or Pacman.")
+#   Copy
+    print(Fore.CYAN  + "copy" +
+          Fore.BLUE  + " <path to file> <path to destination>" +
+          Fore.GREEN + " Copies a file from one place to another.")
 #   Newdir
     print(Fore.CYAN  + "newdir" +
           Fore.BLUE  + " <path to directory>" +
@@ -135,9 +137,19 @@ def commands():
           Fore.BLUE  + "<path to " +
           Fore.BLUE  + "file>" +
           Fore.GREEN + " Runs a CShell script" +
-          Fore.RED   + " Notice: Only supports text files with the file extension \"" +
-          Fore.BLUE  + ".cshell" +
-          Fore.RED   + "\", and the path must be the FULL path")
+          Fore.RED   + " Notice: Only supports text files with the file extension " +
+          Fore.BLUE  + "\".cshell\"" +
+          Fore.RED   + ", and the path can't start with " +
+          Fore.BLUE  + "\"~/\"" +
+          Fore.RED   + ".")
+#   Pscript
+    print(Fore.CYAN  + "pscript " +
+          Fore.BLUE  + "<path to " +
+          Fore.BLUE  + "file>" +
+          Fore.GREEN + " Runs a Python script" +
+          Fore.RED   + " Notice: the path can't start with " +
+          Fore.BLUE  + "\"~/\"" +
+          Fore.RED   + ".")
 #   In
     print(Fore.CYAN  + "in " +
           Fore.BLUE  + "<text>" +
@@ -191,44 +203,51 @@ def processCommand(answer):
 #       Commands that require syntax
 #       (Show usage)
 
-        case "echo"   : print(Fore.CYAN + "Usage: " +
-                              Fore.BLUE + "echo <message>")
-        case "expr"   : print(Fore.CYAN + "Usage: " +
-                              Fore.BLUE + "expr <equation>")
-        case "bash"   : print(Fore.CYAN + "Usage: " +
-                              Fore.BLUE + "bash <command>")
-        case "wait"   : print(Fore.CYAN + "Usage: " +
-                              Fore.BLUE + "wait <time (seconds)>")
-        case "pwd"    : print(Fore.CYAN + "Usage: " +
-                              Fore.BLUE + "pwd <password>")
-        case "script" : print(Fore.CYAN + "Usage: " +
-                              Fore.BLUE + "script <script path>")
-        case "ls"     : print(Fore.CYAN + "Usage: " +
-                              Fore.BLUE + "ls <directory>")
-        case "del"    : print(Fore.CYAN + "Usage: " +
-                              Fore.BLUE + "del <path to file/directory>")
-        case "newdir" : print(Fore.CYAN + "Usage: " +
-                              Fore.BLUE + "newdir <path to directory>")
-        case "pm"     : print(Fore.CYAN + "Usage: " +
-                              Fore.BLUE + "pm <apt/dnf/pacman> <rest of the command>")
-        case ''       : ''
+        case "echo"    : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "echo <message>")
+        case "expr"    : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "expr <equation>")
+        case "bash"    : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "bash <command>")
+        case "wait"    : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "wait <time (seconds)>")
+        case "pwd"     : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "pwd <password>")
+        case "script"  : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "script <script path>")
+        case "pscript" : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "pscript <script path>")
+        case "ls"      : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "ls <directory>")
+        case "del"     : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "del <path to file/directory>")
+        case "newdir"  : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "newdir <path to directory>")
+        case "pm"      : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "pm <apt/dnf/pacman> <rest of the command>")
+        case "copy"    : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "copy <path to file> <path to destination>")
+        case ''        : ''
 
         case _ :
 #           Multi-syntax
-            if   answer.startswith ("echo ")   : print(answer.replace("echo " , "" , 1))
-            elif answer.startswith ("expr ")   : print(eval(answer.replace("expr " , "" , 1)))
-            elif answer.startswith ("bash ")   : command(answer.replace("bash " , "" , 1))
-            elif answer.startswith ("web ")    : webbrowser.open_new(answer.replace("web " , "" , 1))
-            elif answer.startswith ("wait ")   : wait(answer.replace("wait " , "" , 1))
-            elif answer.startswith ("pwd ")    : setPwd(answer.replace("pwd " , "" , 1))
-            elif answer.startswith ("script ") : script(answer.replace("script " , "" , 1))
-            elif answer.startswith ("in ")     : input(answer.replace("in " , "" , 1) + '\n')
-            elif answer.startswith ("ls ")     : ls(answer.replace("ls " , "" , 1))
-            elif answer.startswith ("flatpak") : command(answer)
-            elif answer.startswith ("git")     : git()
-            elif answer.startswith ("touch ")  : command(answer)
-            elif answer.startswith ("del ")    : delete(answer.replace("del " , "" , 1))
-            elif answer.startswith ("pm ")     : pm(answer.replace("pm " , "" , 1))
+            if   answer.startswith ("echo ")    : print(answer.replace("echo " , "" , 1))
+            elif answer.startswith ("expr ")    : print(eval(answer.replace("expr " , "" , 1)))
+            elif answer.startswith ("bash ")    : command(answer.replace("bash " , "" , 1))
+            elif answer.startswith ("web ")     : webbrowser.open_new(answer.replace("web " , "" , 1))
+            elif answer.startswith ("wait ")    : wait(answer.replace("wait " , "" , 1))
+            elif answer.startswith ("pwd ")     : setPwd(answer.replace("pwd " , "" , 1))
+            elif answer.startswith ("script ")  : script(answer.replace("script " , "" , 1))
+            elif answer.startswith ("pscript ") : command("python3 " + answer.replace("pscript " , "" , 1))
+            elif answer.startswith ("in ")      : input(answer.replace("in " , "" , 1) + '\n')
+            elif answer.startswith ("ls ")      : command("\nls " + answer.replace("ls " , "" , 1))
+            elif answer.startswith ("flatpak")  : command(answer)
+            elif answer.startswith ("git")      : git()
+            elif answer.startswith ("create ")  : command("touch " + answer.replace("create " , "" , 1))
+            elif answer.startswith ("del ")     : delete(answer.replace("del " , "" , 1))
+            elif answer.startswith ("pm ")      : pm(answer.replace("pm " , "" , 1))
+            elif answer.startswith ("python")   : command(answer)
+            elif answer.startswith ("copy ")    : command("cp " + answer.replace("copy " , "" , 1))
 
 #           If nothing checks out
             else: print(Fore.RED +
@@ -279,9 +298,6 @@ def git():
         command(answer)
     else:
         print(Fore.RED + "Git is not installed. Please install Git.")
-
-def ls(lsDir):
-    command("\nls " + lsDir)
 
 def uninstall():
     global uninstalled
@@ -391,7 +407,7 @@ def reload():
                 ["python3"] +
                 sys.argv)
     else:
-        print(Fore.RED + "Aborted.")
+        print(Fore.RED + "Aborted.")    
 
 def script(scriptPath):
     if scriptPath.startswith("~/"):
@@ -426,11 +442,11 @@ def credits():
 def help():
     if sufficientPacMan and isLinux:
         print(Fore.CYAN   + "Welcome to " +
-            Fore.GREEN  + "CShell " +
-            Fore.YELLOW + cshellVer)
+              Fore.GREEN  + "CShell " +
+              Fore.YELLOW + cshellVer)
         print(Fore.CYAN   + "Type " +
-            Fore.BLUE   + "\"cmds\"" +
-            Fore.CYAN   + " for some commands!\n")
+              Fore.BLUE   + "\"cmds\"" +
+              Fore.CYAN   + " for some commands!\n")
 
 def ver():
 #   CShell version
@@ -442,28 +458,31 @@ def ver():
     
 #   Python version
     print(Fore.CYAN + "Python " +
-          Fore.BLUE + sys.version +
+          Fore.BLUE + pythonVersion +
           '\n')
 
 """
-Misc
+Criteria
 """
 
-def gitInstalled():
+def gitInstalled(): # Is git installed?
     try:
         subprocess.run(["git", "--version"],
-                    stdout = subprocess.PIPE,
-                    stderr = subprocess.PIPE,
-                    check  = True)
+                       stdout = subprocess.PIPE,
+                       stderr = subprocess.PIPE,
+                       check  = True)
         return True
     except (subprocess.CalledProcessError,
-           FileNotFoundError):
+            FileNotFoundError):
+        return False
+    
+def isLinux(): # Are you using Linux?
+    if platform.system() == "Linux":
+        return True
+    else:
         return False
 
-"""
-Program
-"""
-
+# Do you have a supported package manager?
 if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):   
     sufficientPacMan = True
 else:
@@ -476,13 +495,8 @@ else:
           Fore.RED  + ", or " +
           Fore.BLUE + "Pacman" +
           Fore.RED  + ".")
-
-if platform.system() == "Linux":
-    isLinux = True
-else:
-    isLinux = False
-
-if not isLinux:
+    
+if not isLinux():
     print(Fore.CYAN + "This script is for " +
           Fore.BLUE + "Linux " +
           Fore.RED  + "only! " +
@@ -491,9 +505,13 @@ if not isLinux:
 
     sys.exit(1)
 
+"""
+Program
+"""
+
 help()
 
-while True and isLinux and not locked and sufficientPacMan:
+while True and isLinux() and not locked and sufficientPacMan:
 
     answer = input(Fore.BLUE   + "CShell" +
                    Fore.GREEN  + '$' +
