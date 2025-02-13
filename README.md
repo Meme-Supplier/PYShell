@@ -10,6 +10,7 @@ Features:
 ## For **Linux** machines only.
 ### Supported distros:
 - **Debian**-based (Ex: Linux Mint, Rasberry Pi OS)
+- **Ubuntu**-based (Ex: Linux Mint, Ubunutu)
 - **Fedora**-based (Ex: Fedora, Bazzite)
 - **Arch**-based (Ex Arch, Manjaro)
 
@@ -27,20 +28,26 @@ Features:
 # How to install using commands:
 
 ## Here's everything in one line for your convenience:
-`cd ~/ && git clone https://github.com/Meme-Supplier/CSHELL.git && cd CSHELL && chmod +x installer.sh && ./installer.sh && cd ~/`
+`rm -rf ~/CSHELL/ && cd ~/ && git clone https://github.com/Meme-Supplier/CSHELL.git && cd CSHELL && chmod +x installer.sh && ./installer.sh && cd ~/`
 
-### 1. Navigate to the home directory **(Optional)**
+### 1. Navigate to the home directory
 `cd ~/`
 
 ### 2. Install Git if not installed
 
+**Debian/Ubuntu distros**
+`sudo apt install git`
+
+**Fedora distros**
+`sudo dnf install git`
+
+**Arch distros**
+
 ### 3. Clone the repo
 
+`rm -rf ~/CSHELL/` **If you get an error, ignore and continue.**
+
 `git clone https://github.com/Meme-Supplier/CSHELL.git`
-
-**If you encounter problems cloning the repo, try this command. If not, skip.**
-
-`rm -rf ~/CSHELL/` (Optional)
 
 ### 4. Navigate into the cloned repository directory
 `cd CSHELL`
