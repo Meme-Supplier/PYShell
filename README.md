@@ -14,8 +14,6 @@ Features:
 - **Fedora**-based (Ex: Fedora, Bazzite)
 - **Arch**-based (Ex Arch, Manjaro)
 
-**Ubuntu may work as well.**
-
 ### Tested on:
 - Manjaro
 - Linux Mint
@@ -49,7 +47,8 @@ Features:
 
 ### 3. Clone the repo
 
-`rm -rf ~/CSHELL/` **If you get an error, ignore and continue.**
+**If you get an error for this command, ignore and continue.**
+`rm -rf ~/CSHELL/`
 
 `git clone https://github.com/Meme-Supplier/CSHELL.git`
 
@@ -64,36 +63,23 @@ Features:
 
 ### 7. Install Colorama (If not already installed) [REQUIRED]
 
-If you're using **Debian** or **Ubuntu**:
+**Debain/Ubuntu:**
 
 `sudo apt install python3-colorama`
 
-Otherwise:
+**Fedora:**
 
-**Here is everything in one line for your convenience:**
-`cd ~/ && python -m venv venv && source venv/bin/activate && pip install colorama`
+`sudo dnf install python3-colorama`
 
-`cd ~/`
+**Arch:**
 
-`python3 -m venv venv`
-
-`source venv/bin/activate`
-
-`pip install colorama`
-
-### After installing colorama, restart the instructions from the beginning
-
-**If that doesn't work:**
-
-**https://pypi.org/project/colorama/**
+`sudo pacman -S python-colorama`
 
 ### 8. (OPTIONAL) navigate back to the home directory
 `cd ~/`
 
 ### 9. Run CShell
 `cshell`
-
-**If you have problems with Colorama, try returning to step 7.**
 
 #
 # To uninstall:
