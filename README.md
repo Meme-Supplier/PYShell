@@ -47,7 +47,8 @@ Features:
 
 ### 3. Clone the repo
 
-**If you get an error for this command, ignore and continue.**
+**If you get an error for the following command, ignore and continue on.**
+
 `rm -rf ~/CSHELL/`
 
 `git clone https://github.com/Meme-Supplier/CSHELL.git`
