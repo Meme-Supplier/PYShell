@@ -35,13 +35,17 @@ Features:
 
 ### 2. Install Git if not installed
 
-**Debian/Ubuntu distros**
+**Debian/Ubuntu:**
+
 `sudo apt install git`
 
-**Fedora distros**
+**Fedora:**
+
 `sudo dnf install git`
 
-**Arch distros**
+**Arch:**
+
+`sudo pacman -S git`
 
 ### 3. Clone the repo
 
