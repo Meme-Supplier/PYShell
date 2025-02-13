@@ -22,6 +22,7 @@ Features:
 - Rasberry Pi OS
 - Fedora
 
+
 #
 # How to install using commands:
 
@@ -45,6 +46,7 @@ Features:
 
 `sudo pacman -S git`
 
+
 ### 3. Clone the repo
 
 **If you get an error for the following command, ignore and continue on.**
@@ -53,14 +55,18 @@ Features:
 
 `git clone https://github.com/Meme-Supplier/CSHELL.git`
 
+
 ### 4. Navigate into the cloned repository directory
 `cd CSHELL`
+
 
 ### 5. Ensure the installer.sh file has execute permissions
 `chmod +x installer.sh`
 
+
 ### 6. Run the installer
 `./installer.sh`
+
 
 ### 7. Install Colorama (If not already installed) [REQUIRED]
 
@@ -76,11 +82,14 @@ Features:
 
 `sudo pacman -S python-colorama`
 
+
 ### 8. (OPTIONAL) navigate back to the home directory
 `cd ~/`
 
+
 ### 9. Run CShell
 `cshell`
+
 
 #
 # To uninstall:
