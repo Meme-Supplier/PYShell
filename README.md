@@ -2,9 +2,9 @@
 
 Features:
 
-- **Scriptable:** CShell allows you to create scripts!
-- **Compatability:** CShell is compatible with (almost) ALL commands!
-- **Performance:** CShell is fast, and reliable, so you will never encounter any performance issues.
+- **Scriptable:** CSHELL allows you to create scripts!
+- **Compatability:** CSHELL is compatible with (almost) ALL commands!
+- **Performance:** CSHELL is fast, and reliable, so you will never encounter any performance issues.
 - **And many more!**
 
 ## For **Linux** machines only.
@@ -22,7 +22,6 @@ Features:
 - Rasberry Pi OS
 - Fedora
 - Arch
-
 
 #
 # How to install using commands:
@@ -88,13 +87,13 @@ Features:
 `cd ~/`
 
 
-### 9. Run CShell
+### 9. Run CSHELL
 `cshell`
 
 
 #
 # To uninstall:
-**Open CShell, then type `uninstall`. That's it.**
+**Open CSHELL, then type `uninstall`. That's it.**
 
 #
 Maintained by **Meme Supplier**
