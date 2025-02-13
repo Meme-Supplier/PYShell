@@ -21,6 +21,7 @@ Features:
 - WSL (Debian)
 - Rasberry Pi OS
 - Fedora
+- Arch
 
 
 #
