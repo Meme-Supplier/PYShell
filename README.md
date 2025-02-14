@@ -46,7 +46,7 @@ Features:
 
 ### 3. Clone the repo
 
-**If you get an error for the following command, ignore and continue on.**
+If you get an error for the following command, ignore and continue on.
 
 `rm -rf ~/CSHELL/`
 
