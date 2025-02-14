@@ -4,12 +4,15 @@ GREEN="\e[32m"
 RESET="\e[0m" # Reset color
 CYAN="\e[36m"
 
-echo -e "${GREEN}Upgrading CShell...${RESET}"
+sudo echo ""
+echo -e "${GREEN}Upgrading CSHELL...${RESET}"
+sleep 0.5
 
 cd ~/
 
 echo -e "${CYAN}Removing \"$HOME/CSHELL/\"...${RESET}"
 sudo rm -rf ~/CSHELL/
+sleep 0.5
 
 echo -e "${CYAN}Cloning into \"https://github.com/Meme-Supplier/CSHELL.git\"...${RESET}"
 git clone https://github.com/Meme-Supplier/CSHELL.git
@@ -18,13 +21,15 @@ cd CSHELL
 
 echo -e "${CYAN}Allowing execution for \"installer.sh\"...${RESET}"
 chmod +x installer.sh
+sleep 0.5
 
 echo -e "${CYAN}Running the installer...${RESET}"
 ./installer.sh
 
 echo -e "${CYAN}Reloading shell configurations...${RESET}"
 source ~/.bashrc
+sleep 1
 
-echo -e "${GREEN}CShell successfully updated!${RESET}"
+echo -e "${GREEN}CSHELL successfully updated!${RESET}"
 
 cshell
