@@ -25,7 +25,7 @@ pythonMicro = sys.version_info.micro # Ex: x.x.3
 pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 
-cshellVer = "v1.2"
+cshellVer = "v1.3"
 
 sufficientPacMan = False
 
@@ -50,7 +50,7 @@ def commands():
           Fore.YELLOW + "Available commands:\n")
 #   Exit
     print(Fore.CYAN  + "exit " +
-          Fore.GREEN + "Exits CShell")
+          Fore.GREEN + "Exits CSHELL")
 #   Clear
     print(Fore.CYAN  + "clear" +
           Fore.GREEN + " Clears the screen")
@@ -65,16 +65,20 @@ def commands():
           Fore.GREEN + " Runs the latest Python version")
 #   Ver
     print(Fore.CYAN  + "ver" +
-          Fore.GREEN + " Shows CShell's version")
+          Fore.GREEN + " Shows CSHELL's version")
 #   Lock
     print(Fore.CYAN  + "lock" +
           Fore.GREEN + " Locks the terminal")
 #   Edit
     print(Fore.CYAN  + "edit" +
-          Fore.GREEN + " Allows you to easily edit CShell")
+          Fore.GREEN + " Allows you to easily edit CSHELL")
 #   Reload
     print(Fore.CYAN  + "reload" +
-          Fore.GREEN + " Reloads CShell")
+          Fore.GREEN + " Reloads CSHELL")
+#   Ip
+    print(Fore.CYAN  + "ip" +
+          Fore.GREEN + " Displays your IP." +
+          Fore.RED + " DANGEROUS")
 #   Clean
     print(Fore.CYAN  + "clean" +
           Fore.GREEN + " removes unnecessary packages")
@@ -86,7 +90,7 @@ def commands():
           Fore.GREEN + " Shuts down your system")
 #   Uninstall
     print(Fore.CYAN  + "uninstall" +
-          Fore.GREEN + " Uninstalls CShell.")
+          Fore.GREEN + " Uninstalls CSHELL.")
 #   Create
     print(Fore.CYAN  + "create " +
           Fore.BLUE  + "<path to file>" +
@@ -136,7 +140,7 @@ def commands():
     print(Fore.CYAN  + "script " +
           Fore.BLUE  + "<path to " +
           Fore.BLUE  + "file>" +
-          Fore.GREEN + " Runs a CShell script" +
+          Fore.GREEN + " Runs a CSHELL script" +
           Fore.RED   + " Notice: Only supports text files with the file extension " +
           Fore.BLUE  + "\".cshell\"" +
           Fore.RED   + ", and the path can't start with " +
@@ -158,6 +162,10 @@ def commands():
     print(Fore.CYAN  + "ls " +
           Fore.BLUE  + "<directory>" +
           Fore.GREEN + " Lists the specified directory")
+#   Ping
+    print(Fore.CYAN  + "ping " +
+          Fore.BLUE  + "<web page>" +
+          Fore.GREEN + " Pings a web page")
 #   Pwd
     print(Fore.CYAN  + "pwd " +
           Fore.BLUE  + "<password>" +
@@ -174,22 +182,23 @@ def commands():
           Fore.RED   + "Notice: Only supports Fedora, Arch, and Debian based distros.")
 #   Upgrade
     print(Fore.CYAN  + "upgrade" +
-          Fore.GREEN + " Updates CShell\n")
+          Fore.GREEN + " Updates CSHELL\n")
 
 def processCommand(answer):
-#   Goes through and executes commands
+    # Goes through and executes commands
+    
     match answer:
-#            Input         Response  
         case "clear"     : os.system('clear')
         case "help"      : help()
         case "python"    : command("python" + pythonVersionShort)
         case "cmds"      : commands()
         case "exit"      : sys.exit(0)
         case "shutdown"  : command("shutdown now")
+        case "ping"      : command("ping")
         case "credits"   : credits()
         case "ver"       : ver()
-        case "update"    : update() # updates your system
-        case "upgrade"   : upgrade() # updates CShell
+        case "update"    : update()  # updates your system
+        case "upgrade"   : upgrade()  # updates CSHELL
         case "lock"      : lock()
         case "edit"      : edit()
         case "reload"    : reload()
@@ -199,10 +208,9 @@ def processCommand(answer):
         case "quit"      : quit()
         case "clean"     : clean()
         case "web"       : webbrowser.open_new('')
+        case "ip"        : command("hostname -I")
 
-#       Commands that require syntax
-#       (Show usage)
-
+        # Commands that require syntax (show usage)
         case "echo"    : print(Fore.CYAN + "Usage: " +
                                Fore.BLUE + "echo <message>")
         case "expr"    : print(Fore.CYAN + "Usage: " +
@@ -227,10 +235,18 @@ def processCommand(answer):
                                Fore.BLUE + "pm <apt/dnf/pacman> <rest of the command>")
         case "copy"    : print(Fore.CYAN + "Usage: " +
                                Fore.BLUE + "copy <path to file> <path to destination>")
-        case ''        : ''
+        case ''        : ()
 
         case _ :
-#           Multi-syntax
+            
+            # Handle multiple commands separated by "&&"
+            if " && " in answer:
+                for cmd in answer.split(" && "):
+                    processCommand(cmd.strip())
+                    
+                return  # Exit after handling multiple commands
+            
+            # Multi-syntax commands
             if   answer.startswith ("echo ")    : print(answer.replace("echo " , "" , 1))
             elif answer.startswith ("expr ")    : print(eval(answer.replace("expr " , "" , 1)))
             elif answer.startswith ("bash ")    : command(answer.replace("bash " , "" , 1))
@@ -248,11 +264,11 @@ def processCommand(answer):
             elif answer.startswith ("pm ")      : pm(answer.replace("pm " , "" , 1))
             elif answer.startswith ("python")   : command(answer)
             elif answer.startswith ("copy ")    : command("cp " + answer.replace("copy " , "" , 1))
+            elif answer.startswith ("ping ")    : command(answer)
 
-#           If nothing checks out
-            else: print(Fore.RED +
-                        answer +
-                        ": invalid command.")
+            # If nothing checks out
+            else: 
+                print(Fore.RED + answer + ": invalid command.")
 
 """
 Scripting
@@ -303,7 +319,7 @@ def uninstall():
     global uninstalled
     uninstalled = True
 
-    choice = input(Fore.RED + "Are you sure you want to uninstall CShell?\n" +
+    choice = input(Fore.RED + "Are you sure you want to uninstall CSHELL?\n" +
                    Fore.WHITE)
 
     if choice == 'Y' or choice == 'y':
@@ -320,7 +336,7 @@ def command(command):
                    shell = True)
     
 def setPwd(pwd):
-    global password 
+    global password
     global passwordSet
 
     if len(pwd) < 5:
@@ -340,11 +356,12 @@ def lock():
         
         global locked
         locked = True
+
         attemptsLeft = 5
 
         while locked:
             if attemptsLeft != 0:
-                print(Fore.CYAN + "Enter password to unlock CShell.")
+                print(Fore.CYAN + "Enter password to unlock CSHELL.")
                 pwdAttempt = input()
 
                 if pwdAttempt == password:
@@ -378,10 +395,10 @@ def update():
         print(Fore.RED + "Unable to update: Unsupported package manager!")
 
 def upgrade():
-    print(Fore.CYAN + "Do you want to update CShell?\n" +
-          Fore.BLUE + "(Y/N)")
+    print(Fore.CYAN + "Do you want to update CSHELL?\n" +
+          Fore.BLUE + "(Y/N)\n")
     
-    print(Fore.RED + "Note: This will uninstall then reinstall CShell.")
+    print(Fore.RED + "Note: This will uninstall then reinstall CSHELL.")
     
     choice = input()
 
@@ -398,20 +415,21 @@ def edit():
 
 def reload():
     
-    print(Fore.CYAN + "\nWould you like to reload CShell?")
+    print(Fore.CYAN + "\nWould you like to reload CSHELL?")
     choice = input()
 
     if choice == 'Y' or choice == 'y': 
         print("Reloading script...")
+        
         os.execv(sys.executable,
-                ["python3"] +
+                ["python" + pythonVersion] +
                 sys.argv)
     else:
         print(Fore.RED + "Aborted.")    
 
 def script(scriptPath):
     if scriptPath.startswith("~/"):
-        print(Fore.RED  + "Unsupported file extension! CShell only supports files ending with \"" +
+        print(Fore.RED  + "Unsupported file extension! CSHELL only supports files ending with \"" +
                   Fore.BLUE + ".cshell" +
                   Fore.RED  + "\"!")
     else:
@@ -442,16 +460,16 @@ def credits():
 def help():
     if sufficientPacMan and isLinux:
         print(Fore.CYAN   + "Welcome to " +
-              Fore.GREEN  + "CShell " +
+              Fore.GREEN  + "CSHELL " +
               Fore.YELLOW + cshellVer)
         print(Fore.CYAN   + "Type " +
               Fore.BLUE   + "\"cmds\"" +
               Fore.CYAN   + " for some commands!\n")
 
 def ver():
-#   CShell version
-    print(Fore.CYAN  + '\nCSHELL' +
-          Fore.BLUE  + ' version: ' +
+#   CSHELL version
+    print(Fore.CYAN  + "\nCSHELL" +
+          Fore.BLUE  + " version: " +
           Fore.GREEN + cshellVer)
     print(Fore.CYAN  + platform.system() ,
           Fore.BLUE  + platform.release())
@@ -513,9 +531,9 @@ help()
 
 while True and isLinux() and not locked and sufficientPacMan:
 
-    answer = input(Fore.BLUE   + "CShell" +
+    answer = input(Fore.BLUE   + "CSHELL" +
                    Fore.GREEN  + '$' +
                    Fore.CYAN   + '~' +
                    Fore.WHITE  + ': ')
-    
+
     processCommand(answer)
