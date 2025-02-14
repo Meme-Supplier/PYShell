@@ -24,7 +24,7 @@ Features:
 - Arch
 
 #
-# How to install using commands:
+# Installation:
 
 ### 1. Navigate to the home directory
 `cd ~/`
