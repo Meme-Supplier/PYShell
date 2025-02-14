@@ -9,10 +9,10 @@ Features:
 
 ## For **Linux** machines only.
 ### Supported distros:
-- **Debian**-based (Ex: Linux Mint, Rasberry Pi OS)
-- **Ubuntu**-based (Ex: Linux Mint, Ubunutu)
-- **Fedora**-based (Ex: Fedora, Bazzite)
-- **Arch**-based (Ex Arch, Manjaro)
+- **Debian**-based
+- **Ubuntu**-based
+- **Fedora**-based
+- **Arch**-based
 
 ### Tested on:
 - Manjaro
@@ -89,7 +89,6 @@ Features:
 
 ### 9. Run CSHELL
 `cshell`
-
 
 #
 # To uninstall:
