@@ -25,7 +25,7 @@ pythonMicro = sys.version_info.micro # Ex: x.x.3
 pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 
-cshellVer = "v1.3"
+cshellVer = "v1.3.5"
 
 sufficientPacMan = False
 
@@ -69,8 +69,8 @@ def commands():
 #   Lock
     print(Fore.CYAN  + "lock" +
           Fore.GREEN + " Locks the terminal")
-#   Edit
-    print(Fore.CYAN  + "edit" +
+#   Xray
+    print(Fore.CYAN  + "xray" +
           Fore.GREEN + " Allows you to easily edit CSHELL")
 #   Reload
     print(Fore.CYAN  + "reload" +
@@ -166,6 +166,10 @@ def commands():
     print(Fore.CYAN  + "ping " +
           Fore.BLUE  + "<web page>" +
           Fore.GREEN + " Pings a web page")
+#   Edit
+    print(Fore.CYAN  + "edit " +
+          Fore.BLUE  + "<text file>" +
+          Fore.GREEN + " Edits a text file within the terminal.")
 #   Pwd
     print(Fore.CYAN  + "pwd " +
           Fore.BLUE  + "<password>" +
@@ -200,7 +204,7 @@ def processCommand(answer):
         case "update"    : update()  # updates your system
         case "upgrade"   : upgrade()  # updates CSHELL
         case "lock"      : lock()
-        case "edit"      : edit()
+        case "xray"      : edit()
         case "reload"    : reload()
         case "in"        : input()
         case "uptime"    : command("uptime")
@@ -221,6 +225,8 @@ def processCommand(answer):
                                Fore.BLUE + "wait <time (seconds)>")
         case "pwd"     : print(Fore.CYAN + "Usage: " +
                                Fore.BLUE + "pwd <password>")
+        case "edit"    : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "edit <path to text file>")
         case "script"  : print(Fore.CYAN + "Usage: " +
                                Fore.BLUE + "script <script path>")
         case "pscript" : print(Fore.CYAN + "Usage: " +
@@ -238,14 +244,14 @@ def processCommand(answer):
         case ''        : ()
 
         case _ :
-            
+
             # Handle multiple commands separated by "&&"
             if " && " in answer:
                 for cmd in answer.split(" && "):
                     processCommand(cmd.strip())
-                    
+
                 return  # Exit after handling multiple commands
-            
+
             # Multi-syntax commands
             if   answer.startswith ("echo ")    : print(answer.replace("echo " , "" , 1))
             elif answer.startswith ("expr ")    : print(eval(answer.replace("expr " , "" , 1)))
@@ -265,6 +271,7 @@ def processCommand(answer):
             elif answer.startswith ("python")   : command(answer)
             elif answer.startswith ("copy ")    : command("cp " + answer.replace("copy " , "" , 1))
             elif answer.startswith ("ping ")    : command(answer)
+            elif answer.startswith ("edit ")    : command("nano " + answer.replace("edit " , "" , 1))
 
             # If nothing checks out
             else: 
@@ -397,9 +404,9 @@ def update():
 def upgrade():
     print(Fore.CYAN + "Do you want to update CSHELL?\n" +
           Fore.BLUE + "(Y/N)\n")
-    
+
     print(Fore.RED + "Note: This will uninstall then reinstall CSHELL.")
-    
+
     choice = input()
 
     if choice == 'Y' or choice == 'y': 
@@ -473,7 +480,7 @@ def ver():
           Fore.GREEN + cshellVer)
     print(Fore.CYAN  + platform.system() ,
           Fore.BLUE  + platform.release())
-    
+
 #   Python version
     print(Fore.CYAN + "Python " +
           Fore.BLUE + pythonVersion +
