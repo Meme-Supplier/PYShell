@@ -22,6 +22,7 @@ Features:
 - Rasberry Pi OS
 - Fedora
 - Arch
+- Pop_OS!
 
 #
 # Installation:
