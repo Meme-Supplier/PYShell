@@ -14,7 +14,7 @@ Features:
 - **Fedora**-based
 - **Arch**-based
 
-### Tested on:
+### Tested and works on:
 - Manjaro
 - Linux Mint
 - WSL (Ubuntu)
