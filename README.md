@@ -62,10 +62,10 @@ If you get an error for the following command, ignore and continue on.
 ### 4. Navigate into the cloned repository directory
 `cd CSHELL`
 
-### 6. Run the installer
+### 5. Run the installer
 `bash installer.sh`
 
-### 7. Install Colorama (If not already installed) [REQUIRED]
+### 6. Install Colorama (If not already installed) [REQUIRED]
 
 **Debain/Ubuntu:**
 
@@ -79,15 +79,19 @@ If you get an error for the following command, ignore and continue on.
 
 `sudo pacman -S python-colorama`
 
-### 8. (OPTIONAL) Delete the cloned repo
+### 7. (OPTIONAL) Delete the cloned repo
 `rm -rf ~/CSHELL`
 
-### 9. Run CSHELL
+### 8. Run CSHELL
 `cshell`
 
 #
 # To uninstall:
 **Open CSHELL, then type `uninstall`. That's it.**
+
+**If you have problems launching CSHELL:**
+
+`bash ~/cshell/uninstaller.sh`
 
 #
 Maintained by **Meme Supplier**
