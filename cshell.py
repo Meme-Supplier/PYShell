@@ -25,13 +25,16 @@ pythonMicro = sys.version_info.micro # Ex: x.x.3
 pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 
-cshellVer = "v1.4"
+cshellVer = "v1.4.1"
 
 sufficientPacMan = False
 
 locked = False
 passwordSet = False
 password = ''
+
+homePath = os.path.expanduser("~")
+homeFolder = os.path.basename(homePath)
 
 """
 Define
@@ -217,6 +220,8 @@ def processCommand(answer):
         # Commands that require syntax (show usage)
         case "echo"    : print(Fore.CYAN + "Usage: " +
                                Fore.BLUE + "echo <message>")
+        case "web"     : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "web <site>")
         case "expr"    : print(Fore.CYAN + "Usage: " +
                                Fore.BLUE + "expr <equation>")
         case "bash"    : print(Fore.CYAN + "Usage: " +
@@ -241,7 +246,7 @@ def processCommand(answer):
                                Fore.BLUE + "pm <apt/dnf/pacman> <rest of the command>")
         case "copy"    : print(Fore.CYAN + "Usage: " +
                                Fore.BLUE + "copy <path to file> <path to destination>")
-        case ''        : ()
+        case ''        : None
 
         case _ :
 
@@ -283,7 +288,10 @@ Commands
 """
 
 def web(page):
-    webbrowser.open_new("https://www." + page)
+    if page.startswith("https://www.") or page.startswith("http://www."):
+        webbrowser.open_new(page)
+    else:
+        webbrowser.open_new("https://www." + page)
 
 def pm(cmd):
     if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):
@@ -339,11 +347,11 @@ def uninstall():
         print(Fore.GREEN + "\nAborted.")
 
 def wait(value):
-    command("sleep " + value)
+    command("sleep " + str(value))
 
 def command(command):
     subprocess.run([command],
-                   shell = True)
+                    shell = True)
     
 def setPwd(pwd):
     global password
@@ -356,7 +364,7 @@ def setPwd(pwd):
     else:
         password = pwd
         passwordSet = True
-        
+
         print(Fore.CYAN + "Password has been set to " +
               Fore.BLUE + password)
 
@@ -370,6 +378,7 @@ def lock():
         attemptsLeft = 5
 
         while locked:
+            
             if attemptsLeft != 0:
                 print(Fore.CYAN + "Enter password to unlock CSHELL.")
                 pwdAttempt = input()
@@ -382,9 +391,7 @@ def lock():
             else:
                 os.system("clear")
                 print(Fore.RED + "You are out of attempts! Wait 5 seconds to try again!")
-                wait(str(5))
-                # Resets the attempts
-                print()
+                wait(5)
                 attemptsLeft = 5
     else:
         print(Fore.RED  + "You need to set a password first in order to use this command.")
@@ -439,22 +446,23 @@ def reload():
 
 def script(scriptPath):
     if scriptPath.startswith("~/"):
-        print(Fore.RED  + "Unsupported file extension! CSHELL only supports files ending with \"" +
-                  Fore.BLUE + ".cshell" +
-                  Fore.RED  + "\"!")
+        print(Fore.RED + "The path to the script must be the full path. " +
+              Fore.CYAN + "\nEx: " +
+              Fore.BLUE + "/home/(your username)/file.cshell")
     else:
         if answer.endswith(".cshell"):
             try:
                 with open(scriptPath, "r") as file:
                         for line in file:
-                            processCommand(line.strip())
+                            lineToProcess = line.strip()
+                            processCommand(lineToProcess)
             except:
                 print(Fore.RED + "Error: File/directory not found!")
         
         else:
-            print(Fore.RED + "The path to the script must be the full path. " +
-                Fore.CYAN + "\nEx: " +
-                Fore.BLUE + "/home/(your username)/file.cshell")
+            print(Fore.RED  + "Unsupported file extension! CSHELL only supports files ending with \"" +
+                  Fore.BLUE + ".cshell" +
+                  Fore.RED  + "\"!")
 
 """
 Info
