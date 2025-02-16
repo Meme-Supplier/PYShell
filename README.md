@@ -11,7 +11,7 @@ Features:
 ### Supported distros:
 - **Debian**-based
 - **Ubuntu**-based
-- **Fedora**-based
+- **Fedora**-based (Except **Bazzite**)
 - **Arch**-based
 
 **And if you have one of the package managers listed:**
