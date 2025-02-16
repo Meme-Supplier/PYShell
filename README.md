@@ -77,8 +77,8 @@ If you get an error for the following command, ignore and continue on.
 
 `sudo pacman -S python-colorama`
 
-### 8. (OPTIONAL) navigate back to the home directory
-`cd ~/`
+### 8. (OPTIONAL) Delete the cloned repo
+`rm -rf ~/CSHELL`
 
 ### 9. Run CSHELL
 `cshell`
