@@ -14,6 +14,11 @@ Features:
 - **Fedora**-based
 - **Arch**-based
 
+**And if you have one of the package managers listed:**
+- Apt
+- Dnf
+- Pacman
+
 ### Tested and works on:
 - Manjaro
 - Linux Mint
