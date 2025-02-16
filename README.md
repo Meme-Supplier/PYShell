@@ -1,4 +1,4 @@
-# CSHELL - Custom Bash
+# CSHELL - Custom shell
 
 Features:
 
