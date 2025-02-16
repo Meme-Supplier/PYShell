@@ -10,7 +10,10 @@ echo -e "${GREEN}Upgrading CSHELL...${RESET}"
 cd ~/
 
 echo -e "${CYAN}Removing \"$HOME/CSHELL/\"...${RESET}"
-sudo rm -rf ~/CSHELL/
+if [ -d ~/CSHELL ]; then
+    echo -e "${CYAN}Removing \"$HOME/CSHELL/\"...${RESET}"
+    rm -rf ~/CSHELL/
+fi
 
 echo -e "${CYAN}Cloning into \"https://github.com/Meme-Supplier/CSHELL.git\"...${RESET}"
 git clone https://github.com/Meme-Supplier/CSHELL.git
