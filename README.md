@@ -62,11 +62,8 @@ If you get an error for the following command, ignore and continue on.
 ### 4. Navigate into the cloned repository directory
 `cd CSHELL`
 
-### 5. Ensure the installer.sh file has execute permissions
-`chmod +x installer.sh`
-
 ### 6. Run the installer
-`./installer.sh`
+`bash installer.sh`
 
 ### 7. Install Colorama (If not already installed) [REQUIRED]
 
