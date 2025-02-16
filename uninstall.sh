@@ -8,6 +8,11 @@ RESET="\e[0m" # Reset color
 sudo echo ""
 echo -e "${GREEN}Uninstalling CSHELL......${RESET}"
 
+if [ -d ~/CSHELL ]; then
+    echo -e "${CYAN}Removing \"$HOME/CSHELL/\"...${RESET}"
+    rm -rf ~/CSHELL/
+fi
+
 # Remove the symbolic link
 echo -e "${CYAN}Removing the symbolic link for \"$HOME/cshell/cshell.py\"...${RESET}"
 sudo rm -f /usr/local/bin/cshell
