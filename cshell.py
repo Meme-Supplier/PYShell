@@ -25,7 +25,7 @@ pythonMicro = sys.version_info.micro # Ex: x.x.3
 pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 
-cshellVer = "v1.3.5"
+cshellVer = "v1.4"
 
 sufficientPacMan = False
 
@@ -88,6 +88,9 @@ def commands():
 #   Shutdown
     print(Fore.CYAN  + "shutdown" +
           Fore.GREEN + " Shuts down your system")
+#   Restart
+    print(Fore.CYAN  + "restart" +
+          Fore.GREEN + " Reboots your system")
 #   Uninstall
     print(Fore.CYAN  + "uninstall" +
           Fore.GREEN + " Uninstalls CSHELL.")
@@ -111,7 +114,7 @@ def commands():
     print(Fore.CYAN  + "newdir" +
           Fore.BLUE  + " <path to directory>" +
           Fore.GREEN + " Creates a directory in the desired path." +
-          Fore.RED   + "Notice: The path must be the FULL path")
+          Fore.RED   + " Notice: The path must be the FULL path")
 #   Echo
     print(Fore.CYAN  + "echo" +
           Fore.BLUE  + " <text>" +
@@ -126,9 +129,6 @@ def commands():
           Fore.BLUE  + "<equation>" +
           Fore.GREEN + " Solves a math equation")
 #   Web
-    print(Fore.CYAN  + "web " +
-          Fore.GREEN + " Opens your browser")
-#   Web (site)
     print(Fore.CYAN  + "web " +
           Fore.BLUE  + "<website>" +
           Fore.GREEN + " Opens your desired website")
@@ -198,6 +198,7 @@ def processCommand(answer):
         case "cmds"      : commands()
         case "exit"      : sys.exit(0)
         case "shutdown"  : command("shutdown now")
+        case "reboot"    : command("reboot")
         case "ping"      : command("ping")
         case "credits"   : credits()
         case "ver"       : ver()
@@ -211,7 +212,6 @@ def processCommand(answer):
         case "uninstall" : uninstall()
         case "quit"      : quit()
         case "clean"     : clean()
-        case "web"       : webbrowser.open_new('')
         case "ip"        : command("hostname -I")
 
         # Commands that require syntax (show usage)
@@ -253,21 +253,21 @@ def processCommand(answer):
                 return  # Exit after handling multiple commands
 
             # Multi-syntax commands
-            if   answer.startswith ("echo ")    : print(answer.replace("echo " , "" , 1))
-            elif answer.startswith ("expr ")    : print(eval(answer.replace("expr " , "" , 1)))
+            if   answer.startswith ("echo ")    : print  (answer.replace("echo " , "" , 1))
+            elif answer.startswith ("expr ")    : print  (eval(answer.replace("expr " , "" , 1)))
             elif answer.startswith ("bash ")    : command(answer.replace("bash " , "" , 1))
-            elif answer.startswith ("web ")     : webbrowser.open_new(answer.replace("web " , "" , 1))
-            elif answer.startswith ("wait ")    : wait(answer.replace("wait " , "" , 1))
-            elif answer.startswith ("pwd ")     : setPwd(answer.replace("pwd " , "" , 1))
-            elif answer.startswith ("script ")  : script(answer.replace("script " , "" , 1))
+            elif answer.startswith ("web ")     : web    (answer.replace("web " , "" , 1))
+            elif answer.startswith ("wait ")    : wait   (answer.replace("wait " , "" , 1))
+            elif answer.startswith ("pwd ")     : setPwd (answer.replace("pwd " , "" , 1))
+            elif answer.startswith ("script ")  : script (answer.replace("script " , "" , 1))
             elif answer.startswith ("pscript ") : command("python3 " + answer.replace("pscript " , "" , 1))
-            elif answer.startswith ("in ")      : input(answer.replace("in " , "" , 1) + '\n')
+            elif answer.startswith ("in ")      : input  (answer.replace("in " , "" , 1) + '\n')
             elif answer.startswith ("ls ")      : command("\nls " + answer.replace("ls " , "" , 1))
             elif answer.startswith ("flatpak")  : command(answer)
-            elif answer.startswith ("git")      : git()
-            elif answer.startswith ("create ")  : command("touch " + answer.replace("create " , "" , 1))
-            elif answer.startswith ("del ")     : delete(answer.replace("del " , "" , 1))
-            elif answer.startswith ("pm ")      : pm(answer.replace("pm " , "" , 1))
+            elif answer.startswith ("git")      : git    ()
+            elif answer.startswith ("create ")  : command("touch " + answer.replace("create " ,"" , 1))
+            elif answer.startswith ("del ")     : delete (answer.replace("del " , "" , 1))
+            elif answer.startswith ("pm ")      : pm     (answer.replace("pm " , "" , 1))
             elif answer.startswith ("python")   : command(answer)
             elif answer.startswith ("copy ")    : command("cp " + answer.replace("copy " , "" , 1))
             elif answer.startswith ("ping ")    : command(answer)
@@ -281,6 +281,9 @@ def processCommand(answer):
 Scripting
 Commands
 """
+
+def web(page):
+    webbrowser.open_new("https://www." + page)
 
 def pm(cmd):
     if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):
