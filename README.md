@@ -49,7 +49,6 @@ Features:
 
 `sudo pacman -S git`
 
-
 ### 3. Clone the repo
 
 If you get an error for the following command, ignore and continue on.
@@ -58,14 +57,13 @@ If you get an error for the following command, ignore and continue on.
 
 `git clone https://github.com/Meme-Supplier/CSHELL.git`
 
-
 ### 4. Navigate into the cloned repository directory
 `cd CSHELL`
 
 ### 5. Run the installer
 `bash installer.sh`
 
-### 6. Install Colorama (If not already installed) [REQUIRED]
+### 6. Install Colorama [REQUIRED]
 
 **Debain/Ubuntu:**
 
