@@ -53,8 +53,6 @@ Features:
 
 If you get an error for the following command, ignore and continue on.
 
-`rm -rf ~/CSHELL/`
-
 `git clone https://github.com/Meme-Supplier/CSHELL.git`
 
 ### 4. Navigate into the cloned repository directory
