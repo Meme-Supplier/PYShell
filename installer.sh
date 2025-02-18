@@ -20,12 +20,23 @@ mkdir -p ~/cshell
 # Copy CShell script files
 echo -e "${CYAN}Copying files...${RESET}"
 
+# Python files
+
+#cshell
 echo -e "${BLUE}Copying \"cshell.py\"...${RESET}"
 cp cshell.py ~/cshell/cshell.py
 
+#cmd list
+echo -e "${BLUE}Copying \"cmdList.py\"...${RESET}"
+cp cmdList.py ~/cshell/cmdList.py
+
+# Bash files
+
+#Uninstall
 echo -e "${BLUE}Copying \"uninstall.sh\"...${RESET}"
 cp uninstall.sh ~/cshell/uninstall.sh
 
+# Upgrade
 echo -e "${BLUE}Copying \"upgrade.sh\"...${RESET}"
 cp upgrade.sh ~/cshell/upgrade.sh
 
