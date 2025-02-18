@@ -50,9 +50,6 @@ Features:
 `sudo pacman -S git`
 
 ### 3. Clone the repo
-
-If you get an error for the following command, ignore and continue on.
-
 `git clone https://github.com/Meme-Supplier/CSHELL.git`
 
 ### 4. Navigate into the cloned repository directory
