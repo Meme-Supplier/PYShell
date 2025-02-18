@@ -6,6 +6,7 @@ memesupplierbusiness@gmail.com
 Maintained by Meme Supplier
 """
 
+# System modules
 import os
 import sys
 import subprocess
@@ -13,11 +14,13 @@ import platform
 import webbrowser
 import shutil
 from pathlib import Path
-
 from colorama import Fore, init
-init(autoreset = True)
+
+# CSHELL modules
+import cmdList
 
 os.system("clear")
+init(autoreset = True)
 
 pythonMajor = sys.version_info.major # Ex: 3.x.x
 pythonMinor = sys.version_info.minor # Ex: x.12.x
@@ -25,7 +28,7 @@ pythonMicro = sys.version_info.micro # Ex: x.x.3
 pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 
-cshellVer = "v1.4.1"
+cshellVer = "v1.4.5"
 
 sufficientPacMan = False
 
@@ -35,161 +38,18 @@ password = ''
 
 homePath = os.path.expanduser("~")
 homeFolder = os.path.basename(homePath)
+CSHELLpath = os.path.expanduser("~/CSHELL")
+
+if os.path.exists(CSHELLpath):
+    try:
+        shutil.rmtree(CSHELLpath)
+    except:
+        print(Fore.RED + "Error! Unable to remove " + homePath + "/CSHELL! Please delete it manually!")
 
 """
 Define
 functions
 """
-
-def commands():
-
-    """
-    Command
-    list
-    """
-
-    print('\n' +
-#         Color        Output          
-          Fore.YELLOW + "Available commands:\n")
-#   Exit
-    print(Fore.CYAN  + "exit " +
-          Fore.GREEN + "Exits CSHELL")
-#   Clear
-    print(Fore.CYAN  + "clear" +
-          Fore.GREEN + " Clears the screen")
-#   Help
-    print(Fore.CYAN  + "help" +
-          Fore.GREEN + " Some info")
-#   Cmds
-    print(Fore.CYAN  + "cmds" +
-          Fore.GREEN + " Lists available commands")
-#   Python
-    print(Fore.CYAN  + "python" +
-          Fore.GREEN + " Runs the latest Python version")
-#   Ver
-    print(Fore.CYAN  + "ver" +
-          Fore.GREEN + " Shows CSHELL's version")
-#   Lock
-    print(Fore.CYAN  + "lock" +
-          Fore.GREEN + " Locks the terminal")
-#   Xray
-    print(Fore.CYAN  + "xray" +
-          Fore.GREEN + " Allows you to easily edit CSHELL")
-#   Reload
-    print(Fore.CYAN  + "reload" +
-          Fore.GREEN + " Reloads CSHELL")
-#   Ip
-    print(Fore.CYAN  + "ip" +
-          Fore.GREEN + " Displays your IP." +
-          Fore.RED + " DANGEROUS")
-#   Clean
-    print(Fore.CYAN  + "clean" +
-          Fore.GREEN + " removes unnecessary packages")
-#   Reload
-    print(Fore.CYAN  + "uptime" +
-          Fore.GREEN + " Shows how long your system has been on")
-#   Shutdown
-    print(Fore.CYAN  + "shutdown" +
-          Fore.GREEN + " Shuts down your system")
-#   Restart
-    print(Fore.CYAN  + "restart" +
-          Fore.GREEN + " Reboots your system")
-#   Uninstall
-    print(Fore.CYAN  + "uninstall" +
-          Fore.GREEN + " Uninstalls CSHELL.")
-#   Create
-    print(Fore.CYAN  + "create " +
-          Fore.BLUE  + "<path to file>" +
-          Fore.GREEN + " Creates a file")
-#   Wait
-    print(Fore.CYAN  + "wait" +
-          Fore.BLUE  + " <time (seconds)>" +
-          Fore.GREEN + " Waits your desired time")
-#   Pm
-    print(Fore.CYAN  + "pm" +
-          Fore.BLUE  + " <apt/dnf/pacman> <rest of the command>" +
-          Fore.GREEN + " Runs Apt, Dnf, or Pacman.")
-#   Copy
-    print(Fore.CYAN  + "copy" +
-          Fore.BLUE  + " <path to file> <path to destination>" +
-          Fore.GREEN + " Copies a file from one place to another.")
-#   Newdir
-    print(Fore.CYAN  + "newdir" +
-          Fore.BLUE  + " <path to directory>" +
-          Fore.GREEN + " Creates a directory in the desired path." +
-          Fore.RED   + " Notice: The path must be the FULL path")
-#   Echo
-    print(Fore.CYAN  + "echo" +
-          Fore.BLUE  + " <text>" +
-          Fore.GREEN + " Prints text")
-#   Bash
-    print(Fore.CYAN  + "bash " +
-          Fore.BLUE  + "<commands>" +
-          Fore.GREEN + " Runs normal shell commands " +
-          Fore.RED   + "Notice: commands like \"cd\" and \"dir\" won't work.")
-#   Expr
-    print(Fore.CYAN  + "expr " +
-          Fore.BLUE  + "<equation>" +
-          Fore.GREEN + " Solves a math equation")
-#   Web
-    print(Fore.CYAN  + "web " +
-          Fore.BLUE  + "<website>" +
-          Fore.GREEN + " Opens your desired website")
-#   Git
-    print(Fore.CYAN  + "git " +
-          Fore.BLUE  + "<rest of the command>" +
-          Fore.GREEN + " Runs git")
-#   Script
-    print(Fore.CYAN  + "script " +
-          Fore.BLUE  + "<path to " +
-          Fore.BLUE  + "file>" +
-          Fore.GREEN + " Runs a CSHELL script" +
-          Fore.RED   + " Notice: Only supports text files with the file extension " +
-          Fore.BLUE  + "\".cshell\"" +
-          Fore.RED   + ", and the path can't start with " +
-          Fore.BLUE  + "\"~/\"" +
-          Fore.RED   + ".")
-#   Pscript
-    print(Fore.CYAN  + "pscript " +
-          Fore.BLUE  + "<path to " +
-          Fore.BLUE  + "file>" +
-          Fore.GREEN + " Runs a Python script" +
-          Fore.RED   + " Notice: the path can't start with " +
-          Fore.BLUE  + "\"~/\"" +
-          Fore.RED   + ".")
-#   In
-    print(Fore.CYAN  + "in " +
-          Fore.BLUE  + "<text>" +
-          Fore.GREEN + " Recieves confimation from user")
-#   Ls
-    print(Fore.CYAN  + "ls " +
-          Fore.BLUE  + "<directory>" +
-          Fore.GREEN + " Lists the specified directory")
-#   Ping
-    print(Fore.CYAN  + "ping " +
-          Fore.BLUE  + "<web page>" +
-          Fore.GREEN + " Pings a web page")
-#   Edit
-    print(Fore.CYAN  + "edit " +
-          Fore.BLUE  + "<text file>" +
-          Fore.GREEN + " Edits a text file within the terminal.")
-#   Pwd
-    print(Fore.CYAN  + "pwd " +
-          Fore.BLUE  + "<password>" +
-          Fore.GREEN + " Sets a password " +
-          Fore.RED   + "Notice: Password has to be at least 5 characters long.")
-#   Del
-    print(Fore.CYAN  + "del " +
-          Fore.BLUE  + "<path to file/directory>" +
-          Fore.GREEN + " Deletes a file/directory " +
-          Fore.RED   + "Notice: The path must be the FULL path")
-#   Update
-    print(Fore.CYAN  + "update " +
-          Fore.GREEN + " Updates your device " +
-          Fore.RED   + "Notice: Only supports Fedora, Arch, and Debian based distros.")
-#   Upgrade
-    print(Fore.CYAN  + "upgrade" +
-          Fore.GREEN + " Updates CSHELL\n")
 
 def processCommand(answer):
     # Goes through and executes commands
@@ -198,7 +58,7 @@ def processCommand(answer):
         case "clear"     : os.system('clear')
         case "help"      : help()
         case "python"    : command("python" + pythonVersionShort)
-        case "cmds"      : commands()
+        case "cmds"      : cmdList.list()
         case "exit"      : sys.exit(0)
         case "shutdown"  : command("shutdown now")
         case "reboot"    : command("reboot")
@@ -454,8 +314,7 @@ def script(scriptPath):
             try:
                 with open(scriptPath, "r") as file:
                         for line in file:
-                            lineToProcess = line.strip()
-                            processCommand(lineToProcess)
+                            processCommand(line.strip())
             except:
                 print(Fore.RED + "Error: File/directory not found!")
         
@@ -463,10 +322,6 @@ def script(scriptPath):
             print(Fore.RED  + "Unsupported file extension! CSHELL only supports files ending with \"" +
                   Fore.BLUE + ".cshell" +
                   Fore.RED  + "\"!")
-
-"""
-Info
-"""
 
 def credits():
     print(Fore.CYAN   + "Meme Supplier" +
@@ -496,10 +351,6 @@ def ver():
     print(Fore.CYAN + "Python " +
           Fore.BLUE + pythonVersion +
           '\n')
-
-"""
-Criteria
-"""
 
 def gitInstalled(): # Is git installed?
     try:
