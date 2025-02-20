@@ -1,4 +1,4 @@
-# CSHELL - Custom shell v1.5
+# CSHELL - Custom shell v1.5.1
 
 Features:
 
