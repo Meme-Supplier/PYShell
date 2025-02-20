@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Define color variables
 GREEN="\e[32m"
 BLUE="\e[34m"
