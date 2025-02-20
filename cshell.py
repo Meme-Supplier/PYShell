@@ -29,7 +29,7 @@ pythonMicro = sys.version_info.micro # Ex: x.x.3
 pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 
-cshellVer = "v1.5"
+cshellVer = "v1.5.1"
 
 sufficientPacMan = False
 
@@ -60,8 +60,8 @@ def processCommand(answer):
         case "ping"      : command("ping")
         case "credits"   : credits()
         case "ver"       : ver()
-        case "update"    : update() # updates your system
-        case "upgrade"   : upgrade() # updates CSHELL
+        case "update"    : update()  # updates your system
+        case "upgrade"   : upgrade()  # updates CSHELL
         case "lock"      : lock()
         case "xray"      : edit()
         case "reload"    : reload()
@@ -144,10 +144,7 @@ Commands
 """
 
 def web(page):
-    if page.startswith("https://www.") or page.startswith("http://www."):
-        webbrowser.open_new(page)
-    else:
-        webbrowser.open_new("https://www." + page)
+    webbrowser.open_new_tab(page)
 
 def pm(cmd):
     if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):
@@ -327,7 +324,7 @@ def credits():
           Fore.GREEN  + "2025 Meme Supplier")
 
 def help():
-    if sufficientPacMan and isLinux:
+    if sufficientPacMan() and isLinux:
         print(Fore.CYAN   + "Welcome to " +
               Fore.GREEN  + "CSHELL " +
               Fore.YELLOW + cshellVer)
@@ -351,33 +348,33 @@ def ver():
 def gitInstalled(): # Is git installed?
     try:
         subprocess.run(["git", "--version"],
-                       stdout = subprocess.PIPE,
-                       stderr = subprocess.PIPE,
-                       check  = True)
+                        stdout = subprocess.PIPE,
+                        stderr = subprocess.PIPE,
+                        check  = True)
         return True
     except (subprocess.CalledProcessError,
             FileNotFoundError):
         return False
     
-def isLinux(): # Are you using Linux?
+def isLinux():
     if platform.system() == "Linux":
         return True
     else:
         return False
 
-# Do you have a supported package manager?
-if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):
-    sufficientPacMan = True
-else:
-    sufficientPacMan = False
-
-    print(Fore.RED  + "Unsupported package manager! Please use " +
-          Fore.BLUE + "Apt" +
-          Fore.RED  + ", " +
-          Fore.BLUE + "Dnf" +
-          Fore.RED  + ", or " +
-          Fore.BLUE + "Pacman" +
-          Fore.RED  + ".")
+def sufficientPacMan():
+    if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):
+        return True
+    else:
+        print(Fore.RED  + "Unsupported package manager! Please use " +
+              Fore.BLUE + "Apt" +
+              Fore.RED  + ", " +
+              Fore.BLUE + "Dnf" +
+              Fore.RED  + ", or " +
+              Fore.BLUE + "Pacman" +
+              Fore.RED  + ".")
+        
+        return False
     
 if not isLinux():
     print(Fore.CYAN + "This script is for " +
@@ -394,7 +391,7 @@ Program
 
 help()
 
-while True and isLinux() and not locked and sufficientPacMan:
+while True and isLinux() and not locked and sufficientPacMan():
 
     answer = input(Fore.BLUE   + "CSHELL" +
                    Fore.GREEN  + '$' +
