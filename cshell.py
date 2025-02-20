@@ -17,6 +17,7 @@ from pathlib import Path
 from colorama import Fore, init
 
 # CSHELL modules
+sys.dont_write_bytecode = True # Prevents "__pycache__" from being created
 import cmdList
 
 os.system("clear")
@@ -28,7 +29,7 @@ pythonMicro = sys.version_info.micro # Ex: x.x.3
 pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 
-cshellVer = "v1.4.5"
+cshellVer = "v1.5"
 
 sufficientPacMan = False
 
@@ -39,12 +40,6 @@ password = ''
 homePath = os.path.expanduser("~")
 homeFolder = os.path.basename(homePath)
 CSHELLpath = os.path.expanduser("~/CSHELL")
-
-if os.path.exists(CSHELLpath):
-    try:
-        shutil.rmtree(CSHELLpath)
-    except:
-        print(Fore.RED + "Error! Unable to remove " + homePath + "/CSHELL! Please delete it manually!")
 
 """
 Define
@@ -65,8 +60,8 @@ def processCommand(answer):
         case "ping"      : command("ping")
         case "credits"   : credits()
         case "ver"       : ver()
-        case "update"    : update()  # updates your system
-        case "upgrade"   : upgrade()  # updates CSHELL
+        case "update"    : update() # updates your system
+        case "upgrade"   : upgrade() # updates CSHELL
         case "lock"      : lock()
         case "xray"      : edit()
         case "reload"    : reload()
@@ -134,7 +129,8 @@ def processCommand(answer):
             elif answer.startswith ("del ")     : delete (answer.replace("del " , "" , 1))
             elif answer.startswith ("pm ")      : pm     (answer.replace("pm " , "" , 1))
             elif answer.startswith ("python")   : command(answer)
-            elif answer.startswith ("copy ")    : command("cp " + answer.replace("copy " , "" , 1))
+            elif answer.startswith ("newdir ")  : command("mkdir " + answer.replace("newdir " , "" , 1))
+            elif answer.startswith ("copy ")    : command("cp " + answer.replace("copy " , "" , 1) + " -rf")
             elif answer.startswith ("ping ")    : command(answer)
             elif answer.startswith ("edit ")    : command("nano " + answer.replace("edit " , "" , 1))
 
@@ -299,7 +295,7 @@ def reload():
         print("Reloading script...")
         
         os.execv(sys.executable,
-                ["python" + pythonVersion] +
+                ["python3"] +
                 sys.argv)
     else:
         print(Fore.RED + "Aborted.")    
@@ -370,7 +366,7 @@ def isLinux(): # Are you using Linux?
         return False
 
 # Do you have a supported package manager?
-if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):   
+if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):
     sufficientPacMan = True
 else:
     sufficientPacMan = False
