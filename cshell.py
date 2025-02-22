@@ -14,14 +14,15 @@ import platform
 import webbrowser
 import shutil
 from pathlib import Path
+
 from colorama import Fore, init
+init(autoreset = True)
+
+sys.dont_write_bytecode = True # Prevents "__pycache__" from being created
 
 # CSHELL modules
-sys.dont_write_bytecode = True # Prevents "__pycache__" from being created
 import cmdList
-
-os.system("clear")
-init(autoreset = True)
+import error
 
 pythonMajor = sys.version_info.major # Ex: 3.x.x
 pythonMinor = sys.version_info.minor # Ex: x.12.x
@@ -29,17 +30,11 @@ pythonMicro = sys.version_info.micro # Ex: x.x.3
 pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 
-cshellVer = "v1.5.1"
-
-sufficientPacMan = False
+cshellVer = "v1.6"
 
 locked = False
 passwordSet = False
-password = ''
-
-homePath = os.path.expanduser("~")
-homeFolder = os.path.basename(homePath)
-CSHELLpath = os.path.expanduser("~/CSHELL")
+password = None
 
 """
 Define
@@ -148,43 +143,44 @@ def web(page):
 
 def pm(cmd):
     if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):
-        command(cmd)
+        
+        if cmd.startswith("apt") or cmd.startswith("dnf") or cmd.startswith("pacman"):
+            command(cmd)
+        else:
+            error.handle(1)
     else:
-        print(Fore.RED + "Unable to remove packages: Unsupported package manager!")
+        error.handle(1)
 
 def newdir(dir):
     Path(dir).mkdir(parents = True,
                     exist_ok = True)
-    
-    # Verifies of the directory exists
-    if os.path.exists(dir):
-        print(Fore.GREEN + "Directory successfully created!")
-    else:
-        print("Error! File/Directory doesn't exist!\nTry again and remember to use the full path!")
 
 def clean():
-    if shutil.which("apt"):   
-        command("sudo apt autoremove")
+    if sufficientPacMan():
+        if shutil.which("apt"):   
+            command("sudo apt autoremove && sudo apt autoclean")
 
-    elif shutil.which("dnf"):   
-        command("sudo dnf autoremove")
+        elif shutil.which("dnf"):   
+            command("sudo dnf autoremove")
 
-    elif shutil.which("pacman"):
-        command("sudo pacman -Rns $(pacman -Qdtq)")
-    else:
-        print(Fore.RED + "Unable to remove packages: Unsupported package manager!")
+        elif shutil.which("pacman"):
+            command("sudo pacman -Rns $(pacman -Qdtq)")
+        else:
+            error.handle(1)
+
+        command("rm -rf ~/.cache/*")
 
 def delete(file):
     if os.path.exists(file):
         command("rm -rf " + file)
     else:
-        print(Fore.RED + "Error! File/Directory doesn't exist! Remember to use the full path!")
+        error.handle(2)
 
 def git():
     if gitInstalled():
         command(answer)
     else:
-        print(Fore.RED + "Git is not installed. Please install Git.")
+        error.handle(3)
 
 def uninstall():
     global uninstalled
@@ -211,9 +207,7 @@ def setPwd(pwd):
     global passwordSet
 
     if len(pwd) < 5:
-        print(Fore.RED  + "Password must be at least " +
-                           Fore.BLUE + "5 " +
-                           Fore.RED  + "characters long!")
+        error.handle(4)
     else:
         password = pwd
         passwordSet = True
@@ -239,18 +233,15 @@ def lock():
                 if pwdAttempt == password:
                     locked = False
                 else:
-                    print(Fore.RED + "\nIncorrect password!\n")
+                    error.handle(5)
                     attemptsLeft -= 1
             else:
                 os.system("clear")
-                print(Fore.RED + "You are out of attempts! Wait 5 seconds to try again!")
+                error.handle(6)
                 wait(5)
                 attemptsLeft = 5
     else:
-        print(Fore.RED  + "You need to set a password first in order to use this command.")
-        print(Fore.RED  + "Use the command " +
-              Fore.BLUE + "\"pwd <password>\" " + 
-              Fore.RED  + "to set your password")
+        error.handle(7)
 
 def update():
     if shutil.which("apt"):   
@@ -262,7 +253,7 @@ def update():
     elif shutil.which("pacman"):
         command("sudo pacman -Syu")
     else:
-        print(Fore.RED + "Unable to update: Unsupported package manager!")
+        error.handle(1)
 
 def upgrade():
     print(Fore.CYAN + "Do you want to update CSHELL?\n" +
@@ -298,10 +289,9 @@ def reload():
         print(Fore.RED + "Aborted.")    
 
 def script(scriptPath):
+    
     if scriptPath.startswith("~/"):
-        print(Fore.RED + "The path to the script must be the full path. " +
-              Fore.CYAN + "\nEx: " +
-              Fore.BLUE + "/home/(your username)/file.cshell")
+        error.handle(8)
     else:
         if answer.endswith(".cshell"):
             try:
@@ -309,12 +299,10 @@ def script(scriptPath):
                         for line in file:
                             processCommand(line.strip())
             except:
-                print(Fore.RED + "Error: File/directory not found!")
+                error.handle(2)
         
         else:
-            print(Fore.RED  + "Unsupported file extension! CSHELL only supports files ending with \"" +
-                  Fore.BLUE + ".cshell" +
-                  Fore.RED  + "\"!")
+            error.handle(9)
 
 def credits():
     print(Fore.CYAN   + "Meme Supplier" +
@@ -366,23 +354,11 @@ def sufficientPacMan():
     if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):
         return True
     else:
-        print(Fore.RED  + "Unsupported package manager! Please use " +
-              Fore.BLUE + "Apt" +
-              Fore.RED  + ", " +
-              Fore.BLUE + "Dnf" +
-              Fore.RED  + ", or " +
-              Fore.BLUE + "Pacman" +
-              Fore.RED  + ".")
-        
+        error.handle(10)
         return False
     
 if not isLinux():
-    print(Fore.CYAN + "This script is for " +
-          Fore.BLUE + "Linux " +
-          Fore.RED  + "only! " +
-          Fore.CYAN + "Either install Linux for edit the code " +
-          Fore.RED  + "(it may not work as expected or break if you edit the code).\n"  )
-
+    error.handle(11)
     sys.exit(1)
 
 """
@@ -393,9 +369,9 @@ help()
 
 while True and isLinux() and not locked and sufficientPacMan():
 
-    answer = input(Fore.BLUE   + "CSHELL" +
-                   Fore.GREEN  + '$' +
-                   Fore.CYAN   + '~' +
-                   Fore.WHITE  + ': ')
+    answer = input(Fore.BLUE  + "CSHELL" +
+                   Fore.GREEN + '$' +
+                   Fore.CYAN  + '~' +
+                   Fore.WHITE + ': ')
 
     processCommand(answer)
