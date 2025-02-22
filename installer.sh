@@ -22,17 +22,21 @@ echo -e "${CYAN}Copying files...${RESET}"
 
 # Python files
 
-#cshell
+# Cshell
 echo -e "${BLUE}Copying \"cshell.py\"...${RESET}"
 cp cshell.py ~/cshell/cshell.py
 
-#cmd list
+# Cmd list
 echo -e "${BLUE}Copying \"cmdList.py\"...${RESET}"
 cp cmdList.py ~/cshell/cmdList.py
 
+# Error handling
+echo -e "${BLUE}Copying \"error.py\"...${RESET}"
+cp error.py ~/cshell/error.py
+
 # Bash files
 
-#Uninstall
+# Uninstall
 echo -e "${BLUE}Copying \"uninstall.sh\"...${RESET}"
 cp uninstall.sh ~/cshell/uninstall.sh
 
