@@ -10,10 +10,13 @@ from colorama import Fore, init
 init(autoreset = True)
 
 def list():
-
     print('\n' +
-#         Color        Output          
           Fore.YELLOW + "Available commands:\n")
+    print(Fore.CYAN + "Command " +
+          Fore.BLUE + "Usage " +
+          Fore.GREEN + "Description " +
+          Fore.RED + "Notice\n")
+
 #   Exit
     print(Fore.CYAN  + "exit " +
           Fore.GREEN + "Exits CSHELL")
