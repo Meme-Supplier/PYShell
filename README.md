@@ -81,7 +81,7 @@ Features:
 
 **If you have problems launching CSHELL:**
 
-`bash ~/cshell/uninstaller.sh`
+`bash ~/cshell/uninstall.sh`
 
 #
 Maintained by **Meme Supplier**
