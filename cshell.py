@@ -18,11 +18,13 @@ from pathlib import Path
 from colorama import Fore, init
 init(autoreset = True)
 
-sys.dont_write_bytecode = True # Prevents "__pycache__" from being created
+# Prevents "__pycache__" from being created
+sys.dont_write_bytecode = True
 
 # CSHELL modules
 import cmdList
 import error
+import sysInfo
 
 pythonMajor = sys.version_info.major # Ex: 3.x.x
 pythonMinor = sys.version_info.minor # Ex: x.12.x
@@ -30,7 +32,9 @@ pythonMicro = sys.version_info.micro # Ex: x.x.3
 pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 
-cshellVer = "v1.6"
+shell = os.getenv('SHELL')
+
+cshellVer = "v1.6.5"
 
 locked = False
 passwordSet = False
@@ -74,8 +78,8 @@ def processCommand(answer):
                                Fore.BLUE + "web <site>")
         case "expr"    : print(Fore.CYAN + "Usage: " +
                                Fore.BLUE + "expr <equation>")
-        case "bash"    : print(Fore.CYAN + "Usage: " +
-                               Fore.BLUE + "bash <command>")
+        case "sh"      : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "sh <command>")
         case "wait"    : print(Fore.CYAN + "Usage: " +
                                Fore.BLUE + "wait <time (seconds)>")
         case "pwd"     : print(Fore.CYAN + "Usage: " +
@@ -110,7 +114,7 @@ def processCommand(answer):
             # Multi-syntax commands
             if   answer.startswith ("echo ")    : print  (answer.replace("echo " , "" , 1))
             elif answer.startswith ("expr ")    : print  (eval(answer.replace("expr " , "" , 1)))
-            elif answer.startswith ("bash ")    : command(answer.replace("bash " , "" , 1))
+            elif answer.startswith ("sh ")      : command(answer.replace("sh " , "" , 1))
             elif answer.startswith ("web ")     : web    (answer.replace("web " , "" , 1))
             elif answer.startswith ("wait ")    : wait   (answer.replace("wait " , "" , 1))
             elif answer.startswith ("pwd ")     : setPwd (answer.replace("pwd " , "" , 1))
@@ -313,7 +317,7 @@ def credits():
 
 def help():
     if sufficientPacMan() and isLinux:
-        print(Fore.CYAN   + "Welcome to " +
+        print(Fore.CYAN   + "\nWelcome to " +
               Fore.GREEN  + "CSHELL " +
               Fore.YELLOW + cshellVer)
         print(Fore.CYAN   + "Type " +
@@ -325,12 +329,34 @@ def ver():
     print(Fore.CYAN  + "\nCSHELL" +
           Fore.BLUE  + " version: " +
           Fore.GREEN + cshellVer)
-    print(Fore.CYAN  + platform.system() ,
-          Fore.BLUE  + platform.release())
 
 #   Python version
     print(Fore.CYAN + "Python " +
           Fore.BLUE + pythonVersion +
+          '\n')
+
+#   System info
+
+    # Distro
+    print(Fore.CYAN + "OS:",
+          Fore.BLUE + sysInfo.getDistro())
+    
+    # Kernel version
+    print(Fore.CYAN + "Kernel:",
+          Fore.BLUE + platform.release())
+    
+    # Window Manager
+    print(Fore.CYAN + "WM:",
+          Fore.BLUE + sysInfo.getWM())
+    
+    # Desktop Enviornment
+    print(Fore.CYAN + "DE:",
+          Fore.BLUE + sysInfo.getDE(["XDG_CURRENT_DESKTOP",
+                                     "DESKTOP_SESSION"]))
+    
+    # Terminal
+    print(Fore.CYAN + "Terminal:",
+          Fore.BLUE + sysInfo.getTerminal(),
           '\n')
 
 def gitInstalled(): # Is git installed?
