@@ -30,6 +30,10 @@ cp cshell.py ~/cshell/cshell.py
 echo -e "${BLUE}Copying \"cmdList.py\"...${RESET}"
 cp cmdList.py ~/cshell/cmdList.py
 
+# System info
+echo -e "${BLUE}Copying \"sysInfo.py\"...${RESET}"
+cp sysInfo.py ~/cshell/sysInfo.py
+
 # Error handling
 echo -e "${BLUE}Copying \"error.py\"...${RESET}"
 cp error.py ~/cshell/error.py
