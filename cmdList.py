@@ -88,8 +88,8 @@ def list():
     print(Fore.CYAN  + "echo" +
           Fore.BLUE  + " <text>" +
           Fore.GREEN + " Prints text")
-#   Bash
-    print(Fore.CYAN  + "bash " +
+#   Sh
+    print(Fore.CYAN  + "sh " +
           Fore.BLUE  + "<commands>" +
           Fore.GREEN + " Runs normal shell commands " +
           Fore.RED   + "Notice: commands like \"cd\" and \"dir\" won't work.")
