@@ -38,7 +38,9 @@ cp sysInfo.py ~/cshell/sysInfo.py
 echo -e "${BLUE}Copying \"error.py\"...${RESET}"
 cp error.py ~/cshell/error.py
 
-# Bash files
+# Logger
+echo -e "${BLUE}Copying \"logger.py\"...${RESET}"
+cp logger.py ~/cshell/logger.py
 
 # Uninstall
 echo -e "${BLUE}Copying \"uninstall.sh\"...${RESET}"
