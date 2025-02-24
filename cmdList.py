@@ -5,6 +5,7 @@
 memesupplierbusiness@gmail.com
 Maintained by Meme Supplier
 """
+import logger
 
 from colorama import Fore, init
 init(autoreset = True)
@@ -156,3 +157,8 @@ def list():
 #   Upgrade
     print(Fore.CYAN  + "upgrade" +
           Fore.GREEN + " Updates CSHELL\n")
+#   Logs
+    print(Fore.CYAN  + "logs" +
+          Fore.GREEN + " Views logs for CSHELL.\n")
+
+    logger.log("cmdList: Commands listed")
