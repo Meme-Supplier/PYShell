@@ -25,6 +25,9 @@ sys.dont_write_bytecode = True
 import cmdList
 import error
 import sysInfo
+import logger
+
+logger.log("CSHELL: Initialized modules.")
 
 pythonMajor = sys.version_info.major # Ex: 3.x.x
 pythonMinor = sys.version_info.minor # Ex: x.12.x
@@ -32,13 +35,33 @@ pythonMicro = sys.version_info.micro # Ex: x.x.3
 pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 
-shell = os.getenv('SHELL')
-
-cshellVer = "v1.6.5"
+cshellVer = "v1.7"
+logger.log("CSHELL: CSHELL version: " + cshellVer)
 
 locked = False
 passwordSet = False
 password = None
+
+logger.log("CSHELL: Variables initialized")
+
+# Detecting if the system is linux
+logger.log("CSHELL: Determining if your system is Linux...")
+if platform.system() == "Linux":
+    sufficientPacMan = True
+    logger.log("CSHELL: System is Linux... Continuing")
+else:
+    sufficientPacMan = False
+    error.handle(11)
+    sys.exit(1)
+
+# Detecting a supported pac man
+logger.log("CSHELL: Determining if you have a supported Package Manager...")
+if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):
+    isLinux = True
+    logger.log("CSHELL: Sufficient package manager detected: Continuing...")
+else:
+    isLinux = False
+    error.handle(10)
 
 """
 Define
@@ -47,13 +70,15 @@ functions
 
 def processCommand(answer):
     # Goes through and executes commands
+
+    logger.log("CSHELL: Processing command: " + answer)
     
     match answer:
-        case "clear"     : os.system('clear')
+        case "clear"     : os.system('clear'); logger.log("CSHELL: Cleared the screen")
         case "help"      : help()
         case "python"    : command("python" + pythonVersionShort)
         case "cmds"      : cmdList.list()
-        case "exit"      : sys.exit(0)
+        case "exit"      : logger.log("CSHELL: Exiting CSHELL..."); sys.exit(0)
         case "shutdown"  : command("shutdown now")
         case "reboot"    : command("reboot")
         case "ping"      : command("ping")
@@ -70,6 +95,7 @@ def processCommand(answer):
         case "quit"      : quit()
         case "clean"     : clean()
         case "ip"        : command("hostname -I")
+        case "logs"      : command("nano ~/cshell/logs.txt")
 
         # Commands that require syntax (show usage)
         case "echo"    : print(Fore.CYAN + "Usage: " +
@@ -136,6 +162,8 @@ def processCommand(answer):
             # If nothing checks out
             else: 
                 print(Fore.RED + answer + ": invalid command.")
+            
+            logger.log("CSHELL: Executed command: " + answer)
 
 """
 Scripting
@@ -144,6 +172,7 @@ Commands
 
 def web(page):
     webbrowser.open_new_tab(page)
+    logger.log("CSHELL: Opened webpage " + page)
 
 def pm(cmd):
     if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):
@@ -158,9 +187,10 @@ def pm(cmd):
 def newdir(dir):
     Path(dir).mkdir(parents = True,
                     exist_ok = True)
+    logger.log("CSHELL: Directory created: " + dir)
 
 def clean():
-    if sufficientPacMan():
+    if sufficientPacMan == True:
         if shutil.which("apt"):   
             command("sudo apt autoremove && sudo apt autoclean")
 
@@ -174,15 +204,19 @@ def clean():
 
         command("rm -rf ~/.cache/*")
 
+        logger.log("CSHELL: Cleaned up cache")
+
 def delete(file):
     if os.path.exists(file):
         command("rm -rf " + file)
+        logger.log("CSHELL: Deleted file " + file)
     else:
         error.handle(2)
 
 def git():
     if gitInstalled():
         command(answer)
+        logger.log("CSHELL: Opened Git")
     else:
         error.handle(3)
 
@@ -194,17 +228,21 @@ def uninstall():
                    Fore.WHITE)
 
     if choice == 'Y' or choice == 'y':
+        logger.log("CSHELL: Uninstalling: Sorry to see you go :(")
         command("bash ~/cshell/uninstall.sh")
         sys.exit(0)
     else:
         print(Fore.GREEN + "\nAborted.")
+        logger.log("CSHELL: Aborted: Uninstall CSHELL")
 
 def wait(value):
     command("sleep " + str(value))
+    logger.log("CSHELL: Waited " + str(value) + "seconds")
 
 def command(command):
     subprocess.run([command],
                     shell = True)
+    logger.log("CSHELL: Ran shell command: " + command)
     
 def setPwd(pwd):
     global password
@@ -218,9 +256,13 @@ def setPwd(pwd):
 
         print(Fore.CYAN + "Password has been set to " +
               Fore.BLUE + password)
+        
+        logger.log("CSHELL: Set password to " + password)
 
 def lock():
     if passwordSet:
+        logger.log("CSHELL: Locked CSHELL")
+
         os.system("clear")
         
         global locked
@@ -250,12 +292,15 @@ def lock():
 def update():
     if shutil.which("apt"):   
         command("sudo apt update && sudo apt upgrade")
+        logger.log("Successfully updated device.")
 
     elif shutil.which("dnf"):   
         command("sudo dnf update")
+        logger.log("Successfully updated device.")
 
     elif shutil.which("pacman"):
         command("sudo pacman -Syu")
+        logger.log("Successfully updated device.")
     else:
         error.handle(1)
 
@@ -268,14 +313,17 @@ def upgrade():
     choice = input()
 
     if choice == 'Y' or choice == 'y': 
+        logger.log("CSHELL: Upgrading CSHELL")
         command("bash ~/cshell/upgrade.sh")
         sys.exit(0)
     else:
         print(Fore.RED + "Aborted.")
+        logger.log("CSHELL: Aborted: Upgrade CSHELL")
 
 def edit():
     command("nano ~/cshell/cshell.py")
     print(Fore.BLUE + "\nChanges applied.")
+    logger.log("CSHELL: Made changes to CSHELL")
     reload()
 
 def reload():
@@ -285,12 +333,16 @@ def reload():
 
     if choice == 'Y' or choice == 'y': 
         print("Reloading script...")
+
+        logger.log("CSHELL: Reloaded CSHELL")
         
         os.execv(sys.executable,
                 ["python3"] +
                 sys.argv)
+        
     else:
-        print(Fore.RED + "Aborted.")    
+        print(Fore.RED + "Aborted.")
+        logger.log("CSHELL: Aborted: Reload CSHELL")    
 
 def script(scriptPath):
     
@@ -302,6 +354,8 @@ def script(scriptPath):
                 with open(scriptPath, "r") as file:
                         for line in file:
                             processCommand(line.strip())
+
+                logger.log("CSHELL: Ran script: " + scriptPath)
             except:
                 error.handle(2)
         
@@ -316,7 +370,7 @@ def credits():
           Fore.GREEN  + "2025 Meme Supplier")
 
 def help():
-    if sufficientPacMan() and isLinux:
+    if sufficientPacMan and isLinux:
         print(Fore.CYAN   + "\nWelcome to " +
               Fore.GREEN  + "CSHELL " +
               Fore.YELLOW + cshellVer)
@@ -352,40 +406,27 @@ def ver():
     # Desktop Enviornment
     print(Fore.CYAN + "DE:",
           Fore.BLUE + sysInfo.getDE(["XDG_CURRENT_DESKTOP",
-                                     "DESKTOP_SESSION"]))
-    
-    # Terminal
-    print(Fore.CYAN + "Terminal:",
-          Fore.BLUE + sysInfo.getTerminal(),
-          '\n')
+                                     "DESKTOP_SESSION"]),
+                                     '\n')
 
 def gitInstalled(): # Is git installed?
+    logger.log("CSHELL: Checking if git is installed...")
+
     try:
         subprocess.run(["git", "--version"],
                         stdout = subprocess.PIPE,
                         stderr = subprocess.PIPE,
                         check  = True)
+        
+        logger.log("CSHELL: Git is installer")
+
         return True
     except (subprocess.CalledProcessError,
             FileNotFoundError):
-        return False
-    
-def isLinux():
-    if platform.system() == "Linux":
-        return True
-    else:
-        return False
+        
+        logger.log("CSHELL: Git is not installed")
 
-def sufficientPacMan():
-    if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):
-        return True
-    else:
-        error.handle(10)
         return False
-    
-if not isLinux():
-    error.handle(11)
-    sys.exit(1)
 
 """
 Program
@@ -393,7 +434,7 @@ Program
 
 help()
 
-while True and isLinux() and not locked and sufficientPacMan():
+while True and isLinux and not locked and sufficientPacMan:
 
     answer = input(Fore.BLUE  + "CSHELL" +
                    Fore.GREEN + '$' +
