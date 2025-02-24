@@ -9,6 +9,8 @@ Maintained by Meme Supplier
 import os
 import subprocess
 
+import logger
+
 def getDE(keys):
     """Returns the first found environment variable from the list of keys."""
     for key in keys:
@@ -26,7 +28,8 @@ def getWM():
     # Try getting from wmctrl if available
     try:
         output = subprocess.check_output(["wmctrl",
-                                          "-m"], text=True)
+                                          "-m"],
+                                          text=True)
         for line in output.splitlines():
             if line.startswith("Name:"):
                 wm = line.split(":", 1)[1].strip()
@@ -37,14 +40,6 @@ def getWM():
 
     return wm
 
-def getTerminal():
-    """Detects the terminal emulator."""
-    term = getDE(["TERM_PROGRAM",
-                  "TERMINAL",
-                  "COLORTERM",
-                  "TERM"])
-    return term
-
 def getDistro():
     try:
         with open("/etc/os-release") as f:
@@ -54,3 +49,5 @@ def getDistro():
                 
     except FileNotFoundError:
         return "Unknown"
+    
+logger.log("sysInfo: Retrieved system info")
