@@ -5,7 +5,6 @@
 memesupplierbusiness@gmail.com
 Maintained by Meme Supplier
 """
-import logger
 
 from colorama import Fore, init
 init(autoreset = True)
@@ -156,9 +155,17 @@ def list():
           Fore.RED   + "Notice: Only supports Fedora, Arch, and Debian based distros.")
 #   Upgrade
     print(Fore.CYAN  + "upgrade" +
-          Fore.GREEN + " Updates CSHELL\n")
+          Fore.GREEN + " Updates CSHELL")
 #   Logs
     print(Fore.CYAN  + "logs" +
-          Fore.GREEN + " Views logs for CSHELL.\n")
-
-    logger.log("cmdList: Commands listed")
+          Fore.GREEN + " Views logs for CSHELL.")
+#   Dellogs
+    print(Fore.CYAN  + "dellogs" +
+          Fore.GREEN + " Deletes CSHELL's logs.")
+#   Time
+    print(Fore.CYAN  + "time" +
+          Fore.GREEN + " Displays the time. " +
+          Fore.RED   + "Notice: Displays the 12h clock." +
+          '\n')
+    
+    __import__("logger").log("cmdList: Commands listed")
