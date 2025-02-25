@@ -26,6 +26,7 @@ Error IDs
 9:  Unsupported file extension
 10: Unsupported package manager (startup)
 11: Linux only error
+12: Incorrect equation entered
 
 """
 
