@@ -101,6 +101,10 @@ def handle(id):
             
             logger.log("Error 11: This script is made for linux ONLY!")
         
+        case 12:
+            print(Fore.RED + "Incorrect equation!")
+            logger.log("Error 12: Incorrect equation entered")
+        
         # Does nothing
         case _:
             None
