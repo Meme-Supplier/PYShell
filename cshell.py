@@ -6,6 +6,9 @@ memesupplierbusiness@gmail.com
 Maintained by Meme Supplier
 """
 
+# Prevents "__pycache__" from being created
+__import__("sys").dont_write_bytecode = True
+
 # System modules
 import os
 import sys
@@ -13,13 +16,10 @@ import subprocess
 import platform
 import webbrowser
 import shutil
+
 from pathlib import Path
-
+from readline import *
 from colorama import Fore, init
-init(autoreset = True)
-
-# Prevents "__pycache__" from being created
-sys.dont_write_bytecode = True
 
 # CSHELL modules
 import cmdList
@@ -27,15 +27,26 @@ import error
 import sysInfo
 import logger
 
+init(autoreset = True)
+
 logger.log("CSHELL: Initialized modules.")
+
+# atexit
+def on_exit():
+    logger.log("\n====== Session exit: " +
+               logger.initTime() +
+               " ======")
+__import__("atexit").register(on_exit)
+logger.log("CSHELL: atexit registered")
 
 pythonMajor = sys.version_info.major # Ex: 3.x.x
 pythonMinor = sys.version_info.minor # Ex: x.12.x
 pythonMicro = sys.version_info.micro # Ex: x.x.3
 pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
+logger.log("CSHELL: Python version: " + pythonVersion)
 
-cshellVer = "v1.7"
+cshellVer = "v1.8"
 logger.log("CSHELL: CSHELL version: " + cshellVer)
 
 locked = False
@@ -45,17 +56,15 @@ password = None
 logger.log("CSHELL: Variables initialized")
 
 # Detecting if the system is linux
-logger.log("CSHELL: Determining if your system is Linux...")
 if platform.system() == "Linux":
     sufficientPacMan = True
     logger.log("CSHELL: System is Linux... Continuing")
 else:
     sufficientPacMan = False
     error.handle(11)
-    sys.exit(1)
+    sys.exit(0)
 
 # Detecting a supported pac man
-logger.log("CSHELL: Determining if you have a supported Package Manager...")
 if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):
     isLinux = True
     logger.log("CSHELL: Sufficient package manager detected: Continuing...")
@@ -96,6 +105,8 @@ def processCommand(answer):
         case "clean"     : clean()
         case "ip"        : command("hostname -I")
         case "logs"      : command("nano ~/cshell/logs.txt")
+        case "dellogs"   : dellogs()
+        case "time"      : print(logger.initTime())
 
         # Commands that require syntax (show usage)
         case "echo"    : print(Fore.CYAN + "Usage: " +
@@ -139,7 +150,7 @@ def processCommand(answer):
 
             # Multi-syntax commands
             if   answer.startswith ("echo ")    : print  (answer.replace("echo " , "" , 1))
-            elif answer.startswith ("expr ")    : print  (eval(answer.replace("expr " , "" , 1)))
+            elif answer.startswith ("expr ")    : expr()
             elif answer.startswith ("sh ")      : command(answer.replace("sh " , "" , 1))
             elif answer.startswith ("web ")     : web    (answer.replace("web " , "" , 1))
             elif answer.startswith ("wait ")    : wait   (answer.replace("wait " , "" , 1))
@@ -169,6 +180,20 @@ def processCommand(answer):
 Scripting
 Commands
 """
+
+def expr():
+    try:
+        print(eval(answer.replace("expr " , "" , 1)))
+    except:
+        error.handle(12)
+
+def dellogs():
+
+    command("rm ~/cshell/logs.txt -f && sleep 0.1")
+    logger.log("*Initial log deletion*")
+    os.execv(sys.executable,
+                ["python3"] +
+                sys.argv)
 
 def web(page):
     webbrowser.open_new_tab(page)
