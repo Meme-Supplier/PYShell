@@ -10,15 +10,15 @@ import os
 from datetime import datetime
 
 homePath = os.path.expanduser("~")
-time = datetime.now().strftime("%I:%M:%S")
 
 def log(text):
     with open(homePath + "/cshell/logs.txt", "a") as file:
-        time = datetime.now().strftime("%I:%M:%S")
-        
-        file.write("\n" + time + ": " + text)
+        file.write("\n" + initTime() + ": " + text)
+
+def initTime():
+    return datetime.now().strftime("%I:%M:%S")
 
 with open(homePath + "/cshell/logs.txt", "a") as file:
-    file.write("\n====== Session " + time + " ======")
+    file.write("\n====== Session start: " + initTime() + " ======")
 
-log("Logger: Logger initialized.")
+log("logger: Logger initialized.")
