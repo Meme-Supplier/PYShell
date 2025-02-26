@@ -84,8 +84,6 @@ Features:
 `bash ~/cshell/uninstall.sh`
 
 #
-Maintained by **Meme Supplier**
-
 Everything by **Meme Supplier**
 
 2025 Meme Supplier
