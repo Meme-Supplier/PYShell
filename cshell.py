@@ -39,6 +39,10 @@ def on_exit():
 __import__("atexit").register(on_exit)
 logger.log("CSHELL: atexit registered")
 
+def ignoreCtrlC(signum, frame): ()
+__import__("signal").signal(__import__("signal").SIGINT, ignoreCtrlC)
+logger.log("CSHELL: Ctrl + C disabled")
+
 pythonMajor = sys.version_info.major # Ex: 3.x.x
 pythonMinor = sys.version_info.minor # Ex: x.12.x
 pythonMicro = sys.version_info.micro # Ex: x.x.3
@@ -46,7 +50,7 @@ pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicr
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 logger.log("CSHELL: Python version: " + pythonVersion)
 
-cshellVer = "v1.8"
+cshellVer = "v1.8.5"
 logger.log("CSHELL: CSHELL version: " + cshellVer)
 
 locked = False
@@ -71,6 +75,8 @@ if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):
 else:
     isLinux = False
     error.handle(10)
+
+logger.log("CSHELL: CSHELL initialized")
 
 """
 Define
@@ -189,8 +195,8 @@ def expr():
 
 def dellogs():
 
-    command("rm ~/cshell/logs.txt -f && sleep 0.1")
-    logger.log("*Initial log deletion*")
+    command("rm ~/cshell/logs.txt -f")
+    logger.log("##### Initial log deletion #####")
     os.execv(sys.executable,
                 ["python3"] +
                 sys.argv)
@@ -227,7 +233,7 @@ def clean():
         else:
             error.handle(1)
 
-        command("rm -rf ~/.cache/*")
+        command("sudo rm -rf ~/.cache/*")
 
         logger.log("CSHELL: Cleaned up cache")
 
