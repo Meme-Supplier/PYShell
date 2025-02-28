@@ -12,13 +12,13 @@ from datetime import datetime
 homePath = os.path.expanduser("~")
 
 def log(text):
-    with open(homePath + "/cshell/logs.txt", "a") as file:
+    with open(homePath + "/pyshell/logs.txt", "a") as file:
         file.write("\n" + initTime() + ": " + text)
 
 def initTime():
     return datetime.now().strftime("%I:%M:%S")
 
-with open(homePath + "/cshell/logs.txt", "a") as file:
+with open(homePath + "/pyshell/logs.txt", "a") as file:
     file.write("\n====== Session start: " + initTime() + " ======")
 
 log("logger: Logger initialized.")
