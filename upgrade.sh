@@ -16,9 +16,9 @@ if [ -d ~/PYShell ]; then
 fi
 
 # Icon
-if [ -d /usr/share/applications/icon.png/ ]; then
-    echo -e "${CYAN}Removing \"/usr/share/applications/icon.png/\"...${RESET}"
-    sudo rm -f /usr/share/applications/icon.png/
+if [ -d /usr/share/applications/pyshell.png/ ]; then
+    echo -e "${CYAN}Removing \"/usr/share/applications/pyshell.png/\"...${RESET}"
+    sudo rm -f /usr/share/applications/pyshell.png/
 fi
 
 # Desktop icons
