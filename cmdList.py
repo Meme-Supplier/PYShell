@@ -19,7 +19,7 @@ def list():
 
 #   Exit
     print(Fore.CYAN  + "exit " +
-          Fore.GREEN + "Exits CSHELL")
+          Fore.GREEN + "Exits PYShell")
 #   Clear
     print(Fore.CYAN  + "clear" +
           Fore.GREEN + " Clears the screen")
@@ -34,16 +34,16 @@ def list():
           Fore.GREEN + " Runs the latest Python version")
 #   Ver
     print(Fore.CYAN  + "ver" +
-          Fore.GREEN + " Shows CSHELL's version")
+          Fore.GREEN + " Shows PYShell's version")
 #   Lock
     print(Fore.CYAN  + "lock" +
           Fore.GREEN + " Locks the terminal")
 #   Xray
     print(Fore.CYAN  + "xray" +
-          Fore.GREEN + " Allows you to easily edit CSHELL")
+          Fore.GREEN + " Allows you to easily edit PYShell")
 #   Reload
     print(Fore.CYAN  + "reload" +
-          Fore.GREEN + " Reloads CSHELL")
+          Fore.GREEN + " Reloads PYShell")
 #   Ip
     print(Fore.CYAN  + "ip" +
           Fore.GREEN + " Displays your IP." +
@@ -62,7 +62,7 @@ def list():
           Fore.GREEN + " Reboots your system")
 #   Uninstall
     print(Fore.CYAN  + "uninstall" +
-          Fore.GREEN + " Uninstalls CSHELL.")
+          Fore.GREEN + " Uninstalls PYShell.")
 #   Create
     print(Fore.CYAN  + "create " +
           Fore.BLUE  + "<path to file>" +
@@ -109,9 +109,9 @@ def list():
     print(Fore.CYAN  + "script " +
           Fore.BLUE  + "<path to " +
           Fore.BLUE  + "file>" +
-          Fore.GREEN + " Runs a CSHELL script" +
+          Fore.GREEN + " Runs a PYShell script" +
           Fore.RED   + " Notice: Only supports text files with the file extension " +
-          Fore.BLUE  + "\".cshell\"" +
+          Fore.BLUE  + "\".pyshell\"" +
           Fore.RED   + ", and the path can't start with " +
           Fore.BLUE  + "\"~/\"" +
           Fore.RED   + ".")
@@ -155,13 +155,13 @@ def list():
           Fore.RED   + "Notice: Only supports Fedora, Arch, and Debian based distros.")
 #   Upgrade
     print(Fore.CYAN  + "upgrade" +
-          Fore.GREEN + " Updates CSHELL")
+          Fore.GREEN + " Updates PYShell")
 #   Logs
     print(Fore.CYAN  + "logs" +
-          Fore.GREEN + " Views logs for CSHELL.")
+          Fore.GREEN + " Views logs for PYShell.")
 #   Dellogs
     print(Fore.CYAN  + "dellogs" +
-          Fore.GREEN + " Deletes CSHELL's logs.")
+          Fore.GREEN + " Deletes PYShell's logs.")
 #   Time
     print(Fore.CYAN  + "time" +
           Fore.GREEN + " Displays the time. " +
