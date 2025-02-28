@@ -42,7 +42,7 @@ pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicr
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 logger.log("PYShell: Python version: " + pythonVersion)
 
-pyshellVer = "v1.8.6"
+pyshellVer = "v1.9.1"
 logger.log("PYShell: PYShell version: " + pyshellVer)
 
 locked = False
