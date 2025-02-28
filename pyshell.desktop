@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=PYShell
+Comment=Launch PYShell
+Exec=pyshell
+Icon=/usr/share/applications/icon.png
+Terminal=true
+Categories=Programming;
