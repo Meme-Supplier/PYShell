@@ -7,60 +7,87 @@ CYAN="\e[36m"
 RESET="\e[0m" # Reset color
 
 sudo echo ""
-echo -e "${GREEN}Installing CSHELL...${RESET}"
+echo -e "${GREEN}Installing PYShell...${RESET}"
 
-if [ -d ~/cshell ]; then
-    echo -e "${CYAN}Removing \"$HOME/cshell/\"...${RESET}"
-    rm -rf ~/cshell/
+if [ -d ~/pyshell ]; then
+    echo -e "${CYAN}Removing \"$HOME/pyshell/\"...${RESET}"
+    rm -rf ~/pyshell/
 fi
 
-echo -e "${CYAN}Creating \"$HOME/cshell/\"...${RESET}"
-mkdir -p ~/cshell
+if [ -d ~/Desktop/pyshell.desktop ]; then
+    echo -e "${CYAN}Removing \"$HOME/Desktop/pyshell.desktop/\"...${RESET}"
+    rm -f ~/Desktop/pyshell.desktop/
+fi
 
-# Copy CShell script files
+if [ -d /usr/share/applications/icon.png ]; then
+    echo -e "${CYAN}Removing \"/usr/share/applications/icon.png/\"...${RESET}"
+    sudo rm -f /usr/share/applications/icon.png/
+fi
+
+echo -e "${CYAN}Creating \"$HOME/pyshell/\"...${RESET}"
+mkdir -p ~/pyshell
+
+# Copy PYShell script files
 echo -e "${CYAN}Copying files...${RESET}"
 
 # Python files
 
-# Cshell
-echo -e "${BLUE}Copying \"cshell.py\"...${RESET}"
-cp cshell.py ~/cshell/cshell.py
+# PYShell
+echo -e "${BLUE}Copying \"pyshell.py\"...${RESET}"
+cp pyshell.py ~/pyshell/pyshell.py
 
 # Cmd list
 echo -e "${BLUE}Copying \"cmdList.py\"...${RESET}"
-cp cmdList.py ~/cshell/cmdList.py
+cp cmdList.py ~/pyshell/cmdList.py
 
 # System info
 echo -e "${BLUE}Copying \"sysInfo.py\"...${RESET}"
-cp sysInfo.py ~/cshell/sysInfo.py
+cp sysInfo.py ~/pyshell/sysInfo.py
 
 # Error handling
 echo -e "${BLUE}Copying \"error.py\"...${RESET}"
-cp error.py ~/cshell/error.py
+cp error.py ~/pyshell/error.py
 
 # Logger
 echo -e "${BLUE}Copying \"logger.py\"...${RESET}"
-cp logger.py ~/cshell/logger.py
+cp logger.py ~/pyshell/logger.py
 
 # Uninstall
 echo -e "${BLUE}Copying \"uninstall.sh\"...${RESET}"
-cp uninstall.sh ~/cshell/uninstall.sh
+cp uninstall.sh ~/pyshell/uninstall.sh
 
 # Upgrade
 echo -e "${BLUE}Copying \"upgrade.sh\"...${RESET}"
-cp upgrade.sh ~/cshell/upgrade.sh
+cp upgrade.sh ~/pyshell/upgrade.sh
 
 echo -e "${CYAN}Successfully copied files.${RESET}"
 
-echo -e "${CYAN}Enabling execution for \"$HOME/cshell/cshell.py\"...${RESET}"
-chmod +x ~/cshell/cshell.py
+echo -e "${CYAN}Enabling execution for \"$HOME/pyshell/pyshell.py\"...${RESET}"
+chmod +x ~/pyshell/pyshell.py
 
 # Create a symbolic link in /usr/local/bin
-echo -e "${CYAN}Creating a symbolic link for \"$HOME/cshell/cshell.py\" in \"/usr/local/bin\"...${RESET}"
-sudo ln -sf ~/cshell/cshell.py /usr/local/bin/cshell
+echo -e "${CYAN}Creating a symbolic link for \"$HOME/pyshell/pyshell.py\" in \"/usr/local/bin\"...${RESET}"
+sudo ln -sf ~/pyshell/pyshell.py /usr/local/bin/pyshell
 
 # Reload shell configuration
 echo -e "${CYAN}Reloading shell configurations...${RESET}"
 source ~/.bashrc
 
-echo -e "${GREEN}CSHELL has been installed successfully. You can run it by typing \"cshell\".${RESET}"
+# Asks if you want to create a desktop shortcut
+echo -e "${BLUE}\nDo you want to create a desktop shortcut? (y/n): ${RESET}"
+read -p "" answer
+
+case "$answer" in
+    [Yy])
+        echo -e "${CYAN}Installing icon image...${RESET}"
+        sudo cp icon.png /usr/share/applications
+
+        echo -e "${CYAN}Installing desktop icon file...${RESET}"
+        cp pyshell.desktop ~/Desktop
+
+        echo -e "${CYAN}Enabling execution...${RESET}"
+        chmod +x ~/Desktop/pyshell.desktop
+        ;;
+esac
+
+echo -e "${GREEN}PYShell has been installed successfully. You can run it by typing \"pyshell\".${RESET}"
