@@ -85,6 +85,10 @@ Features:
 
 `bash ~/pyshell/uninstall.sh`
 
+**Or reinstall it by:**
+
+`bash ~/pyshell/upgrade.sh` 
+
 #
 Everything by **Meme Supplier**
 
