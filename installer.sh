@@ -19,9 +19,9 @@ if [ -d ~/Desktop/pyshell.desktop ]; then
     rm -f ~/Desktop/pyshell.desktop/
 fi
 
-if [ -d /usr/share/applications/icon.png ]; then
+if [ -d /usr/share/applications/pyshell.png ]; then
     echo -e "${CYAN}Removing \"/usr/share/applications/icon.png/\"...${RESET}"
-    sudo rm -f /usr/share/applications/icon.png/
+    sudo rm -f /usr/share/applications/pyshell.png/
 fi
 
 echo -e "${CYAN}Creating \"$HOME/pyshell/\"...${RESET}"
@@ -80,7 +80,7 @@ read -p "" answer
 case "$answer" in
     [Yy])
         echo -e "${CYAN}Installing icon image...${RESET}"
-        sudo cp icon.png /usr/share/applications
+        sudo cp pyshell.png /usr/share/applications
 
         echo -e "${CYAN}Installing desktop icon file...${RESET}"
         cp pyshell.desktop ~/Desktop
