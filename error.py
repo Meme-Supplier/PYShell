@@ -71,13 +71,13 @@ def handle(id):
         case 8:
             print(Fore.RED + "The path to the script must be the full path. " +
                   Fore.CYAN + "\nEx: " +
-                  Fore.BLUE + "/home/(your username)/file.cshell")
+                  Fore.BLUE + "/home/(your username)/file.pyshell")
             
             logger.log("Error 8: Full path hasn't been entered")
         
         case 9:
-            print(Fore.RED  + "Unsupported file extension! CSHELL only supports files ending with \"" +
-                  Fore.BLUE + ".cshell" +
+            print(Fore.RED  + "Unsupported file extension! PYShell only supports files ending with \"" +
+                  Fore.BLUE + ".pyshell" +
                   Fore.RED  + "\"!")
             
             logger.log("Error 9: File extension not supported.")
