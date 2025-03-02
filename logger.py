@@ -11,16 +11,20 @@ from datetime import datetime
 
 homePath = os.path.expanduser("~")
 
+pyShellDeleted = False
+
 def log(text):
-    try:
-        with open(homePath + "/pyshell/logs.txt", "a") as file:
-            file.write("\n" + initTime() + ": " + text)
-    except: log("logger: Failed to log line! Skipping...")
+    if not pyShellDeleted:
+        try:
+            with open(homePath + "/pyshell/logs.txt", "a") as file:
+                file.write("\n[" + initTime() + "] " + text)
+        except:
+            log("logger: Logging failed! Skipping...")
 
 def initTime():
     return datetime.now().strftime("%I:%M:%S")
 
 with open(homePath + "/pyshell/logs.txt", "a") as file:
-    file.write("\n====== Session start: " + initTime() + " ======")
+    file.write("\n====== Session start: [" + initTime() + "] ======")
 
 log("logger: Logger initialized.")
