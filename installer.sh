@@ -14,9 +14,9 @@ if [ -d ~/pyshell ]; then
     rm -rf ~/pyshell/
 fi
 
-if [ -d ~/Desktop/pyshell.desktop ]; then
+if [ -d /usr/share/applications/pyshell.desktop ]; then
     echo -e "${CYAN}Removing \"$HOME/Desktop/pyshell.desktop/\"...${RESET}"
-    rm -f ~/Desktop/pyshell.desktop/
+    rm -f /usr/share/applications/pyshell.desktop/
 fi
 
 if [ -d /usr/share/applications/pyshell.png ]; then
@@ -74,7 +74,7 @@ echo -e "${CYAN}Reloading shell configurations...${RESET}"
 source ~/.bashrc
 
 # Asks if you want to create a desktop shortcut
-echo -e "${BLUE}\nDo you want to create a desktop shortcut? (y/n): ${RESET}"
+echo -e "${BLUE}\nDo you want to create a desktop shortcut? (Recommended)\n(y/n): ${RESET}"
 read -p "" answer
 
 case "$answer" in
@@ -83,11 +83,15 @@ case "$answer" in
         sudo cp pyshell.png /usr/share/applications
 
         echo -e "${CYAN}Installing desktop icon file...${RESET}"
-        cp pyshell.desktop ~/Desktop
+        cp pyshell.desktop /usr/share/applications
 
         echo -e "${CYAN}Enabling execution...${RESET}"
-        chmod +x ~/Desktop/pyshell.desktop
+        chmod +x /usr/share/applications/pyshell.desktop
         ;;
 esac
 
-echo -e "${GREEN}PYShell has been installed successfully. You can run it by typing \"pyshell\".${RESET}"
+if [ -d ~/PYShell ]; then
+    sudo rm -rf ~/PYShell/
+fi
+
+echo -e "${GREEN}\nPYShell has been installed successfully. You can run it by typing \"pyshell\".${RESET}"
