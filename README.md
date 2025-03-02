@@ -1,4 +1,4 @@
-# PYShell - Custom shell v1.9.1
+# PYShell - Custom shell v1.9.5
 
 Features:
 
