@@ -14,8 +14,7 @@ def list():
           Fore.YELLOW + "Available commands:\n")
     print(Fore.CYAN + "Command " +
           Fore.BLUE + "Usage " +
-          Fore.GREEN + "Description " +
-          Fore.RED + "Notice\n")
+          Fore.GREEN + "Description ")
 
 #   Exit
     print(Fore.CYAN  + "exit " +
@@ -82,8 +81,7 @@ def list():
 #   Newdir
     print(Fore.CYAN  + "newdir" +
           Fore.BLUE  + " <path to directory>" +
-          Fore.GREEN + " Creates a directory in the desired path." +
-          Fore.RED   + " Notice: The path must be the FULL path")
+          Fore.GREEN + " Creates a directory in the desired path.")
 #   Echo
     print(Fore.CYAN  + "echo" +
           Fore.BLUE  + " <text>" +
@@ -91,8 +89,7 @@ def list():
 #   Sh
     print(Fore.CYAN  + "sh " +
           Fore.BLUE  + "<commands>" +
-          Fore.GREEN + " Runs normal shell commands " +
-          Fore.RED   + "Notice: commands like \"cd\" and \"dir\" won't work.")
+          Fore.GREEN + " Runs normal shell commands ")
 #   Expr
     print(Fore.CYAN  + "expr " +
           Fore.BLUE  + "<equation>" +
@@ -109,20 +106,12 @@ def list():
     print(Fore.CYAN  + "script " +
           Fore.BLUE  + "<path to " +
           Fore.BLUE  + "file>" +
-          Fore.GREEN + " Runs a PYShell script" +
-          Fore.RED   + " Notice: Only supports text files with the file extension " +
-          Fore.BLUE  + "\".pyshell\"" +
-          Fore.RED   + ", and the path can't start with " +
-          Fore.BLUE  + "\"~/\"" +
-          Fore.RED   + ".")
+          Fore.GREEN + " Runs a PYShell script")
 #   Pscript
     print(Fore.CYAN  + "pscript " +
           Fore.BLUE  + "<path to " +
           Fore.BLUE  + "file>" +
-          Fore.GREEN + " Runs a Python script" +
-          Fore.RED   + " Notice: the path can't start with " +
-          Fore.BLUE  + "\"~/\"" +
-          Fore.RED   + ".")
+          Fore.GREEN + " Runs a Python script")
 #   In
     print(Fore.CYAN  + "in " +
           Fore.BLUE  + "<text>" +
@@ -142,17 +131,14 @@ def list():
 #   Pwd
     print(Fore.CYAN  + "pwd " +
           Fore.BLUE  + "<password>" +
-          Fore.GREEN + " Sets a password " +
-          Fore.RED   + "Notice: Password has to be at least 5 characters long.")
+          Fore.GREEN + " Sets a password ")
 #   Del
     print(Fore.CYAN  + "del " +
           Fore.BLUE  + "<path to file/directory>" +
-          Fore.GREEN + " Deletes a file/directory " +
-          Fore.RED   + "Notice: The path must be the FULL path")
+          Fore.GREEN + " Deletes a file/directory ")
 #   Update
     print(Fore.CYAN  + "update " +
-          Fore.GREEN + " Updates your device " +
-          Fore.RED   + "Notice: Only supports Fedora, Arch, and Debian based distros.")
+          Fore.GREEN + " Updates your device ")
 #   Upgrade
     print(Fore.CYAN  + "upgrade" +
           Fore.GREEN + " Updates PYShell")
@@ -164,8 +150,6 @@ def list():
           Fore.GREEN + " Deletes PYShell's logs.")
 #   Time
     print(Fore.CYAN  + "time" +
-          Fore.GREEN + " Displays the time. " +
-          Fore.RED   + "Notice: Displays the 12h clock." +
-          '\n')
+          Fore.GREEN + " Displays the time.\n")
     
     __import__("logger").log("cmdList: Commands listed")
