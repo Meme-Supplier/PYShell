@@ -12,13 +12,13 @@ cd ~/
 echo -e "${CYAN}Removing \"$HOME/PYShell/\"...${RESET}"
 if [ -d ~/PYShell ]; then
     echo -e "${CYAN}Removing \"$HOME/PYShell/\"...${RESET}"
-    rm -rf ~/PYShell/
+    sudo rm -rf ~/PYShell/
 fi
 
 # Icon
 if [ -d /usr/share/applications/pyshell.png/ ]; then
     echo -e "${CYAN}Removing \"/usr/share/applications/pyshell.png/\"...${RESET}"
-    sudo rm -f /usr/share/applications/pyshell.png/
+    sudo rm -f /usr/share/applications/pyshell.png
 fi
 
 # Desktop icons
@@ -31,7 +31,7 @@ git clone https://github.com/Meme-Supplier/PYShell.git
 cd PYShell
 
 echo -e "${CYAN}Allowing execution for \"installer.sh\"...${RESET}"
-chmod +x installer.sh
+sudo chmod +x installer.sh
 
 echo -e "${CYAN}Running the installer...${RESET}"
 ./installer.sh
