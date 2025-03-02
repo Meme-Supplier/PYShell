@@ -4,6 +4,6 @@ Type=Application
 Name=PYShell
 Comment=Launch PYShell
 Exec=pyshell
-Icon=/usr/share/applications/icon.png
+Icon=/usr/share/applications/pyshell.png
 Terminal=true
 Categories=Programming;
