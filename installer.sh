@@ -83,7 +83,7 @@ case "$answer" in
         sudo cp pyshell.png /usr/share/applications
 
         echo -e "${CYAN}Installing desktop icon file...${RESET}"
-        cp pyshell.desktop /usr/share/applications
+        sudo cp pyshell.desktop /usr/share/applications
 
         echo -e "${CYAN}Enabling execution...${RESET}"
         chmod +x /usr/share/applications/pyshell.desktop
