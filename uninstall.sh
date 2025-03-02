@@ -33,6 +33,6 @@ sudo rm -f ~/Desktop/pyshell.desktop
 echo -e "${CYAN}Reloading shell configurations...${RESET}"
 source ~/.bashrc
 
-echo -e "${GREEN}PYShell has been successfully uninstalled.${RESET}"
+echo -e "${GREEN}\nPYShell has been successfully uninstalled.${RESET}"
 
 read
