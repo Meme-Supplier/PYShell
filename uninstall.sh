@@ -27,8 +27,8 @@ echo -e "${CYAN}Removing \"/usr/share/applications/pyshell.png/\"...${RESET}"
 sudo rm -f /usr/share/applications/pyshell.png/
 
 # Desktop icons
-echo -e "${CYAN}Removing \"$HOME/Desktop/pyshell.desktop\"...${RESET}"
-sudo rm -f ~/Desktop/pyshell.desktop
+echo -e "${CYAN}Removing \"/usr/share/applications/pyshell.desktop\"...${RESET}"
+sudo rm -f /usr/share/applications/pyshell.desktop
 
 echo -e "${CYAN}Reloading shell configurations...${RESET}"
 source ~/.bashrc
