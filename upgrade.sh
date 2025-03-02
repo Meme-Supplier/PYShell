@@ -39,6 +39,6 @@ echo -e "${CYAN}Running the installer...${RESET}"
 echo -e "${CYAN}Reloading shell configurations...${RESET}"
 source ~/.bashrc
 
-echo -e "${GREEN}PYShell successfully updated!${RESET}"
+echo -e "${GREEN}\nPYShell successfully updated!${RESET}"
 
 read
