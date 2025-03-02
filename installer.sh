@@ -86,7 +86,7 @@ case "$answer" in
         sudo cp pyshell.desktop /usr/share/applications
 
         echo -e "${CYAN}Enabling execution...${RESET}"
-        chmod +x /usr/share/applications/pyshell.desktop
+        sudo chmod +x /usr/share/applications/pyshell.desktop
         ;;
 esac
 
