@@ -42,7 +42,7 @@ pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicr
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 logger.log("PYShell: Python version: " + pythonVersion)
 
-pyshellVer = "v1.9.2"
+pyshellVer = "v1.9.5"
 logger.log("PYShell: PYShell version: " + pyshellVer)
 
 locked = False
@@ -257,11 +257,12 @@ def uninstall():
     global uninstalled
     uninstalled = True
 
-    choice = input(Fore.RED + "Are you sure you want to uninstall PYShell?\n" +
+    choice = input(Fore.RED + "\nAre you sure you want to uninstall PYShell?\n" +
                    Fore.WHITE)
 
     if choice == 'Y' or choice == 'y':
         logger.log("PYShell: Uninstalling: Sorry to see you go :(")
+        logger.pyShellDeleted = True
         command("bash ~/pyshell/uninstall.sh")
         sys.exit(0)
     else:
