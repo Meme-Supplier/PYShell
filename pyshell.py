@@ -42,7 +42,7 @@ pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicr
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 logger.log("PYShell: Python version: " + pythonVersion)
 
-pyshellVer = "v1.9.1"
+pyshellVer = "v1.9.2"
 logger.log("PYShell: PYShell version: " + pyshellVer)
 
 locked = False
@@ -81,7 +81,7 @@ def processCommand(answer):
     logger.log("PYShell: Processing command: " + answer)
     
     match answer:
-        case "clear"     : os.system('clear'); logger.log("PYShell: Cleared the screen")
+        case "clear"     : os.system('clear')
         case "help"      : help()
         case "python"    : command("python" + pythonVersionShort)
         case "cmds"      : cmdList.list()
@@ -103,7 +103,7 @@ def processCommand(answer):
         case "clean"     : clean()
         case "ip"        : command("hostname -I")
         case "logs"      : command("nano ~/pyshell/logs.txt")
-        case "dellogs"   : dellogs()
+        case "dellogs"   : delLogs()
         case "time"      : print(logger.initTime())
 
         # Commands that require syntax (show usage)
@@ -181,27 +181,37 @@ Commands
 
 def expr():
     try:
-        print(eval(answer.replace("expr " , "" , 1)))
+        print(
+            eval(
+                answer.replace("expr " , "" , 1)))
     except:
         error.handle(12)
 
-def dellogs():
+def delLogs():
 
     command("rm ~/pyshell/logs.txt -f")
     logger.log("##### Initial log deletion #####")
+    
     os.execv(sys.executable,
-                ["python3"] +
-                sys.argv)
+             ["python3"] +
+             sys.argv)
 
 def web(page):
-    webbrowser.open_new_tab(page)
+    if page.startswith("https://www."):
+        webbrowser.open_new_tab(page)
+    else:
+        webbrowser.open_new_tab("https://www." + page)
     logger.log("PYShell: Opened webpage " + page)
 
 def pm(cmd):
-    if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):
+
+    if os.geteuid() == 0:
+        command("sudo echo \"Sudo is enabled for this command.\"")
+
+    if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):        
         
         if cmd.startswith("apt") or cmd.startswith("dnf") or cmd.startswith("pacman"):
-            command(cmd)
+            command("sudo " + cmd)
         else:
             error.handle(1)
     else:
@@ -213,7 +223,7 @@ def newdir(dir):
     logger.log("PYShell: Directory created: " + dir)
 
 def clean():
-    if sufficientPacMan == True:
+    if sufficientPacMan:
         if shutil.which("apt"):   
             command("sudo apt autoremove && sudo apt autoclean")
 
@@ -258,12 +268,12 @@ def uninstall():
         print(Fore.GREEN + "\nAborted.")
         logger.log("PYShell: Aborted: Uninstall PYShell")
 
-def wait(value):
-    command("sleep " + str(value))
-    logger.log("PYShell: Waited " + str(value) + "seconds")
+def wait(time):
+    command("sleep " + str(time))
+    logger.log("PYShell: Waited " + str(time) + "seconds")
 
 def command(command):
-    subprocess.run([command],
+    subprocess.run(command,
                     shell = True)
     logger.log("PYShell: Ran shell command: " + command)
     
@@ -345,8 +355,10 @@ def upgrade():
 
 def edit():
     command("nano ~/pyshell/pyshell.py")
+
     print(Fore.BLUE + "\nChanges applied.")
     logger.log("PYShell: Made changes to PYShell")
+    
     reload()
 
 def reload():
@@ -362,26 +374,23 @@ def reload():
         os.execv(sys.executable,
                 ["python3"] +
                 sys.argv)
-        
     else:
         print(Fore.RED + "Aborted.")
         logger.log("PYShell: Aborted: Reload PYShell")    
 
 def script(scriptPath):
-    
+
     if scriptPath.startswith("~/"):
         error.handle(8)
     else:
         if answer.endswith(".pyshell"):
             try:
                 with open(scriptPath, "r") as file:
-                        for line in file:
-                            processCommand(line.strip())
-
+                    for line in file:
+                        processCommand(line.strip())
                 logger.log("PYShell: Ran script: " + scriptPath)
             except:
                 error.handle(2)
-        
         else:
             error.handle(9)
 
