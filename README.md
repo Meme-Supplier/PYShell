@@ -4,7 +4,7 @@ Features:
 
 - **Scriptable:** PYShell allows you to create scripts!
 - **Compatability:** PYShell is compatible with (almost) ALL commands!
-- **Performance:** PYShell is fast, and reliable, so you will never encounter any performance issues.
+- **Performance:** PYShell is fast and reliable, so you will never encounter any performance issues.
 - **And many more!**
 
 ## For **Linux** machines only.
