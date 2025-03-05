@@ -19,7 +19,7 @@ def log(text):
             with open(homePath + "/pyshell/logs.txt", "a") as file:
                 file.write("\n[" + initTime() + "] " + text)
         except:
-            log("logger: Logging failed! Skipping...")
+            __import__("error").handle(14)
 
 def initTime():
     return datetime.now().strftime("%I:%M:%S")
