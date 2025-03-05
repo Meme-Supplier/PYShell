@@ -42,7 +42,7 @@ pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicr
 pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
 logger.log("PYShell: Python version: " + pythonVersion)
 
-pyshellVer = "v1.9.5"
+pyshellVer = "v2.0"
 logger.log("PYShell: PYShell version: " + pyshellVer)
 
 locked = False
@@ -75,10 +75,12 @@ Define
 functions
 """
 
+def windowTitle(string):
+    os.system('printf "\033]0;' + str(string) + '\007"')
+    logger.log("PYShell: Window title set to: " + str(string))
+
 def processCommand(answer):
     # Goes through and executes commands
-
-    logger.log("PYShell: Processing command: " + answer)
     
     match answer:
         case "clear"     : os.system('clear')
@@ -105,6 +107,7 @@ def processCommand(answer):
         case "logs"      : command("nano ~/pyshell/logs.txt")
         case "dellogs"   : delLogs()
         case "time"      : print(logger.initTime())
+        case "rmtitle"   : windowTitle("PYShell")
 
         # Commands that require syntax (show usage)
         case "echo"    : print(Fore.CYAN + "Usage: " +
@@ -135,6 +138,8 @@ def processCommand(answer):
                                Fore.BLUE + "pm <apt/dnf/pacman> <rest of the command>")
         case "copy"    : print(Fore.CYAN + "Usage: " +
                                Fore.BLUE + "copy <path to file> <path to destination>")
+        case "title"   : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "title <window title>")
         case ''        : None
 
         case _ :
@@ -147,26 +152,27 @@ def processCommand(answer):
                 return  # Exit after handling multiple commands
 
             # Multi-syntax commands
-            if   answer.startswith ("echo ")    : print  (answer.replace("echo " , "" , 1))
+            if   answer.startswith ("echo ")    : print(answer.replace("echo " , "" , 1))
             elif answer.startswith ("expr ")    : expr()
             elif answer.startswith ("sh ")      : command(answer.replace("sh " , "" , 1))
-            elif answer.startswith ("web ")     : web    (answer.replace("web " , "" , 1))
-            elif answer.startswith ("wait ")    : wait   (answer.replace("wait " , "" , 1))
-            elif answer.startswith ("pwd ")     : setPwd (answer.replace("pwd " , "" , 1))
-            elif answer.startswith ("script ")  : script (answer.replace("script " , "" , 1))
+            elif answer.startswith ("web ")     : web(answer.replace("web " , "" , 1))
+            elif answer.startswith ("wait ")    : wait(answer.replace("wait " , "" , 1))
+            elif answer.startswith ("pwd ")     : setPwd(answer.replace("pwd " , "" , 1))
+            elif answer.startswith ("script ")  : script(answer.replace("script " , "" , 1))
             elif answer.startswith ("pscript ") : command("python3 " + answer.replace("pscript " , "" , 1))
-            elif answer.startswith ("in ")      : input  (answer.replace("in " , "" , 1) + '\n')
+            elif answer.startswith ("in ")      : input(answer.replace("in " , "" , 1) + '\n')
             elif answer.startswith ("ls ")      : command("\nls " + answer.replace("ls " , "" , 1))
-            elif answer.startswith ("flatpak")  : command(answer)
-            elif answer.startswith ("git")      : git    ()
+            elif answer.startswith ("flatpak")  : flatpak()
+            elif answer.startswith ("git")      : git()
             elif answer.startswith ("create ")  : command("touch " + answer.replace("create " ,"" , 1))
             elif answer.startswith ("del ")     : delete (answer.replace("del " , "" , 1))
-            elif answer.startswith ("pm ")      : pm     (answer.replace("pm " , "" , 1))
+            elif answer.startswith ("pm ")      : pm(answer.replace("pm " , "" , 1))
             elif answer.startswith ("python")   : command(answer)
             elif answer.startswith ("newdir ")  : command("mkdir " + answer.replace("newdir " , "" , 1))
             elif answer.startswith ("copy ")    : command("cp " + answer.replace("copy " , "" , 1) + " -rf")
             elif answer.startswith ("ping ")    : command(answer)
             elif answer.startswith ("edit ")    : command("nano " + answer.replace("edit " , "" , 1))
+            elif answer.startswith ("title ")   : windowTitle(answer.replace("title " , "" , 1))
 
             # If nothing checks out
             else: 
@@ -178,6 +184,11 @@ def processCommand(answer):
 Scripting
 Commands
 """
+def flatpak():
+    if flatpakInstalled():
+        command(answer)
+    else:
+        error.handle(13)
 
 def expr():
     try:
@@ -209,11 +220,7 @@ def pm(cmd):
         command("sudo echo \"Sudo is enabled for this command.\"")
 
     if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):        
-        
-        if cmd.startswith("apt") or cmd.startswith("dnf") or cmd.startswith("pacman"):
-            command("sudo " + cmd)
-        else:
-            error.handle(1)
+        command(cmd)
     else:
         error.handle(1)
 
@@ -223,6 +230,10 @@ def newdir(dir):
     logger.log("PYShell: Directory created: " + dir)
 
 def clean():
+
+    if os.geteuid() == 0:
+        command("sudo echo \"Sudo is enabled for this command.\"")
+
     if sufficientPacMan:
         if shutil.which("apt"):   
             command("sudo apt autoremove && sudo apt autoclean")
@@ -275,7 +286,7 @@ def wait(time):
 
 def command(command):
     subprocess.run(command,
-                    shell = True)
+                   shell = True)
     logger.log("PYShell: Ran shell command: " + command)
     
 def setPwd(pwd):
@@ -326,17 +337,16 @@ def lock():
 def update():
     if shutil.which("apt"):   
         command("sudo apt update && sudo apt upgrade")
-        logger.log("Successfully updated device.")
-
     elif shutil.which("dnf"):   
         command("sudo dnf update")
-        logger.log("Successfully updated device.")
-
     elif shutil.which("pacman"):
         command("sudo pacman -Syu")
-        logger.log("Successfully updated device.")
     else:
         error.handle(1)
+        return
+    
+    if sufficientPacMan:
+        logger.log("Successfully updated device.")
 
 def upgrade():
     print(Fore.CYAN + "Do you want to update PYShell?\n" +
@@ -460,12 +470,33 @@ def gitInstalled(): # Is git installed?
         logger.log("PYShell: Git is not installed")
 
         return False
+    
+def flatpakInstalled(): # Is flatpak installed?
+    logger.log("PYShell: Checking if Flatpak is installed...")
+
+    try:
+        subprocess.run(["flatpak", "--version"],
+                        stdout = subprocess.PIPE,
+                        stderr = subprocess.PIPE,
+                        check  = True)
+        
+        logger.log("PYShell: Flatpak is installed")
+
+        return True
+    except (subprocess.CalledProcessError,
+            FileNotFoundError):
+        
+        logger.log("PYShell: Flatpak is not installed")
+
+        return False
 
 """
 Program
 """
 
 help()
+
+windowTitle("PYShell")
 
 while True and isLinux and not locked and sufficientPacMan:
 
