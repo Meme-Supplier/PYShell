@@ -27,12 +27,14 @@ Error IDs
 10: Unsupported package manager (startup)
 11: Linux only error
 12: Incorrect equation entered
+13: Flatpak not installed
+14: Logging failed
 
 """
 
-def handle(id):
+def handle(errorID):
     
-    match id:
+    match errorID:
 
         case 1:
             print(Fore.RED + "Unable to execute command: Unsupported package manager!")
@@ -105,6 +107,13 @@ def handle(id):
         case 12:
             print(Fore.RED + "Incorrect equation!")
             logger.log("Error 12: Incorrect equation entered")
+        
+        case 13:
+            print(Fore.RED + "Flatpak is not installed! Please install it!")
+            logger.log("Error 13: Flatpak not installed")
+        case 14:
+            print(Fore.RED + "Logging failed! (You can ignore this message, but if this continues, please reinstall PYShell.)")
+            logger.log("Error 14: Logging failed! Skipping...")
         
         # Does nothing
         case _:
