@@ -50,8 +50,8 @@ def getDistro():
     except FileNotFoundError:
         return "Unknown"
 
-logger.log("logger: Distro: " + getDistro())
-logger.log("logger: Window Manager: " + getWM())
-logger.log("logger: Desktop Enviornment: " + getDE(["XDG_CURRENT_DESKTOP",
+logger.log("sysInfo: Distro: " + getDistro())
+logger.log("sysInfo: Window Manager: " + getWM())
+logger.log("sysInfo: Desktop Enviornment: " + getDE(["XDG_CURRENT_DESKTOP",
                                                     "DESKTOP_SESSION"]))
 logger.log("sysInfo: Retrieved system info")
