@@ -151,5 +151,11 @@ def list():
 #   Time
     print(Fore.CYAN  + "time" +
           Fore.GREEN + " Displays the time.\n")
+#   Title
+    print(Fore.CYAN  + "title" +
+          Fore.GREEN + " Sets the window title\n")
+#   Rmtitle
+    print(Fore.CYAN  + "rmtitle" +
+          Fore.GREEN + " Resets window title\n")
     
     __import__("logger").log("cmdList: Commands listed")
