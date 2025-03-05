@@ -42,3 +42,11 @@ source ~/.bashrc
 echo -e "${GREEN}\nPYShell successfully updated!${RESET}"
 
 read
+
+echo -e "${CYAN}Would you like to open PYShell?${RESET}"
+read -p "" answer
+
+case "$answer" in
+    [Yy])
+        pyshell;;
+esac
