@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-# 2025 Meme Supplier
+2025 Meme Supplier
 memesupplierbusiness@gmail.com
 Maintained by Meme Supplier
 """
@@ -16,15 +16,15 @@ pyShellDeleted = False
 def log(text):
     if not pyShellDeleted:
         try:
-            with open(homePath + "/pyshell/logs.txt", "a") as file:
-                file.write("\n[" + initTime() + "] " + text)
+            with open(f"{homePath}/pyshell/logs.txt", "a") as file:
+                file.write(f"\n[{initTime()}] {text}")
         except:
             __import__("error").handle(14)
 
 def initTime():
     return datetime.now().strftime("%I:%M:%S")
 
-with open(homePath + "/pyshell/logs.txt", "a") as file:
-    file.write("\n====== Session start: [" + initTime() + "] ======")
+with open(f"{homePath}/pyshell/logs.txt", "a") as file:
+    file.write(f"\n====== Session start: [{initTime()}] ======")
 
 log("logger: Logger initialized.")
