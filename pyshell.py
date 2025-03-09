@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-# 2025 Meme Supplier
+2025 Meme Supplier
 memesupplierbusiness@gmail.com
 Maintained by Meme Supplier
 """
@@ -38,12 +38,12 @@ logger.log("PYShell: Ctrl + C disabled")
 pythonMajor = sys.version_info.major # Ex: 3.x.x
 pythonMinor = sys.version_info.minor # Ex: x.12.x
 pythonMicro = sys.version_info.micro # Ex: x.x.3
-pythonVersion = str(pythonMajor) + "." + str(pythonMinor) + "." + str(pythonMicro)
-pythonVersionShort = str(pythonMajor) + "." + str(pythonMinor)
-logger.log("PYShell: Python version: " + pythonVersion)
+pythonVersion = str(f"{pythonMajor}.{pythonMinor}.{pythonMicro}")
+pythonVersionShort = str(f"{pythonMajor}.{pythonMinor}")
+logger.log(f"PYShell: Python version: {pythonVersion}")
 
-pyshellVer = "v2.0"
-logger.log("PYShell: PYShell version: " + pyshellVer)
+pyshellVer = "v2.0.1"
+logger.log(f"PYShell: PYShell version: {pyshellVer}")
 
 locked = False
 passwordSet = False
@@ -76,16 +76,16 @@ functions
 """
 
 def windowTitle(string):
-    os.system('printf "\033]0;' + str(string) + '\007"')
-    logger.log("PYShell: Window title set to: " + str(string))
+    os.system(f'printf "\033]0;{str(string)}\007"')
+    logger.log(f"PYShell: Window title set to: {str(string)}")
 
 def processCommand(answer):
     # Goes through and executes commands
-    
+
     match answer:
         case "clear"     : os.system('clear')
         case "help"      : help()
-        case "python"    : command("python" + pythonVersionShort)
+        case "python"    : command(f"python{pythonVersionShort}")
         case "cmds"      : cmdList.list()
         case "exit"      : logger.log("PYShell: Exiting PYShell..."); sys.exit(0)
         case "shutdown"  : command("shutdown now")
@@ -93,8 +93,8 @@ def processCommand(answer):
         case "ping"      : command("ping")
         case "credits"   : credits()
         case "ver"       : ver()
-        case "update"    : update()  # updates your system
-        case "upgrade"   : upgrade()  # updates PYShell
+        case "update"    : update() # updates your system
+        case "upgrade"   : upgrade() # updates PYShell
         case "lock"      : lock()
         case "xray"      : edit()
         case "reload"    : reload()
@@ -103,13 +103,12 @@ def processCommand(answer):
         case "uninstall" : uninstall()
         case "quit"      : quit()
         case "clean"     : clean()
-        case "ip"        : command("hostname -I")
         case "logs"      : command("nano ~/pyshell/logs.txt")
         case "dellogs"   : delLogs()
         case "time"      : print(logger.initTime())
         case "rmtitle"   : windowTitle("PYShell")
 
-        # Commands that require syntax (show usage)
+          # Commands that require syntax (show usage)
         case "echo"    : print(Fore.CYAN + "Usage: " +
                                Fore.BLUE + "echo <message>")
         case "web"     : print(Fore.CYAN + "Usage: " +
@@ -152,9 +151,9 @@ def processCommand(answer):
                 return  # Exit after handling multiple commands
 
             # Multi-syntax commands
-            if   answer.startswith ("echo ")    : print(answer.replace("echo " , "" , 1))
+            if   answer.startswith ("echo ")    : command(answer)
             elif answer.startswith ("expr ")    : expr()
-            elif answer.startswith ("sh ")      : command(answer.replace("sh " , "" , 1))
+            elif answer.startswith ("sh ")      : command("answer.replace("sh " , "" , 1))
             elif answer.startswith ("web ")     : web(answer.replace("web " , "" , 1))
             elif answer.startswith ("wait ")    : wait(answer.replace("wait " , "" , 1))
             elif answer.startswith ("pwd ")     : setPwd(answer.replace("pwd " , "" , 1))
@@ -173,17 +172,25 @@ def processCommand(answer):
             elif answer.startswith ("ping ")    : command(answer)
             elif answer.startswith ("edit ")    : command("nano " + answer.replace("edit " , "" , 1))
             elif answer.startswith ("title ")   : windowTitle(answer.replace("title " , "" , 1))
+            elif answer.startswith ("error ")   : err(answer.replace("error " , "" , 1))
 
             # If nothing checks out
-            else: 
-                print(Fore.RED + answer + ": invalid command.")
-            
-            logger.log("PYShell: Executed command: " + answer)
+            else:
+                print(f"{Fore.RED}{answer}: invalid command.")
+
+            logger.log(f"PYShell: Executed command: {answer}")
 
 """
 Scripting
 Commands
 """
+
+def err(err):
+    try:
+        error.handle(int(err))
+    except:
+        error.handle(16)
+
 def flatpak():
     if flatpakInstalled():
         command(answer)
@@ -194,7 +201,7 @@ def expr():
     try:
         print(
             eval(
-                answer.replace("expr " , "" , 1)))
+                 answer.replace("expr " , "" , 1)))
     except:
         error.handle(12)
 
@@ -202,7 +209,7 @@ def delLogs():
 
     command("rm ~/pyshell/logs.txt -f")
     logger.log("##### Initial log deletion #####")
-    
+
     os.execv(sys.executable,
              ["python3"] +
              sys.argv)
@@ -211,15 +218,15 @@ def web(page):
     if page.startswith("https://www."):
         webbrowser.open_new_tab(page)
     else:
-        webbrowser.open_new_tab("https://www." + page)
-    logger.log("PYShell: Opened webpage " + page)
+        webbrowser.open_new_tab(f"https://www.{page}")
+    logger.log(f"PYShell: Opened webpage {page}")
 
 def pm(cmd):
 
     if os.geteuid() == 0:
         command("sudo echo \"Sudo is enabled for this command.\"")
 
-    if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):        
+    if shutil.which("apt") or shutil.which("dnf") or shutil.which("pacman"):
         command(cmd)
     else:
         error.handle(1)
@@ -227,7 +234,8 @@ def pm(cmd):
 def newdir(dir):
     Path(dir).mkdir(parents = True,
                     exist_ok = True)
-    logger.log("PYShell: Directory created: " + dir)
+
+    logger.log(f"PYShell: Directory created: {dir}")
 
 def clean():
 
@@ -235,10 +243,10 @@ def clean():
         command("sudo echo \"Sudo is enabled for this command.\"")
 
     if sufficientPacMan:
-        if shutil.which("apt"):   
+        if shutil.which("apt"):
             command("sudo apt autoremove && sudo apt autoclean")
 
-        elif shutil.which("dnf"):   
+        elif shutil.which("dnf"):
             command("sudo dnf autoremove")
 
         elif shutil.which("pacman"):
@@ -252,8 +260,8 @@ def clean():
 
 def delete(file):
     if os.path.exists(file):
-        command("rm -rf " + file)
-        logger.log("PYShell: Deleted file " + file)
+        command(f"rm -rf {file}")
+        logger.log(f"PYShell: Deleted file {file}")
     else:
         error.handle(2)
 
@@ -268,8 +276,7 @@ def uninstall():
     global uninstalled
     uninstalled = True
 
-    choice = input(Fore.RED + "\nAre you sure you want to uninstall PYShell?\n" +
-                   Fore.WHITE)
+    choice = input(f"{Fore.RED}\nAre you sure you want to uninstall PYShell?\n{Fore.WHITE}")
 
     if choice == 'Y' or choice == 'y':
         logger.log("PYShell: Uninstalling: Sorry to see you go :(")
@@ -277,18 +284,18 @@ def uninstall():
         command("bash ~/pyshell/uninstall.sh")
         sys.exit(0)
     else:
-        print(Fore.GREEN + "\nAborted.")
+        print(f"{Fore.GREEN}\nAborted.")
         logger.log("PYShell: Aborted: Uninstall PYShell")
 
 def wait(time):
-    command("sleep " + str(time))
-    logger.log("PYShell: Waited " + str(time) + "seconds")
+    command(f"sleep {str(time)}")
+    logger.log(f"PYShell: Waited {str(time)} seconds")
 
 def command(command):
     subprocess.run(command,
                    shell = True)
-    logger.log("PYShell: Ran shell command: " + command)
-    
+    logger.log(f"PYShell: Ran shell command: {command}")
+
 def setPwd(pwd):
     global password
     global passwordSet
@@ -299,26 +306,25 @@ def setPwd(pwd):
         password = pwd
         passwordSet = True
 
-        print(Fore.CYAN + "Password has been set to " +
-              Fore.BLUE + password)
-        
-        logger.log("PYShell: Set password to " + password)
+        print(f"{Fore.CYAN}Password has been set to {Fore.BLUE}{password}")
+
+        logger.log(f"PYShell: Set password to {password}")
 
 def lock():
     if passwordSet:
         logger.log("PYShell: Locked PYShell")
 
         os.system("clear")
-        
+
         global locked
         locked = True
 
         attemptsLeft = 5
 
         while locked:
-            
+
             if attemptsLeft != 0:
-                print(Fore.CYAN + "Enter password to unlock PYShell.")
+                print(f"{Fore.CYAN}Enter password to unlock PYShell.")
                 pwdAttempt = input()
 
                 if pwdAttempt == password:
@@ -335,59 +341,63 @@ def lock():
         error.handle(7)
 
 def update():
-    if shutil.which("apt"):   
+    if shutil.which("apt"):
         command("sudo apt update && sudo apt upgrade")
-    elif shutil.which("dnf"):   
+    elif shutil.which("dnf"):
         command("sudo dnf update")
     elif shutil.which("pacman"):
         command("sudo pacman -Syu")
     else:
         error.handle(1)
         return
-    
+
     if sufficientPacMan:
         logger.log("Successfully updated device.")
 
 def upgrade():
-    print(Fore.CYAN + "Do you want to update PYShell?\n" +
-          Fore.BLUE + "(Y/N)\n")
+    print(f"{Fore.CYAN}Do you want to update PYShell?\n{Fore.BLUE}(Y/N)\n")
 
-    print(Fore.RED + "Note: This will uninstall then reinstall PYShell.")
+    print(f"{Fore.RED}Note: This will uninstall then reinstall PYShell.")
 
     choice = input()
 
-    if choice == 'Y' or choice == 'y': 
+    if choice == 'Y' or choice == 'y':
         logger.log("PYShell: Upgrading PYShell")
         command("bash ~/pyshell/upgrade.sh")
         sys.exit(0)
     else:
-        print(Fore.RED + "Aborted.")
+        print(f"{Fore.RED}Aborted.")
         logger.log("PYShell: Aborted: Upgrade PYShell")
 
 def edit():
-    command("nano ~/pyshell/pyshell.py")
+    if nanoInstalled():
+        command("nano ~/pyshell/pyshell.py")
 
-    print(Fore.BLUE + "\nChanges applied.")
-    logger.log("PYShell: Made changes to PYShell")
-    
-    reload()
+        print(f"{Fore.BLUE}\nChanges applied.")
+        logger.log("PYShell: Made changes to PYShell")
+
+        reload()
+
+    else:
+        print(f"{Fore.RED}Nano is not installed! Please install it!")
+        error.handle(15)
 
 def reload():
-    
-    print(Fore.CYAN + "\nWould you like to reload PYShell?")
+
+    print(f"{Fore.CYAN}\nWould you like to reload PYShell?")
     choice = input()
 
-    if choice == 'Y' or choice == 'y': 
+    if choice == 'Y' or choice == 'y':
         print("Reloading script...")
 
         logger.log("PYShell: Reloaded PYShell")
-        
+
         os.execv(sys.executable,
                 ["python3"] +
                 sys.argv)
     else:
-        print(Fore.RED + "Aborted.")
-        logger.log("PYShell: Aborted: Reload PYShell")    
+        print(f"{Fore.RED}Aborted.")
+        logger.log("PYShell: Aborted: Reload PYShell")
 
 def script(scriptPath):
 
@@ -399,58 +409,59 @@ def script(scriptPath):
                 with open(scriptPath, "r") as file:
                     for line in file:
                         processCommand(line.strip())
-                logger.log("PYShell: Ran script: " + scriptPath)
+                logger.log(f"PYShell: Ran script: {scriptPath}")
             except:
                 error.handle(2)
         else:
             error.handle(9)
 
 def credits():
-    print(Fore.CYAN   + "Meme Supplier" +
-          Fore.BLUE   + ": owner, programmer, maintainer\n" +
-          Fore.YELLOW + "Contact: " +
-          Fore.BLUE   + "memesupplierbusiness@gmail.com\n" +
-          Fore.GREEN  + "2025 Meme Supplier")
+    print(f"{Fore.CYAN}Meme Supplier{Fore.BLUE}: owner, programmer, maintainer\n" +
+          f"{Fore.YELLOW}Contact: "
+          f"{Fore.BLUE}memesupplierbusiness@gmail.com\n" +
+          f"{Fore.GREEN}2025 Meme Supplier")
 
 def help():
     if sufficientPacMan and isLinux:
-        print(Fore.CYAN   + "\nWelcome to " +
-              Fore.GREEN  + "PYShell " +
-              Fore.YELLOW + pyshellVer)
-        print(Fore.CYAN   + "Type " +
-              Fore.BLUE   + "\"cmds\"" +
-              Fore.CYAN   + " for some commands!\n")
+        print(f"{Fore.CYAN}\nWelcome to "
+              f"{Fore.GREEN}PYShell "
+              f"{Fore.YELLOW}{pyshellVer}")
+        print(f"{Fore.CYAN}Type "
+              f"{Fore.BLUE}\"cmds\""
+              f"{Fore.CYAN} for some commands!\n")
 
 def ver():
 #   PYShell version
-    print(Fore.CYAN  + "\nPYShell" +
-          Fore.BLUE  + " version: " +
-          Fore.GREEN + pyshellVer)
+    print(f"{Fore.CYAN}\nPYShell"
+          f"{Fore.BLUE} version: "
+          f"{Fore.GREEN}{pyshellVer}")
 
 #   Python version
-    print(Fore.CYAN + "Python " +
-          Fore.BLUE + pythonVersion +
-          '\n')
+    print(f"{Fore.CYAN}Python "
+          f"{Fore.BLUE}{pythonVersion}\n")
 
 #   System info
 
     # Distro
-    print(Fore.CYAN + "OS:",
-          Fore.BLUE + sysInfo.getDistro())
-    
+    print(f"{Fore.CYAN}OS: "
+          f"{Fore.BLUE}{sysInfo.getDistro()}")
+
     # Kernel version
-    print(Fore.CYAN + "Kernel:",
-          Fore.BLUE + platform.release())
-    
+    print(f"{Fore.CYAN}Kernel: "
+          f"{Fore.BLUE}{platform.release()}")
+
     # Window Manager
-    print(Fore.CYAN + "WM:",
-          Fore.BLUE + sysInfo.getWM())
-    
+    print(f"{Fore.CYAN}WM: "
+          f"{Fore.BLUE}{sysInfo.getWM()} ({os.environ.get('XDG_SESSION_TYPE')})")
+
     # Desktop Enviornment
-    print(Fore.CYAN + "DE:",
-          Fore.BLUE + sysInfo.getDE(["XDG_CURRENT_DESKTOP",
-                                     "DESKTOP_SESSION"]),
-                                     '\n')
+    print(f"{Fore.CYAN}DE:",
+          f"{Fore.BLUE}{sysInfo.getDE(["XDG_CURRENT_DESKTOP","DESKTOP_SESSION"])}")
+
+    print(f"{Fore.CYAN}Terminal: "
+          f"{Fore.BLUE}{sysInfo.getShell()}")
+
+    print()
 
 def gitInstalled(): # Is git installed?
     logger.log("PYShell: Checking if git is installed...")
@@ -460,33 +471,52 @@ def gitInstalled(): # Is git installed?
                         stdout = subprocess.PIPE,
                         stderr = subprocess.PIPE,
                         check  = True)
-        
+
         logger.log("PYShell: Git is installed")
 
         return True
     except (subprocess.CalledProcessError,
             FileNotFoundError):
-        
-        logger.log("PYShell: Git is not installed")
+
+        logger.log("PYShell: Git is not installed!")
 
         return False
-    
+
 def flatpakInstalled(): # Is flatpak installed?
     logger.log("PYShell: Checking if Flatpak is installed...")
 
     try:
         subprocess.run(["flatpak", "--version"],
                         stdout = subprocess.PIPE,
-                        stderr = subprocess.PIPE,
+			stderr = subprocess.PIPE,
                         check  = True)
-        
+
         logger.log("PYShell: Flatpak is installed")
 
         return True
     except (subprocess.CalledProcessError,
             FileNotFoundError):
-        
+
         logger.log("PYShell: Flatpak is not installed")
+
+        return False
+
+def nanoInstalled(): # Is flatpak installed?
+    logger.log("PYShell: Checking if Nano is installed...")
+
+    try:
+        subprocess.run(["nano", "--version"],
+                        stdout = subprocess.PIPE,
+                        stderr = subprocess.PIPE,
+                        check  = True)
+
+        logger.log("PYShell: Nano is installed")
+
+        return True
+    except (subprocess.CalledProcessError,
+            FileNotFoundError):
+
+        logger.log("PYShell: Nano is not installed")
 
         return False
 
@@ -500,9 +530,6 @@ windowTitle("PYShell")
 
 while True and isLinux and not locked and sufficientPacMan:
 
-    answer = input(Fore.BLUE  + "PYShell" +
-                   Fore.GREEN + '$' +
-                   Fore.CYAN  + '~' +
-                   Fore.WHITE + ': ')
+    answer = input(f"{Fore.BLUE}PYShell{Fore.GREEN}${Fore.CYAN}~{Fore.WHITE}: ")
 
     processCommand(answer)
