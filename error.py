@@ -29,92 +29,102 @@ Error IDs
 12: Incorrect equation entered
 13: Flatpak not installed
 14: Logging failed
+15: Nano not installed
+16: Error isn't an integer
 
 """
 
 def handle(errorID):
-    
-    match errorID:
+    try:
+        match errorID:
 
-        case 1:
-            print(Fore.RED + "Unable to execute command: Unsupported package manager!")
-            logger.log("Error 1: Unsupported package manager")
+            case 1:
+                print(f"{Fore.RED}Unable to execute command: Unsupported package manager!")
+                logger.log("Error 1: Unsupported package manager")
 
-        case 2:
-            print(Fore.RED + "File/Directory doesn't exist!")
-            logger.log("Error 2: Nonexisting file/directory")
+            case 2:
+                print(f"{Fore.RED}File/Directory doesn't exist!")
+                logger.log("Error 2: Nonexisting file/directory")
 
-        case 3:
-            print(Fore.RED + "Git is not installed. Please install Git.")
-            logger.log("Error 3: Git is not installed")
-        
-        case 4:
-            print(Fore.RED  + "Password must be at least " +
-                  Fore.BLUE + "5 " +
-                  Fore.RED  + "characters long!")
-            logger.log("Error 4: Insufficient password length")
+            case 3:
+                print(f"{Fore.RED}Git is not installed. Please install Git.")
+                logger.log("Error 3: Git is not installed")
 
-        case 5:
-            print(Fore.RED + "\nIncorrect password!\n")
-            logger.log("Error 5: Incorrect password entered")
-        
-        case 6:
-            print(Fore.RED + "You are out of attempts! Wait 5 seconds to try again!")
-            logger.log("Error 6: Out of password attempts")
+            case 4:
+                print(f"{Fore.RED}Password must be at least "
+                      f"{Fore.BLUE}5 "
+                      f"{Fore.RED}characters long!")
+                logger.log("Error 4: Insufficient password length")
 
-        case 7:
-            print(Fore.RED  + "You need to set a password first in order to use this command.")
-            print(Fore.RED  + "Use the command " +
-                  Fore.BLUE + "\"pwd <password>\" " + 
-                  Fore.RED  + "to set your password")
+            case 5:
+                print(f"{Fore.RED}Incorrect password!")
+                logger.log("Error 5: Incorrect password entered")
 
-            logger.log("Error 7: Password isn't set")
-        
-        case 8:
-            print(Fore.RED + "The path to the script must be the full path. " +
-                  Fore.CYAN + "\nEx: " +
-                  Fore.BLUE + "/home/(your username)/file.pyshell")
-            
-            logger.log("Error 8: Full path hasn't been entered")
-        
-        case 9:
-            print(Fore.RED  + "Unsupported file extension! PYShell only supports files ending with \"" +
-                  Fore.BLUE + ".pyshell" +
-                  Fore.RED  + "\"!")
-            
-            logger.log("Error 9: File extension not supported.")
-            
-        case 10:
-            print(Fore.RED  + "Unsupported package manager! Please use " +
-                  Fore.BLUE + "Apt" +
-                  Fore.RED  + ", " +
-                  Fore.BLUE + "Dnf" +
-                  Fore.RED  + ", or " +
-                  Fore.BLUE + "Pacman" +
-                  Fore.RED  + ".")
-            
-            logger.log("Error 10: Unsupported file manager")
-        
-        case 11:
-            print(Fore.CYAN + "This script is for " +
-                  Fore.BLUE + "Linux " +
-                  Fore.RED  + "only! " +
-                  Fore.CYAN + "Either install Linux for edit the code " +
-                  Fore.RED  + "(it may not work as expected or break if you edit the code).\n")
-            
-            logger.log("Error 11: This script is made for linux ONLY!")
-        
-        case 12:
-            print(Fore.RED + "Incorrect equation!")
-            logger.log("Error 12: Incorrect equation entered")
-        
-        case 13:
-            print(Fore.RED + "Flatpak is not installed! Please install it!")
-            logger.log("Error 13: Flatpak not installed")
-        case 14:
-            print(Fore.RED + "Logging failed! (You can ignore this message, but if this continues, please reinstall PYShell.)")
-            logger.log("Error 14: Logging failed! Skipping...")
-        
-        # Does nothing
-        case _:
-            None
+            case 6:
+                print(f"{Fore.RED}You are out of attempts! Wait 5 seconds to try again!")
+                logger.log("Error 6: Out of password attempts")
+
+            case 7:
+                print(f"{Fore.RED}You need to set a password first in order to use this command.")
+                print(f"{Fore.RED}Use the command "
+                      f"{Fore.BLUE}\"pwd <password>\" "
+                      f"{Fore.RED}to set your password")
+
+                logger.log("Error 7: Password isn't set")
+
+            case 8:
+                print(f"{Fore.RED}The path to the script must be the full path. "
+                      f"{Fore.CYAN}\nEx: "
+                      f"{Fore.BLUE}/home/(your username)/file.pyshell")
+
+                logger.log("Error 8: Full path hasn't been entered")
+
+            case 9:
+                print(f"{Fore.RED}Unsupported file extension! PYShell only supports files ending with \""
+                      f"{Fore.BLUE}.pyshell"
+                      f"{Fore.RED}\"!")
+
+                logger.log("Error 9: File extension not supported.")
+
+            case 10:
+                print(f"{Fore.RED}Unsupported package manager! Please use "
+                      f"{Fore.BLUE}Apt"
+                      f"{Fore.RED}, "
+                      f"{Fore.BLUE}Dnf"
+                      f"{Fore.RED}, or "
+                      f"{Fore.BLUE}Pacman"
+                      f"{Fore.RED}.")
+
+                logger.log("Error 10: Unsupported file manager")
+
+            case 11:
+                print(f"{Fore.CYAN}This script is for "
+                      f"{Fore.BLUE}Linux "
+                      f"{Fore.RED}only! "
+                      f"{Fore.CYAN}Either install Linux for edit the code "
+                      f"{Fore.RED}(it may not work as expected or break if you edit the code).")
+
+                logger.log("Error 11: This script is made for linux ONLY!")
+
+            case 12:
+                print(f"{Fore.RED}Incorrect equation!")
+                logger.log("Error 12: Incorrect equation entered")
+
+            case 13:
+                print(f"{Fore.RED}Flatpak is not installed! Please install it!")
+                logger.log("Error 13: Flatpak not installed")
+            case 14:
+                print(f"{Fore.RED}Logging failed! (You can ignore this message, but if this continues, please reinstall PYShell.)")
+                logger.log("Error 14: Logging failed! Skipping...")
+            case 15:
+                print(f"{Fore.RED}Nano is not installed! Please install it!")
+                logger.log("Error 15: Nano not installed")
+            case 16:
+                print(f"{Fore.RED}Error to handle must be an integer!")
+                logger.log("Error 16: Error to handle must be an integer!")
+
+            # Does nothing
+            case _:
+                None
+    except:
+        print("Unknown error")
