@@ -153,7 +153,7 @@ def processCommand(answer):
             # Multi-syntax commands
             if   answer.startswith ("echo ")    : command(answer)
             elif answer.startswith ("expr ")    : expr()
-            elif answer.startswith ("sh ")      : command("answer.replace("sh " , "" , 1)")
+            elif answer.startswith ("sh ")      : command(answer.replace("sh " , "" , 1))
             elif answer.startswith ("web ")     : web(answer.replace("web " , "" , 1))
             elif answer.startswith ("wait ")    : wait(answer.replace("wait " , "" , 1))
             elif answer.startswith ("pwd ")     : setPwd(answer.replace("pwd " , "" , 1))
