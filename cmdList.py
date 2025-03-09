@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 """
 # 2025 Meme Supplier
 memesupplierbusiness@gmail.com
@@ -10,11 +9,10 @@ from colorama import Fore, init
 init(autoreset = True)
 
 def list():
-    print('\n' +
-          Fore.YELLOW + "Available commands:\n")
-    print(Fore.CYAN + "Command " +
-          Fore.BLUE + "Usage " +
-          Fore.GREEN + "Description ")
+    print(f"{Fore.YELLOW}\nAvailable commands:\n")
+    print(f"{Fore.CYAN}Command "
+          f"{Fore.BLUE}Usage "
+          f"{Fore.GREEN}Description ")
 
 #   Exit
     print(Fore.CYAN  + "exit " +
@@ -43,10 +41,6 @@ def list():
 #   Reload
     print(Fore.CYAN  + "reload" +
           Fore.GREEN + " Reloads PYShell")
-#   Ip
-    print(Fore.CYAN  + "ip" +
-          Fore.GREEN + " Displays your IP." +
-          Fore.RED + " DANGEROUS")
 #   Clean
     print(Fore.CYAN  + "clean" +
           Fore.GREEN + " removes unnecessary packages")
@@ -150,12 +144,14 @@ def list():
           Fore.GREEN + " Deletes PYShell's logs.")
 #   Time
     print(Fore.CYAN  + "time" +
-          Fore.GREEN + " Displays the time.\n")
+          Fore.GREEN + " Displays the time.")
 #   Title
     print(Fore.CYAN  + "title" +
-          Fore.GREEN + " Sets the window title\n")
+          Fore.GREEN + " Sets the window title")
 #   Rmtitle
     print(Fore.CYAN  + "rmtitle" +
-          Fore.GREEN + " Resets window title\n")
-    
+          Fore.GREEN + " Resets window title")
+
+    print()
+
     __import__("logger").log("cmdList: Commands listed")
