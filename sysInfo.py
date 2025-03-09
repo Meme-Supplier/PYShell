@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-# 2025 Meme Supplier
+2025 Meme Supplier
 memesupplierbusiness@gmail.com
 Maintained by Meme Supplier
 """
@@ -46,12 +46,17 @@ def getDistro():
             for line in f:
                 if line.startswith("PRETTY_NAME="):
                     return line.split("=", 1)[1].strip().strip('"')
-                
+
     except FileNotFoundError:
         return "Unknown"
 
-logger.log("sysInfo: Distro: " + getDistro())
-logger.log("sysInfo: Window Manager: " + getWM())
-logger.log("sysInfo: Desktop Enviornment: " + getDE(["XDG_CURRENT_DESKTOP",
-                                                    "DESKTOP_SESSION"]))
+def getShell():
+    return os.environ.get("SHELL","").split('/')[-1]
+
+logger.log(f"sysInfo: Distro: {getDistro()}")
+logger.log(f"sysInfo: Window Manager: {getWM()}")
+logger.log(f"sysInfo: Desktop Enviornment: {getDE(["XDG_CURRENT_DESKTOP",
+                                                    "DESKTOP_SESSION"])}")
+logger.log(f"sysInfo: Terminal: {getShell()}")
+
 logger.log("sysInfo: Retrieved system info")
