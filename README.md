@@ -17,7 +17,7 @@ Features:
 **And if you have one of the package managers listed:**
 - Apt
 - Dnf
-- Pacman or Yay
+- Pacman/Yay
 
 ### Tested and works on:
 - Manjaro
