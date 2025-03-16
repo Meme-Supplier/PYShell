@@ -42,7 +42,7 @@ pythonVersion = str(f"{pythonMajor}.{pythonMinor}.{pythonMicro}")
 pythonVersionShort = str(f"{pythonMajor}.{pythonMinor}")
 logger.log(f"PYShell: Python version: {pythonVersion}")
 
-pyshellVer = "v2.1"
+pyshellVer = "v2.1.1"
 logger.log(f"PYShell: PYShell version: {pyshellVer}")
 
 locked = False
@@ -131,6 +131,8 @@ def processCommand(answer):
                                Fore.BLUE + "ls <directory>")
         case "del"     : print(Fore.CYAN + "Usage: " +
                                Fore.BLUE + "del <path to file/directory>")
+        case "create"     : print(Fore.CYAN + "Usage: " +
+                               Fore.BLUE + "create <path to file/directory>")
         case "newdir"  : print(Fore.CYAN + "Usage: " +
                                Fore.BLUE + "newdir <path to directory>")
         case "pm"      : print(Fore.CYAN + "Usage: " +
@@ -423,6 +425,8 @@ def credits():
 
 def help():
     if sufficientPacMan and isLinux:
+        print(f"{Fore.RED}\nNOTICE: PYShell will be discontinued and will replaced with \"Rusterminal\" (written in Rust).")
+
         print(f"{Fore.CYAN}\nWelcome to "
               f"{Fore.GREEN}PYShell "
               f"{Fore.YELLOW}{pyshellVer}")
@@ -455,8 +459,8 @@ def ver():
           f"{Fore.BLUE}{sysInfo.getWM()} ({os.environ.get('XDG_SESSION_TYPE')})")
 
     # Desktop Enviornment
-    print(f"{Fore.CYAN}DE:",
-          f"{Fore.BLUE}{sysInfo.getDE(["XDG_CURRENT_DESKTOP","DESKTOP_SESSION"])}")
+    print(Fore.CYAN + "DE: " +
+          Fore.BLUE + sysInfo.getDE(["XDG_CURRENT_DESKTOP","DESKTOP_SESSION"]))
 
     print(f"{Fore.CYAN}Terminal: "
           f"{Fore.BLUE}{sysInfo.getShell()}")
