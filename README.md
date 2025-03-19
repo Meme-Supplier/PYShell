@@ -1,5 +1,5 @@
-# PYSHELL IS BEING REWRITTEN IN RUST
-## Name will cange to _Rusterminal_
+# PYSHELL IS BEING REWRITTEN IN RUST (Will take a while)
+## Name will cange to _Rusterminal_!
 
 # PYShell - Custom shell v2.1
 
