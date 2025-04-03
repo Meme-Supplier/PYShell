@@ -97,4 +97,4 @@ Features:
 #
 Everything by **Meme Supplier**
 
-2025 Meme Supplier
+**2025 Meme Supplier**
