@@ -1,7 +1,4 @@
-# PYSHELL IS BEING REWRITTEN IN RUST (Will take a while)
-## Name will cange to _Rusterminal_!
-
-# PYShell - Custom shell v2.1
+# PYShell - Custom shell v2.1 (Project now discontinued)
 
 Features:
 
