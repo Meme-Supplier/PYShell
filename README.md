@@ -29,7 +29,7 @@ Features:
 - Arch
 - Pop_OS!
 
-# Python 3.12.3+ is recommended.
+# Python 3.12.3+ is required.
 
 # Installation:
 
