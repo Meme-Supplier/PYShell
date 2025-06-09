@@ -1,4 +1,4 @@
-# PYShell - Custom shell v2.1 (Deprecated)
+# PYShell - Custom shell v2.1
 
 Features:
 
